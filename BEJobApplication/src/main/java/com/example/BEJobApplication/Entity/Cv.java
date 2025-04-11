@@ -1,28 +1,29 @@
-package com.example.BEJobApplication.Entity;
+package com.example.bejobapplication.Entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import java.time.Instant;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "cvs")
 public class Cv {
+
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @jakarta.validation.constraints.NotNull
+    @NotNull
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
-    private com.example.BEJobApplication.Entity.User user;
+    private User user;
 
-    @jakarta.validation.constraints.NotNull
+    @NotNull
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "template_id", nullable = false)
-    private com.example.BEJobApplication.Entity.Template template;
+    private Template template;
 
     @Lob
     @Column(name = "content")
@@ -31,4 +32,48 @@ public class Cv {
     @Column(name = "created_at")
     private Instant createdAt;
 
+    // Constructor mặc định cho JPA
+    public Cv() {}
+
+    // Getters and Setters
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Template getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(Template template) {
+        this.template = template;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
 }

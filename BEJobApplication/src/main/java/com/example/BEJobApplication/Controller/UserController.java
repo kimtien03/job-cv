@@ -1,0 +1,78 @@
+package com.example.bejobapplication.Controller;
+
+import com.example.bejobapplication.Entity.User;
+import com.example.bejobapplication.Exception.NoFoundException;
+import com.example.bejobapplication.Service.UserService;
+
+import jakarta.persistence.criteria.CriteriaBuilder.In;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/User")
+public class UserController {
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/GetAllUser")
+    public ResponseEntity<?> getAllUsers() {
+        try {
+            List<User> users = userService.getAllUsers();
+            return ResponseEntity.ok(users);
+        } catch (NoFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/GetUserByID/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable Integer id) {
+        try {
+            User user = userService.getUserById(id);
+            return ResponseEntity.ok(user);
+        } catch (NoFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/Create")
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+        try {
+            User createdUser = userService.createUser(user);
+            return ResponseEntity.status(200).body(createdUser);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(
+                    Map.of("error", e.getMessage(), "status", 400));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                    Map.of("error", "Lỗi máy chủ", "message", e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/Delete/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
+        userService.deleteUser(id); 
+        return ResponseEntity.ok(Map.of("message", "Xóa người dùng thành công"));
+    }
+    @PutMapping("/Update")
+    public ResponseEntity<?> updateUser(@PathVariable Integer id,@RequestBody User user) {
+        try {
+            User createdUser = userService.updateUser(id,user);
+            return ResponseEntity.status(200).body(createdUser);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(
+                    Map.of("error", e.getMessage(), "status", 400));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(
+                    Map.of("error", "Lỗi máy chủ", "message", e.getMessage()));
+        }
+    }
+
+
+
+}
