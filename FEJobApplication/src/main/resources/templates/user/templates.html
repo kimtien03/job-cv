@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title> Hosting | Template</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../static/user/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="../../../static/user/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../static/user/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../../../static/user/css/slicknav.css">
+    <link rel="stylesheet" href="../../../static/user/css/flaticon.css">
+    <link rel="stylesheet" href="../../../static/user/css/progressbar_barfiller.css">
+    <link rel="stylesheet" href="../../../static/user/css/gijgo.css">
+    <link rel="stylesheet" href="../../../static/user/css/animate.min.css">
+    <link rel="stylesheet" href="../../../static/user/css/animated-headline.css">
+    <link rel="stylesheet" href="../../../static/user/css/magnific-popup.css">
+    <link rel="stylesheet" href="../../../static/user/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../../../static/user/css/themify-icons.css">
+    <link rel="stylesheet" href="../../../static/user/css/slick.css">
+    <link rel="stylesheet" href="../../../static/user/css/nice-select.css">
+    <link rel="stylesheet" href="../../../static/user/css/style.css">
+</head>
+<body>
+<style>
+    .template-card {
+        position: relative;
+        overflow: visible;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        min-height: 400px;
+        border: none;
+    }
+
+    .template-card img {
+        height: 400px;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .card-button-group {
+        position: absolute;
+        bottom: 0;
+        right: 5%;
+        transform: translateY(-50%);
+        display: flex;
+        z-index: 3;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        padding: 0 10px;
+        font-size: 1.5rem;
+    }
+
+    .template-card:hover .card-button-group {
+        opacity: 1;
+    }
+
+    .template-card:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 2;
+    }
+
+    .template-card:hover:before {
+        opacity: 1;
+    }
+    .tag-overlay {
+        position: absolute;
+        top: -10px;
+        right: -15px;
+        color: white;
+        padding: 8px 12px;
+        font-size: 1.25rem;
+        font-weight: bold;
+        z-index: 2;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    }
+
+    .tag-overlay::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        border-bottom: 15.5px solid transparent;
+        border-left: 15.5px solid #700d78;
+        transform: translateY(100%);
+    }
+
+    .sidebar-filters {
+        position: sticky;
+        top: 20px;
+        border-radius: 0.5rem;
+        border: 1px solid #e5e5e5;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar-filters .form-label {
+        color: #111;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .page-link {
+        position: relative;
+        display: block;
+        padding: .5rem .75rem;
+        margin-left: -1px;
+        line-height: 1.25;
+        color: #2D0A31;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+    }
+    .page-item.active .page-link{
+        background-color: #2D0A31;
+        z-index: 1;
+        color: #fff;
+        border: none;
+    }
+
+    @media (max-width: 768px) {
+        .sidebar-filters {
+            position: relative;
+            top: 0;
+            margin-bottom: 2rem;
+        }
+
+        .form-select {
+            width: 100% !important;
+            margin-bottom: 1rem;
+        }
+    }
+
+    .modal {
+        border-radius: 7px;
+        overflow: hidden;
+        background-color: transparent; }
+    .modal .logo a img {
+        width: 30px; }
+    .modal .modal-content {
+        background-color: transparent;
+        border: none;
+        border-radius: 7px; }
+    .modal .modal-content .modal-body {
+        border-radius: 7px;
+        overflow: hidden;
+        background-color: #fff;
+        padding-left: 0px;
+        padding-right: 0px;
+        -webkit-box-shadow: 0 10px 50px -10px rgba(0, 0, 0, 0.9);
+        box-shadow: 0 10px 50px -10px rgba(0, 0, 0, 0.9); }
+    .modal .modal-content .modal-body h2 {
+        font-size: 18px; }
+    .modal .modal-content .modal-body p {
+        color: #777;
+        font-size: 14px; }
+    .modal .modal-content .modal-body h3 {
+        color: #000;
+        font-size: 22px; }
+    .modal .modal-content .modal-body .close-btn {
+        color: #000; }
+    .modal .modal-content .modal-body .promo-img {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%; }
+    .modal .cancel {
+        color: gray;
+        font-size: 14px; }
+    .modal .btn-primary {
+        padding-top: 10px;
+        padding-bottom: 10px; }
+
+    .form-control {
+        border: transparent;
+        border: 1px solid #ccc; }
+    .form-control:active, .form-control:focus, .form-control:hover {
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important; }
+
+
+    .logo img {
+        width: 70px; }
+
+    .custom-note {
+        color: #999; }
+    .custom-note a {
+        color: #555;
+        font-weight: 900 !important; }
+
+</style>
+<!-- ? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img src="../../../static/user/img/logo/loder.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader End -->
+<header>
+    <!-- Header Start -->
+    <div class="header-area header-transparent">
+        <div class="main-header ">
+            <div class="header-bottom  header-sticky">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <!-- Logo -->
+                        <div class="col-xl-2 col-lg-2">
+                            <div class="logo">
+                                <a href="index.html"><img src="../../../static/user/img/logo/logo.png" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="col-xl-10 col-lg-10">
+                            <div class="menu-wrapper d-flex align-items-center justify-content-end">
+                                <!-- Main-menu -->
+                                <div class="main-menu d-none d-lg-block">
+                                    <nav>
+                                        <ul id="navigation">
+                                            <li class="button-header margin-left"><a href="templates.html" class="btn2">Bỏ qua</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Header End -->
+</header>
+<main>
+    <section class="pricing-card-area fix">
+        <div class="container pt-100">
+            <div class="row justify-content-center">
+                <div class="col-xl-8 col-lg-8">
+                    <div class="section-tittle text-center mb-90">
+                        <h2>Chọn từ các mẫu cv của chúng tôi</h2>
+                        <p>Bạn luôn có thể thay đổi cv của bạn sau đó.!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card sidebar-filters">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Filters</h5>
+                            <div class="mb-4">
+                                <label class="form-label">Profession</label>
+                                <select class="form-select">
+                                    <option>All Professions</option>
+                                    <option>Technology</option>
+                                    <option>Business</option>
+                                    <option>Creative</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Level</label>
+                                <select class="form-select">
+                                    <option>All Levels</option>
+                                    <option>Basic</option>
+                                    <option>Professional</option>
+                                    <option>Advanced</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Style</label>
+                                <select class="form-select">
+                                    <option>All Colors</option>
+                                    <option>Modern</option>
+                                    <option>Classic</option>
+                                    <option>Bold</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="row g-4">
+                        <div class="col-md-4 mb-20">
+                            <div class="card h-100 template-card">
+                                <div class="card-button-group button-group-area mt-10">
+                                    <a data-toggle="modal" data-target="#exampleModalCenter" class="genric-btn primary-border circle">Xem trước</a>
+                                    <a class="genric-btn success-border circle" href="editResume.html">Chọn</a>
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4" class="card-img" alt="Modern Template">
+                                <span class="badge bg-primary position-absolute tag-overlay">Professional</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-20">
+                            <div class="card h-100 template-card">
+                                <div class="card-button-group button-group-area mt-10">
+                                    <button class="genric-btn primary-border circle">Xem trước</button>
+                                    <button class="genric-btn success-border circle">Chọn</button>
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1586282391129-76a6df230234" class="card-img" alt="Creative Template">
+                                <span class="badge bg-success position-absolute tag-overlay">Advanced</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-20">
+                            <div class="card h-100 template-card">
+                                <div class="card-button-group button-group-area mt-10">
+                                    <button class="genric-btn primary-border circle">Xem trước</button>
+                                    <button class="genric-btn success-border circle">Chọn</button>
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1586282023378-83c4c64a058f" class="card-img" alt="Classic Template">
+                                <span class="badge bg-info position-absolute tag-overlay">Basic</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-20">
+                            <div class="card h-100 template-card">
+                                <div class="card-button-group button-group-area mt-10">
+                                    <button class="genric-btn primary-border circle">Xem trước</button>
+                                    <button class="genric-btn success-border circle">Chọn</button>
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1586282391129-76a6df230234" class="card-img" alt="Executive Template">
+                                <span class="badge bg-warning position-absolute tag-overlay">Professional</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-20">
+                            <div class="card h-100 template-card">
+                                <div class="card-button-group button-group-area mt-10">
+                                    <button class="genric-btn primary-border circle">Xem trước</button>
+                                    <button class="genric-btn success-border circle">Chọn</button>
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4" class="card-img" alt="Minimalist Template">
+                                <span class="badge bg-secondary position-absolute tag-overlay">Basic</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-20">
+                            <div class="card h-100 template-card">
+                                <div class="card-button-group button-group-area mt-10">
+                                    <button class="genric-btn primary-border circle">Xem trước</button>
+                                    <button class="genric-btn success-border circle">Chọn</button>
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1586282023378-83c4c64a058f" class="card-img" alt="Tech Template">
+                                <span class="badge bg-danger position-absolute tag-overlay">Advanced</span>
+                            </div>
+                        </div>
+                    </div>
+                    <nav class="mb-20">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content rounded-0">
+                <div class="modal-body py-0">
+                    <div class="d-flex main-content">
+                        <img src="../../../static/user/img/hero/hero_right.png" class="img img-fluid promo-img">
+                        <div class="content-text p-4">
+                            <h3>Sign up to access all the resourcess</h3>
+                            <p>All their equipment and instruments are alive. The sky was cloudless and of a deep dark blue.</p>
+                            <button class="genric-btn success-border circle">Chọn mẫu này</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <div class="footer-wrappr " data-background="assets/img/gallery/footer-bg.png">
+        <div class="footer-bottom-area">
+            <div class="container">
+                <div class="footer-border">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="footer-copy-right text-center">
+                                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- JS here -->
+
+<script src="../../../static/user/js/vendor/modernizr-3.5.0.min.js"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script src="../../../static/user/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="../../../static/user/js/popper.min.js"></script>
+<script src="../../../static/user/js/bootstrap.min.js"></script>
+<!-- Jquery Mobile Menu -->
+<script src="../../../static/user/js/jquery.slicknav.min.js"></script>
+
+<!-- Jquery Slick , Owl-Carousel Plugins -->
+<script src="../../../static/user/js/owl.carousel.min.js"></script>
+<script src="../../../static/user/js/slick.min.js"></script>
+<!-- One Page, Animated-HeadLin -->
+<script src="../../../static/user/js/wow.min.js"></script>
+<script src="../../../static/user/js/animated.headline.js"></script>
+<script src="../../../static/user/js/jquery.magnific-popup.js"></script>
+
+<!-- Date Picker -->
+<script src="../../../static/user/js/gijgo.min.js"></script>
+
+<!-- Video bg -->
+<script src="../../../static/user/js/jquery.vide.js"></script>
+
+<!-- Nice-select, sticky -->
+<script src="../../../static/user/js/jquery.nice-select.min.js"></script>
+<script src="../../../static/user/js/jquery.sticky.js"></script>
+<!-- Progress -->
+<script src="../../../static/user/js/jquery.barfiller.js"></script>
+
+<!-- counter , waypoint,Hover Direction -->
+<script src="../../../static/user/js/jquery.counterup.min.js"></script>
+<script src="../../../static/user/js/waypoints.min.js"></script>
+<script src="../../../static/user/js/jquery.countdown.min.js"></script>
+<script src="../../../static/user/js/hover-direction-snake.min.js"></script>
+
+<!-- contact js -->
+<script src="../../../static/user/js/contact.js"></script>
+<script src="../../../static/user/js/jquery.form.js"></script>
+<script src="../../../static/user/js/jquery.validate.min.js"></script>
+<script src="../../../static/user/js/mail-script.js"></script>
+<script src="../../../static/user/js/jquery.ajaxchimp.min.js"></script>
+
+<!-- Jquery Plugins, main Jquery -->
+<script src="../../../static/user/js/plugins.js"></script>
+<script src="../../../static/user/js/main.js"></script>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <met#aeb3b8et="utf-8">
+        <meta aeb3b8et="utf-8">
         <title>DarkCV - Bootstrap CV Resume Template</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Free Website Template" name="keywords">
@@ -29,412 +29,398 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/grapesjs/dist/css/grapes.min.css">
+        <script src="https://unpkg.com/grapesjs"></script>
+        <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+        <script src="https://unpkg.com/grapesjs-plugin-ckeditor"></script>
+
     </head>
 
     <body>
-        <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
+    <style>
+        #chat2 .form-control {
+            border-color: transparent;
+        }
+
+        #chat2 .form-control:focus {
+            border-color: transparent;
+            box-shadow: inset 0px 0px 0px 1px transparent;
+        }
+
+        .divider:after,
+        .divider:before {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #eee;
+        }
+
+    </style>
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg" data-bs-theme="dark">
+            <div class="container">
+            <a class="navbar-brand" href="#">CV Builder</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">CV của tôi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Mẫu CV</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Lưu và tải xuống</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Lưu lại</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
             </div>
         </div>
-        <!-- Spinner End -->
+        </nav>
+        <div id="gjs" style="height: 800px; border:1px solid #ccc;">
+                <div class="container bg-dark">
+                    <div class="row g-5">
+                        <div class="col-lg-4 vh-100">
+                            <div class="d-flex flex-column h-100 text-center overflow-auto shadow">
+                                <img class="w-100 img-fluid mb-4" src="img/profile.jpg" alt="Image">
+                                <h1 class="text-primary mt-2">John Doe</h1>
+                                <div class="mb-4" style="height: 22px;">
+                                    <div class="typed-text">Web Designer, Web Developer, Front End Developer, Apps Designer, Apps Developer</div>
+                                </div>
+                                <div class="d-flex justify-content-center mt-auto mb-3">
+                                    <a class="btn btn-secondary btn-square mx-1" href="#"><i class="fab fa-twitter"></i></a>
+                                    <a class="btn btn-secondary btn-square mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                                    <a class="btn btn-secondary btn-square mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
+                                    <a class="btn btn-secondary btn-square mx-1" href="#"><i class="fab fa-instagram"></i></a>
+                                </div>
+                                <div class="d-flex align-items-end justify-content-between border-top">
+                                    <a href="" class="btn w-50 border-end">Download CV</a>
+                                    <a href="#contact" class="btn w-50 btn-scroll">Contact Me</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <!-- About Start -->
+                            <section class="py-5 border-bottom wow fadeInUp" data-wow-delay="0.1s">
+                                <h1 class="title pb-3 mb-5">About Me</h1>
+                                <p>Diam rebum sea stet rebum ea. Et kasd amet et accusam elitr voluptua. Tempor dolore sit et accusam ipsum erat duo. Gubergren et takimata dolor duo amet et sanctus elitr lorem. Ipsum amet duo rebum dolor labore. No diam duo lorem elitr dolor takimata elitr no. Magna et gubergren duo ipsum sed, amet ea voluptua dolores voluptua dolor ipsum et. Sit takimata erat consetetur invidunt lorem consetetur. Lorem magna diam vero nonumy. Aliquyam diam voluptua magna et magna nonumy. Accusam rebum clita et sit vero lorem, voluptua amet sit eos no et labore vero, et consetetur justo et et sit aliquyam labore, sit erat lorem justo dolores kasd est sit. Dolor et accusam ea et dolor sit.</p>
+                                <div class="row mb-4">
+                                    <div class="col-sm-6 py-1">
+                                        <span class="fw-medium text-primary">Name:</span> John Doe
+                                    </div>
+                                    <div class="col-sm-6 py-1">
+                                        <span class="fw-medium text-primary">Birthday:</span> 1 April 1990
+                                    </div>
+                                    <div class="col-sm-6 py-1">
+                                        <span class="fw-medium text-primary">Degree:</span> Master
+                                    </div>
+                                    <div class="col-sm-6 py-1">
+                                        <span class="fw-medium text-primary">Experience:</span> 10 Years
+                                    </div>
+                                    <div class="col-sm-6 py-1">
+                                        <span class="fw-medium text-primary">Phone:</span> +012 345 6789
+                                    </div>
+                                    <div class="col-sm-6 py-1">
+                                        <span class="fw-medium text-primary">Email:</span> info@example.com
+                                    </div>
+                                    <div class="col-sm-6 py-1">
+                                        <span class="fw-medium text-primary">Address:</span> 123 Street, New York, USA
+                                    </div>
+                                    <div class="col-sm-6 py-1">
+                                        <span class="fw-medium text-primary">Freelance:</span> Available
+                                    </div>
+                                </div>
+                                <div class="row g-4">
+                                    <div class="col-md-4 col-lg-6 col-xl-4">
+                                        <div class="d-flex bg-secondary p-4">
+                                            <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">10</h1>
+                                            <div class="ps-3">
+                                                <p class="mb-0">Years of</p>
+                                                <h5 class="mb-0">Experience</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-6 col-xl-4">
+                                        <div class="d-flex bg-secondary p-4">
+                                            <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">100</h1>
+                                            <div class="ps-3">
+                                                <p class="mb-0">Happy</p>
+                                                <h5 class="mb-0">Clients</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-6 col-xl-4">
+                                        <div class="d-flex bg-secondary p-4">
+                                            <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">200</h1>
+                                            <div class="ps-3">
+                                                <p class="mb-0">Complete</p>
+                                                <h5 class="mb-0">Projects</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- About End -->
 
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-4 sticky-lg-top vh-100">
-                    <div class="d-flex flex-column h-100 text-center overflow-auto shadow">
-                        <img class="w-100 img-fluid mb-4" src="img/profile.jpg" alt="Image">
-                        <h1 class="text-primary mt-2">John Doe</h1>
-                        <div class="mb-4" style="height: 22px;">
-                            <h4 class="typed-text-output d-inline-block text-light"></h4>
-                            <div class="typed-text d-none">Web Designer, Web Developer, Front End Developer, Apps Designer, Apps Developer</div>
-                        </div>
-                        <div class="d-flex justify-content-center mt-auto mb-3">
-                            <a class="btn btn-secondary btn-square mx-1" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-secondary btn-square mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-secondary btn-square mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="btn btn-secondary btn-square mx-1" href="#"><i class="fab fa-instagram"></i></a>
-                        </div>
-                        <div class="d-flex align-items-end justify-content-between border-top">
-                            <a href="" class="btn w-50 border-end">Download CV</a>
-                            <a href="#contact" class="btn w-50 btn-scroll">Contact Me</a>
+                            <!-- Skills Start -->
+                            <section class="py-5 border-bottom wow fadeInUp" data-wow-delay="0.1s">
+                                <h1 class="title pb-3 mb-5">Skills</h1>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="skill mb-4">
+                                            <div class="d-flex justify-content-between">
+                                                <p class="mb-2">HTML</p>
+                                                <p class="mb-2">95%</p>
+                                            </div>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill mb-4">
+                                            <div class="d-flex justify-content-between">
+                                                <p class="mb-2">CSS</p>
+                                                <p class="mb-2">85%</p>
+                                            </div>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill mb-4">
+                                            <div class="d-flex justify-content-between">
+                                                <p class="mb-2">PHP</p>
+                                                <p class="mb-2">90%</p>
+                                            </div>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="skill mb-4">
+                                            <div class="d-flex justify-content-between">
+                                                <p class="mb-2">Javascript</p>
+                                                <p class="mb-2">90%</p>
+                                            </div>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill mb-4">
+                                            <div class="d-flex justify-content-between">
+                                                <p class="mb-2">Angular JS</p>
+                                                <p class="mb-2">95%</p>
+                                            </div>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill mb-4">
+                                            <div class="d-flex justify-content-between">
+                                                <p class="mb-2">Wordpress</p>
+                                                <p class="mb-2">85%</p>
+                                            </div>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-info" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- Skills End -->
+
+                            <!-- Expericence Start -->
+                            <section class="py-5 wow fadeInUp" data-wow-delay="0.1s">
+                                <h1 class="title pb-3 mb-5">Expericence</h1>
+                                <div class="border-start border-2 border-light pt-2 ps-5">
+                                    <div class="position-relative mb-4">
+                                        <span class="bi bi-arrow-right fs-4 text-light position-absolute" style="top: -5px; left: -50px;"></span>
+                                        <h5 class="mb-1">Web Designer</h5>
+                                        <p class="mb-2">Soft Company | <small>2000 - 2050</small></p>
+                                        <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
+                                    </div>
+                                    <div class="position-relative mb-4">
+                                        <span class="bi bi-arrow-right fs-4 text-light position-absolute" style="top: -5px; left: -50px;"></span>
+                                        <h5 class="mb-1">Web Designer</h5>
+                                        <p class="mb-2">Soft Company | <small>2000 - 2050</small></p>
+                                        <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
+                                    </div>
+                                    <div class="position-relative mb-4">
+                                        <span class="bi bi-arrow-right fs-4 text-light position-absolute" style="top: -5px; left: -50px;"></span>
+                                        <h5 class="mb-1">Web Designer</h5>
+                                        <p class="mb-2">Soft Company | <small>2000 - 2050</small></p>
+                                        <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- Expericence End -->
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-8">
-                    <!-- About Start -->
-                    <section class="py-5 border-bottom wow fadeInUp" data-wow-delay="0.1s">
-                        <h1 class="title pb-3 mb-5">About Me</h1>
-                        <p>Diam rebum sea stet rebum ea. Et kasd amet et accusam elitr voluptua. Tempor dolore sit et accusam ipsum erat duo. Gubergren et takimata dolor duo amet et sanctus elitr lorem. Ipsum amet duo rebum dolor labore. No diam duo lorem elitr dolor takimata elitr no. Magna et gubergren duo ipsum sed, amet ea voluptua dolores voluptua dolor ipsum et. Sit takimata erat consetetur invidunt lorem consetetur. Lorem magna diam vero nonumy. Aliquyam diam voluptua magna et magna nonumy. Accusam rebum clita et sit vero lorem, voluptua amet sit eos no et labore vero, et consetetur justo et et sit aliquyam labore, sit erat lorem justo dolores kasd est sit. Dolor et accusam ea et dolor sit.</p>
-                        <div class="row mb-4">
-                            <div class="col-sm-6 py-1">
-                                <span class="fw-medium text-primary">Name:</span> John Doe
-                            </div>
-                            <div class="col-sm-6 py-1">
-                                <span class="fw-medium text-primary">Birthday:</span> 1 April 1990
-                            </div>
-                            <div class="col-sm-6 py-1">
-                                <span class="fw-medium text-primary">Degree:</span> Master
-                            </div>
-                            <div class="col-sm-6 py-1">
-                                <span class="fw-medium text-primary">Experience:</span> 10 Years
-                            </div>
-                            <div class="col-sm-6 py-1">
-                                <span class="fw-medium text-primary">Phone:</span> +012 345 6789
-                            </div>
-                            <div class="col-sm-6 py-1">
-                                <span class="fw-medium text-primary">Email:</span> info@example.com
-                            </div>
-                            <div class="col-sm-6 py-1">
-                                <span class="fw-medium text-primary">Address:</span> 123 Street, New York, USA
-                            </div>
-                            <div class="col-sm-6 py-1">
-                                <span class="fw-medium text-primary">Freelance:</span> Available
-                            </div>
-                        </div>
-                        <div class="row g-4">
-                            <div class="col-md-4 col-lg-6 col-xl-4">
-                                <div class="d-flex bg-secondary p-4">
-                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">10</h1>
-                                    <div class="ps-3">
-                                        <p class="mb-0">Years of</p>
-                                        <h5 class="mb-0">Experience</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-6 col-xl-4">
-                                <div class="d-flex bg-secondary p-4">
-                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">100</h1>
-                                    <div class="ps-3">
-                                        <p class="mb-0">Happy</p>
-                                        <h5 class="mb-0">Clients</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-6 col-xl-4">
-                                <div class="d-flex bg-secondary p-4">
-                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">200</h1>
-                                    <div class="ps-3">
-                                        <p class="mb-0">Complete</p>
-                                        <h5 class="mb-0">Projects</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- About End -->
-
-                    <!-- Skills Start -->
-                    <section class="py-5 border-bottom wow fadeInUp" data-wow-delay="0.1s">
-                        <h1 class="title pb-3 mb-5">Skills</h1>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="skill mb-4">
-                                    <div class="d-flex justify-content-between">
-                                        <p class="mb-2">HTML</p>
-                                        <p class="mb-2">95%</p>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="skill mb-4">
-                                    <div class="d-flex justify-content-between">
-                                        <p class="mb-2">CSS</p>
-                                        <p class="mb-2">85%</p>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="skill mb-4">
-                                    <div class="d-flex justify-content-between">
-                                        <p class="mb-2">PHP</p>
-                                        <p class="mb-2">90%</p>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="skill mb-4">
-                                    <div class="d-flex justify-content-between">
-                                        <p class="mb-2">Javascript</p>
-                                        <p class="mb-2">90%</p>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="skill mb-4">
-                                    <div class="d-flex justify-content-between">
-                                        <p class="mb-2">Angular JS</p>
-                                        <p class="mb-2">95%</p>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="skill mb-4">
-                                    <div class="d-flex justify-content-between">
-                                        <p class="mb-2">Wordpress</p>
-                                        <p class="mb-2">85%</p>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- Skills End -->
-
-                    <!-- Expericence Start -->
-                    <section class="py-5 wow fadeInUp" data-wow-delay="0.1s">
-                        <h1 class="title pb-3 mb-5">Expericence</h1>
-                        <div class="border-start border-2 border-light pt-2 ps-5">
-                            <div class="position-relative mb-4">
-                                <span class="bi bi-arrow-right fs-4 text-light position-absolute" style="top: -5px; left: -50px;"></span>
-                                <h5 class="mb-1">Web Designer</h5>
-                                <p class="mb-2">Soft Company | <small>2000 - 2050</small></p>
-                                <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
-                            </div>
-                            <div class="position-relative mb-4">
-                                <span class="bi bi-arrow-right fs-4 text-light position-absolute" style="top: -5px; left: -50px;"></span>
-                                <h5 class="mb-1">Web Designer</h5>
-                                <p class="mb-2">Soft Company | <small>2000 - 2050</small></p>
-                                <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
-                            </div>
-                            <div class="position-relative mb-4">
-                                <span class="bi bi-arrow-right fs-4 text-light position-absolute" style="top: -5px; left: -50px;"></span>
-                                <h5 class="mb-1">Web Designer</h5>
-                                <p class="mb-2">Soft Company | <small>2000 - 2050</small></p>
-                                <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- Expericence End -->
-
-                    <!-- Subscribe Start -->
-                    <section class="wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="bg-secondary text-center p-5">
-                            <h1 class="text-white font-weight-bold">Subscribe My Newsletter</h1>
-                            <p class="text-white">Subscribe and get my latest article in your inbox</p>
-                            <div class="position-relative w-100">
-                                <input class="form-control bg-dark border-0 w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                                <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">Subscribe</button>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- Subscribe End -->
-
-                    <!-- Services Start -->
-                    <section class="py-5 border-bottom wow fadeInUp" data-wow-delay="0.1s">
-                        <h1 class="title pb-3 mb-5">Services</h1>
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="service-item">
-                                    <i class="fa fa-2x fa-laptop-code mx-auto mb-4"></i>
-                                    <h5 class="mb-2">Web Design</h5>
-                                    <p class="mb-0">Justo sit justo eos amet tempor amet clita amet ipsum eos elitr. Amet lorem lorem lorem est amet labore</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="service-item">
-                                    <i class="fab fa-2x fa-android mx-auto mb-4"></i>
-                                    <h5 class="mb-2">Apps Development</h5>
-                                    <p class="mb-0">Justo sit justo eos amet tempor amet clita amet ipsum eos elitr. Amet lorem lorem lorem est amet labore</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="service-item">
-                                    <i class="fa fa-2x fa-search mx-auto mb-4"></i>
-                                    <h5 class="mb-2">SEO</h5>
-                                    <p class="mb-0">Justo sit justo eos amet tempor amet clita amet ipsum eos elitr. Amet lorem lorem lorem est amet labore</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="service-item">
-                                    <i class="fa fa-2x fa-edit mx-auto mb-4"></i>
-                                    <h5 class="mb-2">Content Creating</h5>
-                                    <p class="mb-0">Justo sit justo eos amet tempor amet clita amet ipsum eos elitr. Amet lorem lorem lorem est amet labore</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- Services End -->
-
-                    <!-- Portfolio Start -->
-                    <section class="py-5 border-bottom wow fadeInUp" data-wow-delay="0.1s">
-                        <h1 class="title pb-3 mb-5">Portfolio</h1>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-12 text-center mb-2">
-                                        <ul class="list-inline mb-4" id="portfolio-flters">
-                                            <li class="btn btn-secondary active"  data-filter="*"><i class="fa fa-star me-2"></i>All</li>
-                                            <li class="btn btn-secondary" data-filter=".first"><i class="fa fa-laptop-code me-2"></i>Design</li>
-                                            <li class="btn btn-secondary" data-filter=".second"><i class="fa fa-mobile-alt me-2"></i>Development</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="row portfolio-container">
-                                    <div class="col-md-6 mb-4 portfolio-item first">
-                                        <div class="position-relative overflow-hidden mb-2">
-                                            <img class="img-fluid w-100" src="img/portfolio-1.jpg" alt="">
-                                            <div class="portfolio-btn d-flex align-items-center justify-content-center">
-                                                <a href="img/portfolio-1.jpg" data-lightbox="portfolio">
-                                                    <i class="bi bi-plus text-light"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mb-4 portfolio-item second">
-                                        <div class="position-relative overflow-hidden mb-2">
-                                            <img class="img-fluid w-100" src="img/portfolio-2.jpg" alt="">
-                                            <div class="portfolio-btn d-flex align-items-center justify-content-center">
-                                                <a href="img/portfolio-2.jpg" data-lightbox="portfolio">
-                                                    <i class="bi bi-plus text-light"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mb-4 portfolio-item first">
-                                        <div class="position-relative overflow-hidden mb-2">
-                                            <img class="img-fluid w-100" src="img/portfolio-3.jpg" alt="">
-                                            <div class="portfolio-btn d-flex align-items-center justify-content-center">
-                                                <a href="img/portfolio-3.jpg" data-lightbox="portfolio">
-                                                    <i class="bi bi-plus text-light"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mb-4 portfolio-item second">
-                                        <div class="position-relative overflow-hidden mb-2">
-                                            <img class="img-fluid w-100" src="img/portfolio-4.jpg" alt="">
-                                            <div class="portfolio-btn d-flex align-items-center justify-content-center">
-                                                <a href="img/portfolio-4.jpg" data-lightbox="portfolio">
-                                                    <i class="bi bi-plus text-light"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- Portfolio End -->
-
-                    <!-- Testimonial Start -->
-                    <section class="py-5 border-bottom wow fadeInUp" data-wow-delay="0.1s">
-                        <h1 class="title pb-3 mb-5">Testimonial</h1>
-                        <div class="owl-carousel testimonial-carousel">
-                            <div class="text-left">
-                                <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
-                                <p class="fs-4 mb-4">Dolor eirmod diam stet kasd sed. Aliqu rebum est eos. Rebum elitr dolore et eos labore, stet justo sed est sed. Diam sed sed dolor stet accusam amet eirmod eos, labore diam clita</p>
-                                <div class="d-flex align-items-center">
-                                    <img class="img-fluid" src="img/testimonial-1.jpg" style="width: 60px; height: 60px;">
-                                    <div class="ps-3">
-                                        <p class="text-primary fs-5 mb-1">Client Name</p>
-                                        <i>Profession</i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-left">
-                                <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
-                                <p class="fs-4 mb-4">Dolor eirmod diam stet kasd sed. Aliqu rebum est eos. Rebum elitr dolore et eos labore, stet justo sed est sed. Diam sed sed dolor stet accusam amet eirmod eos, labore diam clita</p>
-                                <div class="d-flex align-items-center">
-                                    <img class="img-fluid" src="img/testimonial-2.jpg" style="width: 60px; height: 60px;">
-                                    <div class="ps-3">
-                                        <p class="text-primary fs-5 mb-1">Client Name</p>
-                                        <i>Profession</i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-left">
-                                <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
-                                <p class="fs-4 mb-4">Dolor eirmod diam stet kasd sed. Aliqu rebum est eos. Rebum elitr dolore et eos labore, stet justo sed est sed. Diam sed sed dolor stet accusam amet eirmod eos, labore diam clita</p>
-                                <div class="d-flex align-items-center">
-                                    <img class="img-fluid" src="img/testimonial-3.jpg" style="width: 60px; height: 60px;">
-                                    <div class="ps-3">
-                                        <p class="text-primary fs-5 mb-1">Client Name</p>
-                                        <i>Profession</i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- Testimonial End -->
-
-                    <!-- Contact Start -->
-                    <section class="py-5 wow fadeInUp" data-wow-delay="0.1s" id="contact">
-                        <h1 class="title pb-3 mb-5">Contact Me</h1>
-						<p class="mb-4">The contact form is currently inactive. Get a functional and working contact form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a href="https://htmlcodex.com/contact-form">Download Now</a></p>
-                        <form>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control border-0 bg-secondary" id="name" placeholder="Your Name">
-                                        <label for="name">Your Name</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="email" class="form-control border-0 bg-secondary" id="email" placeholder="Your Email">
-                                        <label for="email">Your Email</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control border-0 bg-secondary" id="subject" placeholder="Subject">
-                                        <label for="subject">Subject</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <textarea class="form-control border-0 bg-secondary" placeholder="Leave a message here" id="message" style="height: 200px"></textarea>
-                                        <label for="message">Message</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
-                                </div>
-                            </div>
-                        </form>
-                    </section>
-                    <!-- Contact End -->
-
-                    <!-- Footer Start -->
-                    <section class="wow fadeIn" data-wow-delay="0.1s">
-                        <div class="bg-secondary text-light text-center p-5">
-                            <div class="d-flex justify-content-center mb-4">
-                                <a class="btn btn-dark btn-square mx-1" href="#"><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-dark btn-square mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-dark btn-square mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                                <a class="btn btn-dark btn-square mx-1" href="#"><i class="fab fa-instagram"></i></a>
-                            </div>
-                            <div class="d-flex justify-content-center mb-3">
-                                <a class="text-light px-3 border-end" href="#">Privacy</a>
-                                <a class="text-light px-3 border-end" href="#">Terms</a>
-                                <a class="text-light px-3 border-end" href="#">FAQs</a>
-                                <a class="text-light px-3" href="#">Help</a>
-                            </div>
-							
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-							<p class="m-0">&copy; All Rights Reserved. Designed by <a href="https://htmlcodex.com">HTML Codex</a></p>
-                        </div>
-                    </section>
-                    <!-- Footer End -->
-                </div>
             </div>
-        </div>
+            <!-- Khung chat AI -->
+        <section>
+            <div class="container py-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-6">
 
-        
-        <!-- Back to Top -->
-        <a href="#" class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
-        
+                        <div class="card" id="chat2">
+                            <div class="card-header d-flex justify-content-between align-items-center p-3">
+                                <h5 class="mb-0">Chat</h5>
+                                <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-sm" data-mdb-ripple-color="dark">Let's Chat
+                                    App</button>
+                            </div>
+                            <div class="card-body" data-mdb-perfect-scrollbar-init style="position: relative; height: 400px">
+
+                                <div class="d-flex flex-row justify-content-start">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                                         alt="avatar 1" style="width: 45px; height: 100%;">
+                                    <div>
+                                        <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">Hi</p>
+                                        <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">How are you ...???
+                                        </p>
+                                        <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">What are you doing
+                                            tomorrow? Can we come up a bar?</p>
+                                        <p class="small ms-3 mb-3 rounded-3 text-muted">23:58</p>
+                                    </div>
+                                </div>
+
+                                <div class="divider d-flex align-items-center mb-4">
+                                    <p class="text-center mx-3 mb-0" style="color: #a2aab7;">Today</p>
+                                </div>
+
+                                <div class="d-flex flex-row justify-content-end mb-4 pt-1">
+                                    <div>
+                                        <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Hiii, I'm good.</p>
+                                        <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">How are you doing?</p>
+                                        <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Long time no see! Tomorrow
+                                            office. will
+                                            be free on sunday.</p>
+                                        <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:06</p>
+                                    </div>
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
+                                         alt="avatar 1" style="width: 45px; height: 100%;">
+                                </div>
+
+                                <div class="d-flex flex-row justify-content-start mb-4">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                                         alt="avatar 1" style="width: 45px; height: 100%;">
+                                    <div>
+                                        <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">Okay</p>
+                                        <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">We will go on
+                                            Sunday?</p>
+                                        <p class="small ms-3 mb-3 rounded-3 text-muted">00:07</p>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-row justify-content-end mb-4">
+                                    <div>
+                                        <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">That's awesome!</p>
+                                        <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">I will meet you Sandon Square
+                                            sharp at
+                                            10 AM</p>
+                                        <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Is that okay?</p>
+                                        <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:09</p>
+                                    </div>
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
+                                         alt="avatar 1" style="width: 45px; height: 100%;">
+                                </div>
+
+                                <div class="d-flex flex-row justify-content-start mb-4">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                                         alt="avatar 1" style="width: 45px; height: 100%;">
+                                    <div>
+                                        <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">Okay i will meet
+                                            you on
+                                            Sandon Square</p>
+                                        <p class="small ms-3 mb-3 rounded-3 text-muted">00:11</p>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-row justify-content-end mb-4">
+                                    <div>
+                                        <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Do you have pictures of Matley
+                                            Marriage?</p>
+                                        <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:11</p>
+                                    </div>
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
+                                         alt="avatar 1" style="width: 45px; height: 100%;">
+                                </div>
+
+                                <div class="d-flex flex-row justify-content-start mb-4">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                                         alt="avatar 1" style="width: 45px; height: 100%;">
+                                    <div>
+                                        <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">Sorry I don't
+                                            have. i
+                                            changed my phone.</p>
+                                        <p class="small ms-3 mb-3 rounded-3 text-muted">00:13</p>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-row justify-content-end">
+                                    <div>
+                                        <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Okay then see you on sunday!!
+                                        </p>
+                                        <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:15</p>
+                                    </div>
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
+                                         alt="avatar 1" style="width: 45px; height: 100%;">
+                                </div>
+
+                            </div>
+                            <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                                     alt="avatar 3" style="width: 40px; height: 100%;">
+                                <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
+                                       placeholder="Type message">
+                                <a class="ms-1 text-muted" href="#!"><i class="fas fa-paperclip"></i></a>
+                                <a class="ms-3 text-muted" href="#!"><i class="fas fa-smile"></i></a>
+                                <a class="ms-3" href="#!"><i class="fas fa-paper-plane"></i></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <div id="chat-ai" style="
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          width: 300px;
+          background: white;
+          border: 1px solid #ccc;
+          padding: 10px;
+          display: none;
+          z-index: 9999;
+        ">
+        <strong>Gợi ý từ AI</strong>
+        <textarea id="ai-question" style="width: 100%; height: 60px;" placeholder="Nhập nội dung bạn muốn AI giúp..."></textarea>
+        <button onclick="handleAIChat()">Gửi</button>
+        <div id="ai-response" style="margin-top:10px; font-size:14px;"></div>
+    </div>
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -453,5 +439,125 @@
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
+        <script>
+            const editor = grapesjs.init({
+                container: '#gjs',
+                height: '800px',
+                fromElement: true,
+                // Tắt lưu trữ tự động
+                storageManager: { type: 0 },
+                // Ẩn các panel mặc định để tạo giao diện gọn gàng
+                // panels: { defaults: [] },
+                canvas: {
+                    // Đưa các file CSS bên ngoài vào canvas.styles
+                    styles: [
+                        "https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap",
+                        "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css",
+                        "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css",
+                        "lib/owlcarousel/assets/owl.carousel.min.css",
+                        "lib/lightbox/css/lightbox.min.css",
+                        "lib/animate/animate.min.css",
+                        "css/bootstrap.min.css",
+                        "css/style.css"
+                    ]
+                },
+                i18n: {
+                    locale: 'vi',
+                    locales: {
+                        vi: {
+                            // Các key cần dịch, ví dụ:
+                            "Select Component": "Chọn thành phần",
+                            "Layer Manager": "Quản lý lớp",
+                            "Style Manager": "Quản lý kiểu dáng",
+                            "Blocks": "Các khối",
+                            "Settings": "Cài đặt",
+                            "Open Block Manager": "Mở trình quản lý khối",
+                            // Thêm các key khác theo nhu cầu
+                        }
+                    }
+                },
+                // Tùy chỉnh Block Manager: chỉ cung cấp các block cơ bản cần thiết cho CV
+                blockManager: {
+                    blocks: [
+                        {
+                            id: 'text', // Khối text cơ bản
+                            label: 'Text',
+                            content: '<p>Nhập nội dung CV tại đây...</p>',
+                            category: 'Basic',
+                        },
+                        {
+                            id: 'image', // Khối hình ảnh
+                            label: 'Image',
+                            content: '<img src="http://placehold.it/350x250" alt="Image"/>',
+                            category: 'Basic',
+                        },
+                        // Bạn có thể thêm các block khác nếu cần
+                    ]
+                },
+                // Thêm plugin blocks cơ bản (text, image, columns...)
+                plugins: ['gjs-blocks-basic', 'gjs-plugin-ckeditor'],
+                pluginsOpts: {
+                    'gjs-blocks-basic': {}
+                },
+                // Ẩn thanh toolbar không cần thiết
+                // assetManager: { assets: [] },
+                // Tùy chọn giao diện đơn giản, bạn có thể tắt Style Manager nếu không cần
+                // styleManager: { sectors: [] }
+            });
+            // const editor = grapesjs.init({
+            //     container: '#gjs',
+            //     plugins: ['gjs-blocks-basic', 'gjs-plugin-ckeditor'],
+            //     pluginsOpts: {
+            //         'gjs-plugin-ckeditor': {
+            //             // Tùy chọn plugin CKEditor
+            //         }
+            //     }
+            // });
+            // Thêm nút "AI Gợi ý"
+            editor.Panels.addButton('options', [{
+                id: 'ai-chat',
+                className: 'fa fa-robot',
+                label: 'Gợi ý AI',
+                command: () => {
+                    const chatBox = document.getElementById('chat-ai');
+                    chatBox.style.display = chatBox.style.display === 'none' ? 'block' : 'none';
+                }
+            }]);
+            async function callGemini(promptText) {
+                const apiKey = "AIzaSyD1C1ghQkK4nOce3URJfuPD8w88VtcbOYM"; // Thay bằng API Key bạn lấy từ Google
+
+                const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + apiKey, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: promptText
+                            }]
+                        }],
+                        system_instruction: {
+                            role: "assistant",
+                            parts: [
+                                {
+                                    text: "Bạn là chuyên gia hỗ trợ người dùng tạo và chỉnh sửa CV. Không trả lời những nội dung ngoài chủ đề tạo CV."
+                                }
+                            ]
+                        }
+                    })
+                });
+
+                const result = await response.json();
+                console.log(result);
+                const output = result?.candidates?.[0]?.content?.parts?.[0]?.text || "Không có phản hồi";
+                document.getElementById("ai-response").innerText = output;
+            }
+
+            function handleAIChat() {
+                const input = document.getElementById("ai-question").value;
+                callGemini(input);
+            }
+        </script>
     </body>
 </html>
