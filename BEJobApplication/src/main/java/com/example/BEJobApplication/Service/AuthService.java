@@ -1,7 +1,7 @@
-//package com.example.bejobapplication.Service;
+//package com.example.BEJobApplication.Service;
 //
-//import com.example.bejobapplication.DTO.LoginResponse;
-//import com.example.bejobapplication.Entity.User;
+//import com.example.BEJobApplication.DTO.LoginResponse;
+//import com.example.BEJobApplication.Entity.User;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 //

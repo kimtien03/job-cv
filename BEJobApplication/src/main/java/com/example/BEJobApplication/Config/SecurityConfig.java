@@ -1,7 +1,7 @@
-package com.example.bejobapplication.Config;
+package com.example.BEJobApplication.Config;
 
 import org.springframework.context.annotation.Bean;
-import com.example.bejobapplication.Entity.User;
+import com.example.BEJobApplication.Entity.User;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;

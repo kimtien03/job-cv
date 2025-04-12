@@ -4,10 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BeJobApplication {
+public class BEJobApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BeJobApplication.class, args);
+		SpringApplication.run(BEJobApplication.class, args);
 	}
-
 }

@@ -1,18 +1,18 @@
-package com.example.bejobapplication.Controller;
+package com.example.BEJobApplication.Controller;
 
-import com.example.bejobapplication.DTO.LoginRequest;
-import com.example.bejobapplication.DTO.LoginResponse;
-import com.example.bejobapplication.DTO.GoogleLoginRequest;
-import com.example.bejobapplication.Entity.User;
-import com.example.bejobapplication.Reponsitory.UserReponsitory;
-import com.example.bejobapplication.Service.JwtService;
+import com.example.BEJobApplication.DTO.LoginRequest;
+import com.example.BEJobApplication.DTO.LoginResponse;
+import com.example.BEJobApplication.DTO.GoogleLoginRequest;
+import com.example.BEJobApplication.Entity.User;
+import com.example.BEJobApplication.Responsitory.UserReponsitory;
+import com.example.BEJobApplication.Service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
-import com.example.bejobapplication.Service.GoogleAuthService;
+import com.example.BEJobApplication.Service.GoogleAuthService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
-package com.example.bejobapplication.DTO;
+package com.example.BEJobApplication.DTO;
 
-import com.example.bejobapplication.Entity.User;
+import com.example.BEJobApplication.Entity.User;
 
 // LoginResponse.java
 public class LoginResponse {

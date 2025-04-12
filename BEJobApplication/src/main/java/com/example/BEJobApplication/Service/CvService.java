@@ -1,10 +1,11 @@
-package com.example.bejobapplication.Service;
+package com.example.BEJobApplication.Service;
 
-import com.example.bejobapplication.Entity.Cv;
-import com.example.bejobapplication.Exception.NoFoundException;
-import com.example.bejobapplication.Reponsitory.CvReponsitory;
-import com.example.bejobapplication.Reponsitory.TemplateReponsitory;
-import com.example.bejobapplication.Reponsitory.UserReponsitory;
+import com.example.BEJobApplication.Entity.Cv;
+import com.example.BEJobApplication.Exception.NoFoundException;
+import com.example.BEJobApplication.Responsitory.CvReponsitory;
+import com.example.BEJobApplication.Responsitory.TemplateReponsitory;
+import com.example.BEJobApplication.Responsitory.CvReponsitory;
+import com.example.BEJobApplication.Responsitory.UserReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

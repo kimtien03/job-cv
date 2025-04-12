@@ -1,9 +1,9 @@
-package com.example.bejobapplication.Config;
+package com.example.BEJobApplication.Config;
 
-import com.example.bejobapplication.Reponsitory.UserReponsitory;
+import com.example.BEJobApplication.Responsitory.UserReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
-import com.example.bejobapplication.Entity.User;
+import com.example.BEJobApplication.Entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;

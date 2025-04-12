@@ -1,7 +1,7 @@
-package com.example.bejobapplication.Service;
-import com.example.bejobapplication.Entity.User;
-import com.example.bejobapplication.Exception.NoFoundException;
-import com.example.bejobapplication.Reponsitory.UserReponsitory;
+package com.example.BEJobApplication.Service;
+import com.example.BEJobApplication.Entity.User;
+import com.example.BEJobApplication.Exception.NoFoundException;
+import com.example.BEJobApplication.Responsitory.UserReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

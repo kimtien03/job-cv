@@ -1,8 +1,8 @@
-package com.example.bejobapplication.Controller;
+package com.example.BEJobApplication.Controller;
 
-import com.example.bejobapplication.Entity.Template;
-import com.example.bejobapplication.Exception.NoFoundException;
-import com.example.bejobapplication.Service.TemplateService;
+import com.example.BEJobApplication.Entity.Template;
+import com.example.BEJobApplication.Exception.NoFoundException;
+import com.example.BEJobApplication.Service.TemplateService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

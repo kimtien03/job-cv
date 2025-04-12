@@ -1,9 +1,9 @@
-package com.example.bejobapplication.Service;
+package com.example.BEJobApplication.Service;
 
 
-import com.example.bejobapplication.Entity.Job;
-import com.example.bejobapplication.Exception.NoFoundException;
-import com.example.bejobapplication.Reponsitory.JobReponsitory;
+import com.example.BEJobApplication.Entity.Job;
+import com.example.BEJobApplication.Exception.NoFoundException;
+import com.example.BEJobApplication.Responsitory.JobReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.example.bejobapplication.Entity;
+package com.example.BEJobApplication.Entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

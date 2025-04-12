@@ -1,7 +1,7 @@
-package com.example.bejobapplication.DTO;
+package com.example.BEJobApplication.DTO;
 
 
-import com.example.bejobapplication.Entity.User;
+import com.example.BEJobApplication.Entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

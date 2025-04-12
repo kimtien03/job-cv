@@ -1,4 +1,4 @@
-package com.example.bejobapplication;
+package com.example.BEJobApplication;
 
 import java.awt.Desktop;
 import java.net.URI;

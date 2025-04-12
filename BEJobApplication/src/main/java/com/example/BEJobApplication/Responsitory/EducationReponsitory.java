@@ -1,6 +1,6 @@
-package com.example.bejobapplication.Reponsitory;
+package com.example.BEJobApplication.Responsitory;
 
-import com.example.bejobapplication.Entity.Education;
+import com.example.BEJobApplication.Entity.Education;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EducationReponsitory extends JpaRepository<Education,Integer> {

@@ -1,6 +1,6 @@
-package com.example.bejobapplication.Reponsitory;
+package com.example.BEJobApplication.Responsitory;
 
-import com.example.bejobapplication.Entity.User;
+import com.example.BEJobApplication.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

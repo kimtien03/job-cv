@@ -1,4 +1,4 @@
-package com.example.bejobapplication.Entity;
+package com.example.BEJobApplication.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;

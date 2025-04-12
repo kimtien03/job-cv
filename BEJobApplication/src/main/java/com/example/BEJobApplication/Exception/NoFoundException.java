@@ -1,4 +1,4 @@
-package com.example.bejobapplication.Exception;
+package com.example.BEJobApplication.Exception;
 
 public class NoFoundException extends RuntimeException {
     public NoFoundException(String message) {

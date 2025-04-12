@@ -1,4 +1,4 @@
-package com.example.bejobapplication;
+package com.example.BEJobApplication;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

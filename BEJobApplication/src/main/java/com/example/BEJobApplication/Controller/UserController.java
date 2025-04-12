@@ -1,8 +1,8 @@
-package com.example.bejobapplication.Controller;
+package com.example.BEJobApplication.Controller;
 
-import com.example.bejobapplication.Entity.User;
-import com.example.bejobapplication.Exception.NoFoundException;
-import com.example.bejobapplication.Service.UserService;
+import com.example.BEJobApplication.Entity.User;
+import com.example.BEJobApplication.Exception.NoFoundException;
+import com.example.BEJobApplication.Service.UserService;
 
 import jakarta.persistence.criteria.CriteriaBuilder.In;
 

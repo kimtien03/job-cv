@@ -1,9 +1,8 @@
-package com.example.bejobapplication.Controller;
+package com.example.BEJobApplication.Controller;
 
-import com.example.bejobapplication.Entity.Cv;
-import com.example.bejobapplication.Exception.NoFoundException;
-import com.example.bejobapplication.Service.CvService;
-
+import com.example.BEJobApplication.Entity.Cv;
+import com.example.BEJobApplication.Exception.NoFoundException;
+import com.example.BEJobApplication.Service.CvService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

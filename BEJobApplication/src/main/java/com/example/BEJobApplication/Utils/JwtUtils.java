@@ -1,6 +1,6 @@
-//package com.example.bejobapplication.Utils;
+//package com.example.BEJobApplication.Utils;
 //
-//import com.example.bejobapplication.Entity.User;
+//import com.example.BEJobApplication.Entity.User;
 //import io.jsonwebtoken.*;
 //import io.jsonwebtoken.security.Keys;
 //import jakarta.servlet.http.Cookie;
