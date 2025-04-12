@@ -52,7 +52,7 @@ public class User {
     public void setPassword(String password) { this.password = password; }
 
     public LocalDate getBirth_date() { return birth_date; }
-    public void setBirthDate(LocalDate birthDate) { this.birth_date = birthDate; }
+   public void setBirth_date(LocalDate Birth_date) { this.birth_date = Birth_date; }
 
     public Boolean getGender() { return gender; }
     public void setGender(Boolean gender) { this.gender = gender; }
