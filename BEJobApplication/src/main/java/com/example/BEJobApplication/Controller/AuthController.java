@@ -53,24 +53,23 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/google")
+    @PostMapping("/logingoogle")
     public ResponseEntity<LoginResponse> loginWithGoogle(@RequestBody GoogleLoginRequest request) {
         GoogleIdToken.Payload payload = googleAuthService.verifyGoogleToken(request.getIdToken());
-        // Bước 1: Xác minh id_token từ client gửi lên
 
+        // Bước 1: Xác minh id_token từ client gửi lên
         if (payload == null) {
             return ResponseEntity.badRequest().body(new LoginResponse("Invalid Google token", null, null));
         }
-
         String email = payload.getEmail();
         String name = (String) payload.get("name");
 
         // Bước 2: Kiểm tra user đã tồn tại trong DB chưa
         Optional<User> useroptional = userRepository.findByEmail(email);
-
         if (useroptional.isEmpty()) {
             return ResponseEntity.ok(new LoginResponse("Người dùng không tồn tại", null, null));
         }
+
         // Bước 3: Tạo JWT token và trả về
         User user = useroptional.get();
         String token = jwtService.generateToken(user.getUsername());

@@ -14,6 +14,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
+    private final String[] PUBLIC_ENDPOINT = {
+            "/api/auth/login",
+            "/api/auth/register",
+            "/api/auth/logingoogle",
+            "/api/Job/GetAllJob",
+    };
 
     private final CustomUserDetailsService userDetailsService;
 
@@ -43,7 +49,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers(PUBLIC_ENDPOINT).permitAll()//khong cần login
+                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN") // bắt buộc login
+                        .requestMatchers("/admin/**").hasRole("ADMIN")// chỉ có admin mới  vào được
                         .anyRequest().permitAll() // tất cả API đều cho phép truy cập
                 )
                 .authenticationProvider(authenticationProvider())
