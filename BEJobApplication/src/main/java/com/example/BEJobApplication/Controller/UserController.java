@@ -24,6 +24,10 @@ public class UserController {
     public ResponseEntity<?> getAllUsers() {
         try {
             List<User> users = userService.getAllUsers();
+
+            for (User user : users) {
+                System.out.println(user);
+            }
             return ResponseEntity.ok(users);
         } catch (NoFoundException e) {
             return ResponseEntity.status(404).body(e.getMessage());

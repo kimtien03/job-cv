@@ -1,15 +1,12 @@
 package com.example.BEJobApplication.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,14 +27,25 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+//    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "birth_date")
     private LocalDate birth_date;
 
     @Column(name = "gender")
     private Boolean gender;
 
+    @Column(name = "role")
+    private String role;
+
     public User() {}
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
@@ -52,7 +60,7 @@ public class User {
     public void setPassword(String password) { this.password = password; }
 
     public LocalDate getBirth_date() { return birth_date; }
-    public void setBirthDate(LocalDate birthDate) { this.birth_date = birthDate; }
+    public void setBirth_date(LocalDate birth_date) { this.birth_date = birth_date; }
 
     public Boolean getGender() { return gender; }
     public void setGender(Boolean gender) { this.gender = gender; }
@@ -63,7 +71,7 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", birthDate=" + birth_date +
+                ", birth_date=" + birth_date +
                 ", gender=" + gender +
                 ", password=" + password +
                 '}';

@@ -5,7 +5,7 @@ import com.example.BEJobApplication.DTO.LoginResponse;
 import com.example.BEJobApplication.DTO.GoogleLoginRequest;
 import com.example.BEJobApplication.Entity.User;
 import com.example.BEJobApplication.Responsitory.UserReponsitory;
-import com.example.BEJobApplication.Service.JwtService;
+import com.example.BEJobApplication.Utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,7 +30,7 @@ public class AuthController {
     private GoogleAuthService googleAuthService;
 
     @Autowired
-    private JwtService jwtService;
+    private JwtUtils jwtUtils;
 
     @Autowired
     private UserReponsitory userRepository;
@@ -46,7 +46,7 @@ public class AuthController {
                 return new LoginResponse("Invalid credentials", null, null);
             }
             // Tạo JWT token
-            String token = jwtService.generateToken(user.getUsername());
+            String token = jwtUtils.generateToken(user);
             return new LoginResponse("Login thành công", token, user);
         } catch (Exception e) {
             return new LoginResponse("Invalid credentials", null, null);
@@ -73,7 +73,7 @@ public class AuthController {
         }
         // Bước 3: Tạo JWT token và trả về
         User user = useroptional.get();
-        String token = jwtService.generateToken(user.getUsername());
+        String token = jwtUtils.generateToken(user);
         return ResponseEntity.ok(new LoginResponse("Login with Google thành công", token, user));
     }
 
