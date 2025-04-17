@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class User_cvsService {
@@ -44,8 +43,8 @@ public class User_cvsService {
         userCvs.setTemplates_id(userCvs.getTemplates_id());
         userCvs.setStyle_id(userCvs.getStyle_id());
         userCvs.setCv_name(userCvs.getCv_name());
-        userCvs.setCreateDate(userCvs.getCreateDate());
-        userCvs.setUpdateDate(userCvs.getUpdateDate());
+        userCvs.setCreateAt(userCvs.getCreateAt());
+        userCvs.setUpdateAt(userCvs.getUpdateAt());
 
         return userCvsRepository.save(userCvs);
     }
