@@ -25,7 +25,7 @@ public class SecurityConfig {
     private final String[] PUBLIC_ENDPOINT = {
             "/api/auth/login",
             "/api/auth/register",
-//            "/api/User/GetAllUser",
+            "/api/auth/logingoogle",
 
     };
     private final JwtUtils jwtUtils; // Inject JwtUtils
@@ -59,6 +59,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Cấu hình stateless
                 .authorizeHttpRequests((authz) -> authz
@@ -75,7 +76,13 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated()
-//                                .anyRequest().permitAll()
+
+//                .authorizeHttpRequests(request -> request
+//                        .requestMatchers(PUBLIC_ENDPOINT).permitAll()//khong cần login
+//                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN") // bắt buộc login
+//                        .requestMatchers("/admin/**").hasRole("ADMIN")// chỉ có admin mới  vào được
+//                        .anyRequest().permitAll() // tất cả API đều cho phép truy cập
+
                 )
                 .authenticationProvider(authenticationProvider());
         http.addFilterBefore(

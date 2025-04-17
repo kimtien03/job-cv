@@ -70,8 +70,11 @@ public class UserService {
         if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
             existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         }
-    
+
         existingUser.setBirth_day(updatedUser.getBirth_day());
+
+        existingUser.setBirth_date(updatedUser.getBirth_date());
+
         existingUser.setGender(updatedUser.getGender());
     
         return userRepository.save(existingUser);

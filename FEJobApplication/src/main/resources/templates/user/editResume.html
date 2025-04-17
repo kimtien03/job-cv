@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV Builder</title>
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="shortcut icon" type="image/x-icon" href="../../../static/user/img/favicon.ico">
+
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../../../static/user/css/editResume.css">
+
+
+
+  <!-- CSS here -->
+  <link rel="stylesheet" href="../../../static/user/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../../static/user/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="../../../static/user/css/slicknav.css">
+  <link rel="stylesheet" href="../../../static/user/css/flaticon.css">
+  <link rel="stylesheet" href="../../../static/user/css/progressbar_barfiller.css">
+  <link rel="stylesheet" href="../../../static/user/css/gijgo.css">
+  <link rel="stylesheet" href="../../../static/user/css/animate.min.css">
+  <link rel="stylesheet" href="../../../static/user/css/animated-headline.css">
+  <link rel="stylesheet" href="../../../static/user/css/magnific-popup.css">
+  <link rel="stylesheet" href="../../../static/user/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="../../../static/user/css/themify-icons.css">
+  <link rel="stylesheet" href="../../../static/user/css/slick.css">
+  <link rel="stylesheet" href="../../../static/user/css/nice-select.css">
+  <link rel="stylesheet" href="../../../static/user/css/style.css">
+</head>
+
+<body>
+<!-- ? Preloader Start -->
+<div id="preloader-active">
+  <div class="preloader d-flex align-items-center justify-content-center">
+    <div class="preloader-inner position-relative">
+      <div class="preloader-circle"></div>
+      <div class="preloader-img pere-text">
+        <img src="../../../static/user/img/logo/loder.png" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Preloader End -->
+<nav class="navbar navbar-expand-lg bg-light mb-4">
+  <div class="container-fluid">
+    <span class="navbar-brand">CV Builder</span>
+    <div class="d-flex gap-2">
+      <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="themeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-palette"></i> Theme
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="themeDropdown">
+          <li><a class="dropdown-item" href="#" data-theme="light">Light</a></li>
+          <li><a class="dropdown-item" href="#" data-theme="dark">Dark</a></li>
+          <li><a class="dropdown-item" href="#" data-theme="blue">Blue</a></li>
+          <li><a class="dropdown-item" href="#" data-theme="green">Green</a></li>
+          <li><a class="dropdown-item" href="#" data-theme="purple">Purple</a></li>
+        </ul>
+      </div>
+      <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="templateDropdown" data-bs-toggle="dropdown">
+          <i class="bi bi-layout-text-window-reverse"></i> Template
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#" data-template="classic">Classic</a></li>
+          <li><a class="dropdown-item" href="#" data-template="modern">Modern</a></li>
+          <li><a class="dropdown-item" href="#" data-template="minimal">Minimal</a></li>
+        </ul>
+      </div>
+      <button id="saveBtn" class="btn btn-primary">
+        <i class="bi bi-save"></i> Save
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid px-4">
+  <div class="row">
+    <!-- Added: Script side column with moved elements -->
+    <div class="col-lg-6">
+      <!-- Moved: Breadcrumb navigation -->
+      <nav aria-label="breadcrumb" class="pt-3">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">CV Builder</li>
+        </ol>
+      </nav>
+
+      <!-- Moved: Process steps indicator -->
+      <div class="mb-4">
+        <div class="process-steps d-flex justify-content-between">
+          <div class="step active" data-step="1">
+            <div class="step-circle">1</div>
+            <div class="step-label">General Info</div>
+          </div>
+          <div class="step" data-step="2">
+            <div class="step-circle">2</div>
+            <div class="step-label">Personal Info</div>
+          </div>
+          <div class="step" data-step="3">
+            <div class="step-circle">3</div>
+            <div class="step-label">Experience</div>
+          </div>
+          <div class="step" data-step="4">
+            <div class="step-circle">4</div>
+            <div class="step-label">Education</div>
+          </div>
+          <div class="step" data-step="5">
+            <div class="step-circle">5</div>
+            <div class="step-label">Skills</div>
+          </div>
+          <div class="step" data-step="add" id="addStepButton">
+            <div class="step-circle">+</div>
+            <div class="step-label">Add Section</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Moved: Navigation buttons to top -->
+      <div class="d-flex justify-content-between mb-4">
+        <button type="button" class="btn btn-secondary prev-step" disabled>
+          <i class="bi bi-arrow-left"></i> Previous
+        </button>
+        <button type="button" class="btn btn-primary next-step">
+          Next <i class="bi bi-arrow-right"></i>
+        </button>
+        <button type="submit" class="btn btn-success submit-cv" style="display: none;">
+          Complete CV <i class="bi bi-check-circle"></i>
+        </button>
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <form id="cvForm">
+            <!-- Step 1: General Information -->
+            <div class="form-step active" data-step="1">
+              <h3 class="mb-4">General Information</h3>
+              <div class="mb-3">
+                <label class="form-label">Project Name</label>
+                <input type="text" class="form-control" placeholder="Enter project name" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" rows="4" placeholder="Enter project description"></textarea>
+              </div>
+            </div>
+
+            <!-- Step 2: Personal Information -->
+            <div class="form-step" data-step="2">
+              <h3 class="mb-4">Personal Information</h3>
+              <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <div class="row">
+                  <div class="col">
+                    <input type="text" class="form-control" placeholder="First Name" required>
+                  </div>
+                  <div class="col">
+                    <input type="text" class="form-control" placeholder="Last Name" required>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Professional Title</label>
+                <input type="text" class="form-control" placeholder="e.g. Senior Software Engineer">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Contact Details</label>
+                <input type="email" class="form-control mb-2" placeholder="Email" required>
+                <input type="tel" class="form-control mb-2" placeholder="Phone Number">
+                <input type="text" class="form-control" placeholder="Location">
+              </div>
+              <div class="mb-4">
+                <label class="form-label">Profile Summary</label>
+                <textarea class="form-control" rows="4" placeholder="Brief professional summary"></textarea>
+              </div>
+            </div>
+
+            <!-- Step 3: Professional Experience -->
+            <div class="form-step" data-step="3">
+              <h3 class="mb-4">Professional Experience</h3>
+              <div id="experienceContainer">
+                <div class="experience-entry card mb-3">
+                  <div class="card-body">
+                    <input type="text" class="form-control mb-2" placeholder="Company Name">
+                    <input type="text" class="form-control mb-2" placeholder="Job Title">
+                    <div class="row mb-2">
+                      <div class="col">
+                        <input type="date" class="form-control" placeholder="Start Date">
+                      </div>
+                      <div class="col">
+                        <input type="date" class="form-control" placeholder="End Date">
+                      </div>
+                    </div>
+                    <textarea class="form-control" rows="3" placeholder="Job Responsibilities"></textarea>
+                  </div>
+                </div>
+              </div>
+              <button type="button" id="addExperience" class="btn btn-outline-primary mb-4">
+                <i class="bi bi-plus-circle"></i> Add Experience
+              </button>
+            </div>
+
+            <!-- Step 4: Education -->
+            <div class="form-step" data-step="4">
+              <h3 class="mb-4">Education</h3>
+              <div class="mb-3">
+                <input type="text" class="form-control mb-2" placeholder="Institution Name">
+                <input type="text" class="form-control mb-2" placeholder="Degree/Qualification">
+                <input type="number" class="form-control mb-2" placeholder="Graduation Year">
+                <textarea class="form-control" rows="2" placeholder="Academic Achievements"></textarea>
+              </div>
+              <button type="button" id="addEducation" class="btn btn-outline-primary">
+                <i class="bi bi-plus-circle"></i> Add Education
+              </button>
+            </div>
+
+            <!-- Step 5: Skills -->
+            <div class="form-step" data-step="5">
+              <h3 class="mb-4">Skills</h3>
+              <div class="mb-4">
+                <div class="skill-entry mb-2">
+                  <input type="text" class="form-control mb-2" placeholder="Skill Name">
+                  <select class="form-select">
+                    <option>Beginner</option>
+                    <option>Intermediate</option>
+                    <option>Advanced</option>
+                    <option>Expert</option>
+                  </select>
+                </div>
+                <button type="button" id="addSkill" class="btn btn-outline-primary">
+                  <i class="bi bi-plus-circle"></i> Add Skill
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview Column remains unchanged -->
+    <div class="col-lg-6 preview-column">
+      <div class="card shadow-sm">
+        <div class="card-body cv-preview">
+          <div class="preview-header text-center mb-4">
+            <h1 class="preview-name">John Doe</h1>
+            <p class="preview-title">Senior Software Engineer</p>
+            <div class="preview-contact">
+              <span><i class="bi bi-envelope"></i> john@example.com</span>
+              <span><i class="bi bi-telephone"></i> +1 234 567 890</span>
+              <span><i class="bi bi-geo-alt"></i> New York, USA</span>
+            </div>
+          </div>
+
+          <div class="preview-section">
+            <h3>Profile</h3>
+            <p class="preview-summary">Experienced software engineer with expertise in web development...</p>
+          </div>
+
+          <div class="preview-section">
+            <h3>Experience</h3>
+            <div class="preview-experience">
+              <h4>Tech Company</h4>
+              <p class="position">Senior Developer</p>
+              <p class="duration">2020 - Present</p>
+              <ul>
+                <li>Led development team of 5 engineers</li>
+                <li>Implemented new features and optimizations</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="preview-section">
+            <h3>Education</h3>
+            <div class="preview-education">
+              <h4>University Name</h4>
+              <p>Bachelor of Science in Computer Science</p>
+              <p>2016 - 2020</p>
+            </div>
+          </div>
+
+          <div class="preview-section">
+            <h3>Skills</h3>
+            <div class="preview-skills">
+              <span class="skill-badge">JavaScript</span>
+              <span class="skill-badge">React</span>
+              <span class="skill-badge">Node.js</span>
+              <span class="skill-badge">Python</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- JS here -->
+
+<script src="../../../static/user/js/vendor/modernizr-3.5.0.min.js"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script src="../../../static/user/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="../../../static/user/js/popper.min.js"></script>
+<script src="../../../static/user/js/bootstrap.min.js"></script>
+<!-- Jquery Mobile Menu -->
+<script src="../../../static/user/js/jquery.slicknav.min.js"></script>
+
+<!-- Jquery Slick , Owl-Carousel Plugins -->
+<script src="../../../static/user/js/owl.carousel.min.js"></script>
+<script src="../../../static/user/js/slick.min.js"></script>
+<!-- One Page, Animated-HeadLin -->
+<script src="../../../static/user/js/wow.min.js"></script>
+<script src="../../../static/user/js/animated.headline.js"></script>
+<script src="../../../static/user/js/jquery.magnific-popup.js"></script>
+
+<!-- Date Picker -->
+<script src="../../../static/user/js/gijgo.min.js"></script>
+
+<!-- Video bg -->
+<script src="../../../static/user/js/jquery.vide.js"></script>
+
+<!-- Nice-select, sticky -->
+<script src="../../../static/user/js/jquery.nice-select.min.js"></script>
+<script src="../../../static/user/js/jquery.sticky.js"></script>
+<!-- Progress -->
+<script src="../../../static/user/js/jquery.barfiller.js"></script>
+
+<!-- counter , waypoint,Hover Direction -->
+<script src="../../../static/user/js/jquery.counterup.min.js"></script>
+<script src="../../../static/user/js/waypoints.min.js"></script>
+<script src="../../../static/user/js/jquery.countdown.min.js"></script>
+<script src="../../../static/user/js/hover-direction-snake.min.js"></script>
+
+<!-- contact js -->
+<script src="../../../static/user/js/contact.js"></script>
+<script src="../../../static/user/js/jquery.form.js"></script>
+<script src="../../../static/user/js/jquery.validate.min.js"></script>
+<script src="../../../static/user/js/mail-script.js"></script>
+<script src="../../../static/user/js/jquery.ajaxchimp.min.js"></script>
+
+<!-- Jquery Plugins, main Jquery -->
+<script src="../../../static/user/js/plugins.js"></script>
+<script src="../../../static/user/js/main.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../../../static/user/js/editResume.js"></script>
+</body>
+
+</html>
