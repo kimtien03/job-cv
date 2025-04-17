@@ -92,6 +92,7 @@ public class UserService {
         }
 
         existingUser.setBirth_day(updatedUser.getBirth_day());
+
         existingUser.setGender(updatedUser.getGender());
 
         return userRepository.save(existingUser);

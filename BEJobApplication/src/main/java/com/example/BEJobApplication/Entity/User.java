@@ -62,6 +62,7 @@ public class User {
     public LocalDate getBirth_day() { return birth_day; }
     public void setBirth_day(LocalDate birth_day) { this.birth_day = birth_day; }
 
+
     public String getGender() { return gender; }
     public void setGender(String gender) { this.gender = gender; }
 

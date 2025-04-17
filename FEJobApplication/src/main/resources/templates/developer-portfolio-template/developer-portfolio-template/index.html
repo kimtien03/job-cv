@@ -22,9 +22,15 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://unpkg.com/grapesjs/dist/css/grapes.min.css">
+        <script src="https://unpkg.com/grapesjs"></script>
+        <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+        <script src="https://unpkg.com/grapesjs-plugin-ckeditor"></script>
     </head>
 
     <body data-spy="scroll" data-target=".navbar" data-offset="51">
+    <div id="gjs" style="height: 800px; border:1px solid #ccc;">
         <!-- Nav Bar Start -->
         <div class="navbar navbar-expand-lg bg-light navbar-light">
             <div class="container-fluid">
@@ -134,8 +140,8 @@
             </div>
         </div>
         <!-- About End -->
-        
-        
+
+
         <!-- Service Start -->
         <div class="service" id="service">
             <div class="container">
@@ -200,9 +206,9 @@
             </div>
         </div>
         <!-- Service End -->
-        
-        
-         <!-- Experience Start -->
+
+
+        <!-- Experience Start -->
         <div class="experience" id="experience">
             <div class="container">
                 <header class="section-header text-center wow zoomIn" data-wow-delay="0.1s">
@@ -274,8 +280,8 @@
             </div>
         </div>
         <!-- Job Experience End -->
-        
-        
+
+
         <!-- Banner Start -->
         <div class="banner wow zoomIn" data-wow-delay="0.1s">
             <div class="container">
@@ -285,7 +291,7 @@
                 </div>
                 <div class="container banner-text">
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus.
                     </p>
                     <a class="btn">Pricing Plan</a>
                 </div>
@@ -382,8 +388,8 @@
             </div>
         </div>
         <!-- Portfolio End -->
-        
-        
+
+
         <!-- Banner Start -->
         <div class="banner wow zoomIn" data-wow-delay="0.1s">
             <div class="container">
@@ -393,15 +399,15 @@
                 </div>
                 <div class="container banner-text">
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus.
                     </p>
                     <a class="btn">Order Now</a>
                 </div>
             </div>
         </div>
         <!-- Banner End -->
-        
-        
+
+
         <!-- Price Start -->
         <div class="price" id="price">
             <div class="container">
@@ -498,8 +504,8 @@
             </div>
         </div>
         <!-- Price End -->
-        
-        
+
+
         <!-- Testimonial Start -->
         <div class="testimonial wow fadeInUp" data-wow-delay="0.1s" id="review">
             <div class="container">
@@ -641,8 +647,8 @@
             </div>
         </div>
         <!-- Team End -->
-        
-        
+
+
         <!-- Contact Start -->
         <div class="contact wow fadeInUp" data-wow-delay="0.1s" id="contact">
             <div class="container-fluid">
@@ -757,24 +763,26 @@
                     </div>
                 </div>
                 <div class="container copyright">
-                    <p>&copy; <a href="#">Your Site Name</a>, All Right Reserved | 
-					
-					<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                    Designed By <a href="https://htmlcodex.com">HTML Codex</a></p>
+                    <p>&copy; <a href="#">Your Site Name</a>, All Right Reserved |
+
+                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                        Designed By <a href="https://htmlcodex.com">HTML Codex</a></p>
                 </div>
             </div>
         </div>
         <!-- Footer End -->
-        
-        
+
+
         <!-- Back to top button -->
         <a href="#" class="btn back-to-top"><i class="fa fa-chevron-up"></i></a>
-        
-        
+
+
         <!-- Pre Loader -->
         <div id="loader" class="show">
             <div class="loader"></div>
         </div>
+
+    </div>
 
         
         <!-- JavaScript Libraries -->
@@ -794,5 +802,28 @@
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
+        <script>
+            // const editor = grapesjs.init({
+            //     container: '#gjs',
+            //     height: '800px',
+            //     fromElement: true,
+            //     // Tắt tính năng lưu tạm để demo (có thể bật khi cần)
+            //     storageManager: false,
+            //     // Thêm plugin blocks cơ bản (text, image, columns...)
+            //     plugins: ['gjs-blocks-basic'],
+            //     pluginsOpts: {
+            //         'gjs-blocks-basic': {}
+            //     }
+            // });
+            const editor = grapesjs.init({
+                container: '#gjs',
+                plugins: ['gjs-blocks-basic', 'gjs-plugin-ckeditor'],
+                pluginsOpts: {
+                    'gjs-plugin-ckeditor': {
+                        // Tùy chọn plugin CKEditor
+                    }
+                }
+            });
+        </script>
     </body>
 </html>
