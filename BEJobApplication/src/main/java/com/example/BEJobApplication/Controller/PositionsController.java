@@ -43,6 +43,7 @@ public class PositionsController {
     @PostMapping
     public ResponseEntity<Positions> createPosition(@RequestBody Positions position) {
         try {
+            System.out.println("position: " + position.toString());
             Positions createdPosition = positionsService.createPosition(position);
             return new ResponseEntity<>(createdPosition, HttpStatus.CREATED);
         } catch (Exception ex) {
@@ -53,7 +54,7 @@ public class PositionsController {
     // Cập nhật vị trí
     @PutMapping("/{id}")
     public ResponseEntity<Positions> updatePosition(@PathVariable("id") Integer id,
-                                                    @RequestBody Positions positionDetails) {
+            @RequestBody Positions positionDetails) {
         try {
             Positions updatedPosition = positionsService.updatePosition(id, positionDetails);
             return new ResponseEntity<>(updatedPosition, HttpStatus.OK);

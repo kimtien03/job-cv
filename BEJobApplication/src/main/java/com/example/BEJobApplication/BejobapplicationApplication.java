@@ -10,7 +10,6 @@ public class BejobapplicationApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BejobapplicationApplication.class, args);
-
 		try {
 				String url = "http://localhost:8090/swagger-ui.html";
 			if (Desktop.isDesktopSupported()) {

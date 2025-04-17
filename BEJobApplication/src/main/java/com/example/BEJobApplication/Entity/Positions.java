@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "positions")
 public class Positions {
+
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
@@ -22,13 +23,16 @@ public class Positions {
     @NotNull
     @Column(name = "industry_id", nullable = false)
     private Integer industry_id;
-    public Positions(){}
-    public Positions(Integer id,String name,Integer industry_id)
-    {
-        this.id=id;
-        this.name=name;
-        this.industry_id=industry_id;
+
+    public Positions() {
     }
+
+    public Positions(Integer id, String name, Integer industry_id) {
+        this.id = id;
+        this.name = name;
+        this.industry_id = industry_id;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -46,10 +50,20 @@ public class Positions {
     }
 
     public Integer getIndustry_id() {
-        return id;
+        return industry_id;
     }
 
-    public void setIndustry_id(Integer id) {
-        this.id = id;
+    public void setIndustry_id(Integer industry_id) {
+        this.industry_id = industry_id;
     }
+
+    @Override
+    public String toString() {
+        return "position{"
+                + "id=" + id
+                + ", name=" + name
+                + ", intrid=" + industry_id
+                + '}';
+    }
+
 }
