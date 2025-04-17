@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,10 +17,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
     public List<User> getAllUsers() {
         List<User> users = userRepository.findAll();
-        if (users.isEmpty()) {
-            throw new NoFoundException("Không có người dùng nào trong hệ thống.");
-        }
-        return users;
+        return users.isEmpty() ? new ArrayList<>() : users;
     }
 
     public User getUserById(Integer id) {

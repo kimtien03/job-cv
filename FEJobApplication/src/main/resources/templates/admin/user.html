@@ -19,100 +19,170 @@
         <!-- Icon Font Stylesheet -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <object type="text/html" data="templates/admin/notification.html" width="100%" height="0"></object>
 
-        <!-- Libraries Stylesheet -->
-        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-        <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet"/>
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet"/>
 
-        <!-- Customized Bootstrap Stylesheet -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- Template Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
-    </head>
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
 
-    <body>
-        <div th:replace="layouts/spinner"></div>
+<body>
+    <div th:replace="layouts/spinner"></div>
 
-        <div class="container-fluid position-relative bg-white d-flex p-0">
-            <div th:replace="layouts/sidebar"></div>
-            <!-- Content Start -->
-            <div class="content">
-                <div th:replace="layouts/navbar"></div>
+    <div class="container-fluid position-relative bg-white d-flex p-0">
+        <div th:replace="layouts/sidebar"></div>
+        <!-- Content Start -->
+        <div class="content">
+            <div th:replace="layouts/navbar"></div>
 
-                <!-- Table Start -->
-                <div class="container-fluid pt-4 px-4 col-12">
-                    <div class="row g-4">
-                        <div class="col-12">
-                            <div class="bg-light rounded h-100 p-4">
-                                <h6 class="mb-4">User Table</h6>
-                                <div class="table-responsive">
-                                    <table class="table w-100">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Username</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Mật khẩu</th>
-                                                <th scope="col">Ngày sinh</th>
-                                                <th scope="col">Giới tính</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr th:each="user, stat : ${users}">
-                                                <td th:text="${stat.count}"></td>
-                                                <td th:text="${user.username}"></td>
-                                                <td th:text="${user.email}"></td>
-                                                <td th:text="${user.password}"></td>
-                                                <td th:text="${user.birth_date}"></td>
-                                                <td th:text="${user.gender}"></td>
-                                            </tr>
-                     
-                                        </tbody>
-                                    </table>
-                                </div>
+            <!-- Table Start -->
+            <div class="container-fluid pt-4 px-4 col-12">
+                <div class="row g-4">
+                    <div class="col-12">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">User Table</h6>
+                            <div class="table-responsive" >
+                                <table class="table w-100">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Username</th>
+                                            <th scope="col">Email</th>
+<!--                                            <th scope="col">Mật khẩu</th>-->
+                                            <th scope="col">Ngày sinh</th>
+                                            <th scope="col">Giới tính</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="user, stat : ${users}">
+                                            <td th:text="${stat.count}"></td>
+                                            <td th:text="${user.username}"></td>
+                                            <td th:text="${user.email}"></td>
+<!--                                            <td th:text="${user.password}"></td>-->
+                                            <td th:text="${user.birth_date}"></td>
+                                            <td th:text="${user.gender}"></td>
+
+                                            <td>
+                                                <div class="d-flex gap-2">
+                                                    <form id="deleteForm" method="post" onsubmit="return false;">
+                                                        <input type="hidden" name="id" th:value="${user.id}" />
+                                                        <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#notification">Xóa</button>
+                                                    </form>
+
+                                                    <button class="btn btn-primary" onclick="viewDetails()">
+                                                        <i class="bi bi-eye"></i>
+                                                    </button>
+                                                </div>  
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
                             </div>
+
                         </div>
                     </div>
                 </div>
-
-                <!-- Table End -->
-                <!-- Footer Start -->
-                <div class="container-fluid pt-4 px-4">
-                    <div class="bg-light rounded-top p-4">
-                        <div class="row">
-                            <div class="col-12 col-sm-6 text-center text-sm-start">
-                                &copy; <a href="#">Your Site Name</a>, All Right Reserved.
-                            </div>
-                            <div class="col-12 col-sm-6 text-center text-sm-end">
-                                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                                Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Footer End -->
             </div>
-            <!-- Content End -->
+
+            <!-- Table End -->
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="#">Your Site Name</a>, All Right Reserved.
+                        </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                            Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+        <!-- Button trigger modal -->
 
 
-            <!-- Back to Top -->
-            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        
+
+        <!-- Modal -->
+        <div class="modal fade" id="notification" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa người dùng không?
+                    </div>
+                    <div class="modal-footer">
+                        <!-- Nút Close không làm gì -->
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <!-- Nút Save changes sẽ gửi form -->
+                        <button type="button" class="btn btn-danger" onclick="submitForm()">Xác nhận xóa</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/chart/chart.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-        <script src="lib/tempusdominus/js/moment.min.js"></script>
-        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-        <!-- Template Javascript -->
-        <script src="js/main.js"></script>
-    </body>
+        <!-- Đảm bảo Bootstrap JavaScript và jQuery được tải -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <script>
+                        let formToSubmit;  // Biến lưu trữ form cần gửi
+
+                        // Khi nhấn nút "Xóa", lưu form cần gửi
+                        document.querySelector('[data-toggle="modal"]').addEventListener('click', function () {
+                            // Lưu form cần gửi khi người dùng bấm "Xóa"
+                            formToSubmit = document.getElementById('deleteForm');
+                        });
+
+                        // Hàm gửi form khi nhấn "Xác nhận xóa"
+                        function submitForm() {
+                            // Kiểm tra nếu form tồn tại trước khi gửi
+                            if (formToSubmit) {
+                                formToSubmit.submit();  // Gửi form
+                                $('#notification').modal('hide');  // Đóng modal
+                            } else {
+                                alert("Không tìm thấy form cần gửi!");
+                            }
+                        }
+    </script>
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/chart/chart.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
 
 </html>

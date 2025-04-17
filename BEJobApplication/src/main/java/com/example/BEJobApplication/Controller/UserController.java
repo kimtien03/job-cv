@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,9 +25,14 @@ public class UserController {
     public ResponseEntity<?> getAllUsers() {
         try {
             List<User> users = userService.getAllUsers();
+            if (users.isEmpty()) {
+                // Nếu danh sách người dùng rỗng, trả về một danh sách rỗng
+                return ResponseEntity.ok(new ArrayList<>());
+            }
             return ResponseEntity.ok(users);
-        } catch (NoFoundException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
+        } catch (Exception e) {
+            // Xử lý các lỗi khác (nếu có)
+            return ResponseEntity.status(500).body("Đã xảy ra lỗi trong khi xử lý yêu cầu.");
         }
     }
 
