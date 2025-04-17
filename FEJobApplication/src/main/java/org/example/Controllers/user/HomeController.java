@@ -13,4 +13,9 @@ public class HomeController {
     public String survey(Model model) {
         return "user/survey";
     }
+    @GetMapping("/templates")
+    public String templates(Model model) {
+        return "user/templates";
+    }
+
 }
