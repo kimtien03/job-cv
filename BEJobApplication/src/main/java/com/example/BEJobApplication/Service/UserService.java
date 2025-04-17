@@ -71,7 +71,7 @@ public class UserService {
             existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         }
     
-        existingUser.setBirth_date(updatedUser.getBirth_date());
+        existingUser.setBirth_day(updatedUser.getBirth_day());
         existingUser.setGender(updatedUser.getGender());
     
         return userRepository.save(existingUser);
