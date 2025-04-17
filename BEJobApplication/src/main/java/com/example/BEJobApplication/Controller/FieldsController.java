@@ -3,13 +3,16 @@ package com.example.BEJobApplication.Controller;
 import com.example.BEJobApplication.Entity.Fields;
 import com.example.BEJobApplication.Service.FieldsService;
 import com.example.BEJobApplication.Exception.NoFoundException;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//@SecurityRequirement(name = "Bearer Authentication")
 @RestController
 @RequestMapping("/api/fields")
 public class FieldsController {
@@ -18,6 +21,7 @@ public class FieldsController {
     private FieldsService fieldsService;
 
     // Lấy tất cả các trường
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<Fields>> getAllFields() {
         try {

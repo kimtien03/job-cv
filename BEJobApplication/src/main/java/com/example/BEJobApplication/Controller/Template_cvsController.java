@@ -3,6 +3,7 @@ package com.example.BEJobApplication.Controller;
 import com.example.BEJobApplication.Entity.Template_cvs;
 import com.example.BEJobApplication.Service.Template_cvsService;
 import com.example.BEJobApplication.Exception.NoFoundException;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+//@SecurityRequirement(name = "Bearer Authentication")
 @RestController
 @RequestMapping("/api/template-cvs")
 public class Template_cvsController {

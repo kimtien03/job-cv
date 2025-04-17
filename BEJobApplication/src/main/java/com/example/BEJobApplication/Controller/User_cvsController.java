@@ -62,7 +62,7 @@ public class User_cvsController {
     }
 
     // Xóa một CV theo ID
-    @DeleteMapping("/{id}")
+        @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUserCvs(@PathVariable("id") Integer id) {
         try {
             userCvsService.deleteUserCvs(id);
