@@ -1,7 +1,6 @@
 package org.example.Controllers.admin;
-
 import org.example.Services.JobApiService;
-import org.example.Models.User; // Nhớ import model User
+import org.example.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,12 +36,12 @@ public class UserController {
 //        return "admin/user/edit";
 //    }
 
-    @PostMapping("/user")
-    public String Delete(@RequestParam(value = "id", required = false) Integer id) {
-        if (id != null) {
-            jobService.deleteUser(id);
-        }
-        return "redirect:/admin/user";
-    }
+//    @PostMapping("/user")
+//    public String Delete(@RequestParam(value = "id", required = false) Integer id) {
+//        if (id != null) {
+//            jobService.deleteUser(id);
+//        }
+//        return "redirect:/admin/user";
+//    }
 
 }

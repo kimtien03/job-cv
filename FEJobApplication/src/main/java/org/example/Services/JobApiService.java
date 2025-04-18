@@ -1,9 +1,12 @@
 package org.example.Services;
 
+import org.example.Models.LoginRequest;
+import org.example.Models.LoginResponse;
 import org.example.Models.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -46,9 +49,29 @@ public class JobApiService {
 //        restTemplate.put(url, user);
 //    }
 
-    // Xóa người dùng
-    public void deleteUser(int id) {
-        String url =   "http://localhost:8090/api/User/Delete/"+id;
-        restTemplate.delete(url);
+//    // Xóa người dùng
+//    public void deleteUser(int id) {
+//        String url =   "http://localhost:8090/api/User/Delete/"+id;
+//        restTemplate.delete(url);
+//    }
+
+    public ResponseEntity<LoginResponse> login(LoginRequest  request) {
+        try {
+        String url = "http://localhost:8090/api/auth/login";
+
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<LoginRequest> requestEntity = new HttpEntity<>(request, headers);
+
+
+            return restTemplate.exchange(url, HttpMethod.POST, requestEntity, LoginResponse.class);
+        } catch (HttpClientErrorException e) {
+            return new ResponseEntity<>(new LoginResponse("Lỗi xác thực!", null, null), e.getStatusCode());
+        } catch (Exception e) {
+            return new ResponseEntity<>(new LoginResponse("Lỗi kết nối máy chủ!", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
 }

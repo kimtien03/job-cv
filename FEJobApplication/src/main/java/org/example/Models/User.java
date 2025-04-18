@@ -1,6 +1,8 @@
 package org.example.Models;
 
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 public class User {
@@ -13,11 +15,21 @@ public class User {
 
     private String password;
 
-    private LocalDate birth_date;
+    private LocalDate birth_day;
 
-    private Boolean gender;
+    private String gender;
+
+    private String role;
 
     public User() {}
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
@@ -31,9 +43,10 @@ public class User {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
-    public LocalDate getBirth_date() { return birth_date; }
-   public void setBirth_date(LocalDate Birth_date) { this.birth_date = Birth_date; }
+    public LocalDate getBirth_day() { return birth_day; }
+    public void setBirth_day(LocalDate birth_day) { this.birth_day = birth_day; }
 
-    public Boolean getGender() { return gender; }
-    public void setGender(Boolean gender) { this.gender = gender; }
+
+    public String getGender() { return gender; }
+    public void setGender(String gender) { this.gender = gender; }
 }
