@@ -40,25 +40,26 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
-    
+
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // Thêm dòng này
 
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
-        try {
-            // Tìm user từ DB
-            User user = userService.findByEmailOrUsername(request.getIdentifier(), request.getIdentifier())
-                    .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
-            
-            if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-                return new LoginResponse("Sai mật khẩu", null, null);
-            }
-            // Tạo JWT token
-            String token = jwtUtils.generateToken(user);
-            return new LoginResponse("Login thành công", token, user);
-        } catch (Exception e) {
-            return new LoginResponse("Invalid credentials", null, null);
+        // Sử dụng Optional để kiểm tra người dùng có tồn tại không
+        Optional<User> userOptional = userService.findByEmailOrUsername(request.getIdentifier(), request.getIdentifier());
+        if (!userOptional.isPresent()) {
+            // Trả về lỗi nếu người dùng không tồn tại
+            return new LoginResponse("Người dùng không tồn tại", null, null);
         }
+        User user = userOptional.get();
+        // Kiểm tra mật khẩu
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            return new LoginResponse("Sai mật khẩu", null, null);
+        }
+
+        // Tạo JWT token
+        String token = jwtUtils.generateToken(user);
+        return new LoginResponse("Login thành công", token, user);
     }
 
     @PostMapping("/google")

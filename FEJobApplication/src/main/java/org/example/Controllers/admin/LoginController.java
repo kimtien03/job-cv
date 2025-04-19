@@ -4,13 +4,14 @@ import org.example.Models.LoginResponse;
 import org.example.Models.User;
 import org.example.Services.JobApiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller("LoginController")
 @RequestMapping("")
@@ -33,11 +34,8 @@ public class LoginController {
         LoginRequest loginRequest = new LoginRequest(user.getUsername(), user.getPassword());
         try {
             ResponseEntity<LoginResponse> response = jobService.login(loginRequest);
-            System.out.println(response.getBody().getToken()) ;
-            System.out.println(response.getBody().getUser());
             if (response.getBody().getToken() != null && response.getBody().getUser() != null) {
                 model.addAttribute("message", "Đăng nhập thành công!");
-                System.out.println("TEST1");
                 if(response.getBody().getUser().getRole().equals("ADMIN") ) {
                     return "redirect:admin/";
                 }
@@ -45,18 +43,38 @@ public class LoginController {
                     return "redirect:/";
                 }
             } else {
-                System.out.println("TEST2");
-                model.addAttribute("error", response.getBody().getMessage());
+                model.addAttribute("loginError", response.getBody().getMessage());
                 return "Auth/login";
             }
 
         } catch (Exception e) {
-            System.out.println("TEST3");
-
-            model.addAttribute("error", "Lỗi kết nối máy chủ!");
+            model.addAttribute("loginError", "Lỗi kết nối máy chủ!");
             return "Auth/login";
 
         }
     }
+    @PostMapping("/google")
+    @ResponseBody // 👈 thêm dòng này để trả về JSON thay vì view
+    public ResponseEntity<Map<String, Object>> loginWithGoogle(@RequestBody Map<String, String> payload) {
+        Map<String, Object> responseData = new HashMap<>();
+
+        try {
+            String idToken = payload.get("idToken");
+            ResponseEntity<LoginResponse> response = jobService.loginWithGoogle(idToken);
+
+            if (response.getBody().getToken() != null && response.getBody().getUser() != null) {
+                responseData.put("LoginResponse", response);
+                return ResponseEntity.ok(responseData);
+            } else {
+                responseData.put("LoginResponse", response);
+                return ResponseEntity.ok(responseData);
+            }
+        } catch (Exception e) {
+            responseData.put("success", false);
+            responseData.put("message", "Lỗi hệ thống khi đăng nhập bằng Google!");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseData);
+        }
+    }
+
 
 }

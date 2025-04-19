@@ -73,5 +73,20 @@ public class JobApiService {
             return new ResponseEntity<>(new LoginResponse("Lỗi kết nối máy chủ!", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    public ResponseEntity<LoginResponse> loginWithGoogle(String  id_token) {
+        try {
+            String url = "http://localhost:8090/api/auth/google";
+            String jsonBody = "{\"idToken\": \"" + id_token + "\"}";
 
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<String> requestEntity = new HttpEntity<>(jsonBody, headers);
+            return restTemplate.exchange(url, HttpMethod.POST, requestEntity, LoginResponse.class);
+        } catch (HttpClientErrorException e) {
+            return new ResponseEntity<>(new LoginResponse("Lỗi xác thực!", null, null), e.getStatusCode());
+        } catch (Exception e) {
+            return new ResponseEntity<>(new LoginResponse("Lỗi kết nối máy chủ!", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
