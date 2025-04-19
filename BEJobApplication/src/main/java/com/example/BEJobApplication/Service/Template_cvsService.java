@@ -52,4 +52,12 @@ public class Template_cvsService {
         }
         templateCvsRepository.deleteById(id);
     }
+    public List<Template_cvs> findByPositionIdAndStyleId (Integer position_id,Integer style_id)
+    {
+        List<Template_cvs> list = templateCvsRepository.findByPositionIdAndStyleId(position_id,style_id);
+        if (list.isEmpty()) {
+            throw new NoFoundException("Không có dữ liệu template CV nào.");
+        }
+        return list;
+    }
 }

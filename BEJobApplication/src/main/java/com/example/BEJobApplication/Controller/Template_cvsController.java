@@ -74,4 +74,22 @@ public class Template_cvsController {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/filter")
+    public ResponseEntity<?> filterBySectionAndStyle(
+            @RequestParam("position_id") Integer position_id,
+            @RequestParam("style_id") Integer style_id
+    ) {
+        try {
+            List<Template_cvs> templates = templateCvsService.findByPositionIdAndStyleId(position_id, style_id);
+
+            if (templates.isEmpty()) {
+                return new ResponseEntity<>("Không tìm thấy dữ liệu phù hợp", HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<>(templates, HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>("Lỗi server: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
