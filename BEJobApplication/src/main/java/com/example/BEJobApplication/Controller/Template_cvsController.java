@@ -80,12 +80,16 @@ public class Template_cvsController {
             @RequestParam("style_id") Integer style_id
     ) {
         try {
-            List<Template_cvs> templates = templateCvsService.findByPositionIdAndStyleId(position_id, style_id);
-
-            if (templates.isEmpty()) {
-                return new ResponseEntity<>("Không tìm thấy dữ liệu phù hợp", HttpStatus.NOT_FOUND);
+            List<Template_cvs> templates;
+            if (position_id != null && style_id != null) {
+                templates = templateCvsService.findByPositionIdAndStyleId(position_id, style_id);
+            } else if (position_id != null) {
+                templates = templateCvsService.getAllTemplateCvsbyPositionID(position_id);
+            } else if (style_id != null) {
+                templates = templateCvsService.getAllTemplateCvsbstyleID(style_id);
+            } else {
+               templates = templateCvsService.getAllTemplateCvs();
             }
-
             return new ResponseEntity<>(templates, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>("Lỗi server: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

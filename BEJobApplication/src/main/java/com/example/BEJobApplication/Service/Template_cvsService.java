@@ -22,6 +22,22 @@ public class Template_cvsService {
         }
         return list;
     }
+    public List<Template_cvs> getAllTemplateCvsbyPositionID(Integer postionID ) {
+        List<Template_cvs> list = templateCvsRepository.findByPositionId(postionID);
+        if (list.isEmpty()) {
+            throw new NoFoundException("Không có dữ liệu template CV nào.");
+        }
+        return list;
+    }
+    public List<Template_cvs> getAllTemplateCvsbstyleID(Integer styleID) {
+        List<Template_cvs> list = templateCvsRepository.findByStyleId(styleID);
+        if (list.isEmpty()) {
+            throw new NoFoundException("Không có dữ liệu template CV nào.");
+        }
+        return list;
+    }
+
+
 
     // Lấy template_cvs theo ID
     public Template_cvs getTemplateCvsById(Integer id) {
