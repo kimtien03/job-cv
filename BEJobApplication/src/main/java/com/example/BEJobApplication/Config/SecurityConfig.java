@@ -26,6 +26,14 @@ public class SecurityConfig {
             "/api/auth/login",
             "/api/auth/register",
             "/api/auth/logingoogle",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/api-docs",
+            "/api-docs/swagger-config",
+            "/api-docs/**"
+//            "/api/fields/**"
 
     };
     private final JwtUtils jwtUtils; // Inject JwtUtils
@@ -62,26 +70,14 @@ public class SecurityConfig {
 
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Cấu hình stateless
-                .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers(
-                                "/swagger-ui/**",
-                                "/swagger-ui.html",
-                                "/v3/api-docs",
-                                "/v3/api-docs/**",
-                                "/api-docs",
-                                "/api-docs/swagger-config",
-                                "/api-docs/**"
-                        ).permitAll()
-                        .requestMatchers(PUBLIC_ENDPOINT).permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-                        .anyRequest().authenticated()
+//                .authorizeHttpRequests((authz) -> authz
+//                        .requestMatchers(PUBLIC_ENDPOINT).permitAll()
+//                        .requestMatchers("/admin/**").hasRole("ADMIN")
+//                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+//                        .anyRequest().authenticated()
 
-//                .authorizeHttpRequests(request -> request
-//                        .requestMatchers(PUBLIC_ENDPOINT).permitAll()//khong cần login
-//                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN") // bắt buộc login
-//                        .requestMatchers("/admin/**").hasRole("ADMIN")// chỉ có admin mới  vào được
-//                        .anyRequest().permitAll() // tất cả API đều cho phép truy cập
+                .authorizeHttpRequests(request -> request
+                        .anyRequest().permitAll() // tất cả API đều cho phép truy cập
 
                 )
                 .authenticationProvider(authenticationProvider());

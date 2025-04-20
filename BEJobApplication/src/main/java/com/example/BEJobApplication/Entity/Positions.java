@@ -1,16 +1,15 @@
 package com.example.BEJobApplication.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "positions")
 public class Positions {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -20,15 +19,20 @@ public class Positions {
     private String name;
 
     @NotNull
-    @Column(name = "industry_id", nullable = false)
-    private Integer industry_id;
-    public Positions(){}
-    public Positions(Integer id,String name,Integer industry_id)
-    {
-        this.id=id;
-        this.name=name;
-        this.industry_id=industry_id;
+    @ManyToOne
+    @JoinColumn(name = "industry_id", nullable = false)
+    private Industries industry;
+
+    // Constructors
+    public Positions() {}
+
+    public Positions(Integer id, String name, Industries industry) {
+        this.id = id;
+        this.name = name;
+        this.industry = industry;
     }
+
+    // Getters and Setters
     public Integer getId() {
         return id;
     }
@@ -45,11 +49,21 @@ public class Positions {
         this.name = name;
     }
 
-    public Integer getIndustry_id() {
-        return id;
+    public Industries getIndustry() {
+        return industry;
     }
 
-    public void setIndustry_id(Integer id) {
-        this.id = id;
+    public void setIndustry(Industries industry) {
+        this.industry = industry;
+    }
+
+    // toString
+    @Override
+    public String toString() {
+        return "Positions{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", industry=" + (industry != null ? industry.getId() : null) +
+                '}';
     }
 }

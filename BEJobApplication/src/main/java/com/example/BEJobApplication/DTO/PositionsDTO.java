@@ -1,30 +1,29 @@
-package com.example.BEJobApplication.Entity;
+package com.example.BEJobApplication.DTO;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-@Entity
-@Table(name = "industries")
-public class Industries {
+public class PositionsDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Integer id;
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "name", nullable = false)
     private String name;
 
-    public Industries() {}
+    @NotNull
+    private Integer industryId;  // Chứa ID của ngành (Industry)
 
-    public Industries(Integer id, String name) {
+    // Constructors
+    public PositionsDTO() {}
+
+    public PositionsDTO(Integer id, String name, Integer industryId) {
         this.id = id;
         this.name = name;
+        this.industryId = industryId;
     }
 
+    // Getters and Setters
     public Integer getId() {
         return id;
     }
@@ -41,11 +40,20 @@ public class Industries {
         this.name = name;
     }
 
+    public Integer getIndustryId() {
+        return industryId;
+    }
+
+    public void setIndustryId(Integer industryId) {
+        this.industryId = industryId;
+    }
+
     @Override
     public String toString() {
-        return "Industries{" +
+        return "PositionsDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", industryId=" + industryId +
                 '}';
     }
 }

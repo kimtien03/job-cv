@@ -1,30 +1,25 @@
-package com.example.BEJobApplication.Entity;
+package com.example.BEJobApplication.DTO;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-@Entity
-@Table(name = "industries")
-public class Industries {
+public class IndustriesDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Integer id;
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "name", nullable = false)
     private String name;
 
-    public Industries() {}
+    // Constructor
+    public IndustriesDTO() {}
 
-    public Industries(Integer id, String name) {
+    public IndustriesDTO(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
+    // Getters and Setters
     public Integer getId() {
         return id;
     }
@@ -43,7 +38,7 @@ public class Industries {
 
     @Override
     public String toString() {
-        return "Industries{" +
+        return "IndustriesDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

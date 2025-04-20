@@ -1,9 +1,6 @@
 package com.example.BEJobApplication.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -11,27 +8,32 @@ import jakarta.validation.constraints.NotNull;
 public class Template_cvs {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @NotNull
-    @Column(name = "position_id", nullable = false)
-    private Integer section_id;
+    @ManyToOne
+    @JoinColumn(name = "position_id", nullable = false)
+    private Positions positions;
 
     @NotNull
-    @Column(name = "style_id", nullable = false)
-    private Integer style_id;
+    @ManyToOne
+    @JoinColumn(name = "style_id", nullable = false)
+    private Styles style;
 
     // Constructors
-    public Template_cvs() {}
+    public Template_cvs() {
+    }
 
-    public Template_cvs(Integer id, Integer section_id, Integer style_id) {
+    public Template_cvs(Integer id, Positions positions, Styles style) {
         this.id = id;
-        this.section_id = section_id;
-        this.style_id = style_id;
+        this.positions = positions;
+        this.style = style;
     }
 
     // Getters and Setters
+
     public Integer getId() {
         return id;
     }
@@ -40,29 +42,19 @@ public class Template_cvs {
         this.id = id;
     }
 
-    public Integer getSection_id() {
-        return section_id;
+    public Positions getPositions() {
+        return positions;
     }
 
-    public void setSection_id(Integer section_id) {
-        this.section_id = section_id;
+    public void setPositions(Positions positions) {
+        this.positions = positions;
     }
 
-    public Integer getStyle_id() {
-        return style_id;
+    public Styles getStyle() {
+        return style;
     }
 
-    public void setStyle_id(Integer style_id) {
-        this.style_id = style_id;
-    }
-
-    // toString
-    @Override
-    public String toString() {
-        return "Template_cvs{" +
-                "id=" + id +
-                ", section_id=" + section_id +
-                ", style_id=" + style_id +
-                '}';
+    public void setStyle(Styles style) {
+        this.style = style;
     }
 }
