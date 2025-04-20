@@ -55,8 +55,8 @@ public class Template_cvsService {
         Template_cvs existing = templateCvsRepository.findById(id)
                 .orElseThrow(() -> new NoFoundException("Không tìm thấy template CV với id: " + id));
 
-        existing.setSection_id(details.getSection_id());
-        existing.setStyle_id(details.getStyle_id());
+        existing.setPositionId(details.getPositionId());
+        existing.setStyleId(details.getStyleId());
 
         return templateCvsRepository.save(existing);
     }

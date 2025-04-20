@@ -1,0 +1,166 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>CV Builder</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/user/img/logo/loader.png}">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" th:href="@{/user/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/slick.css}">
+    <link rel="stylesheet" th:href="@{/user/css/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/style.css}">
+
+
+    <!-- CSS here -->
+    <link rel="stylesheet" th:href="@{/user/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/slicknav.css}">
+    <link rel="stylesheet" th:href="@{/user/css/flaticon.css}">
+    <link rel="stylesheet" th:href="@{/user/css/progressbar_barfiller.css}">
+    <link rel="stylesheet" th:href="@{/user/css/gijgo.css}">
+    <link rel="stylesheet" th:href="@{/user/css/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/animated-headline.css}">
+    <link rel="stylesheet" th:href="@{/user/css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/user/css/fontawesome-all.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/user/css/slick.css}">
+    <link rel="stylesheet" th:href="@{/user/css/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/user/css/style.css}">
+
+
+</head>
+<body>
+<!-- ? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img th:src="@{/user/img/logo/loader.png}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader End -->
+<header>
+    <!-- Header Start -->
+    <div class="header-area header-transparent">
+        <div class="main-header ">
+            <div class="header-bottom  header-sticky">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <!-- Logo -->
+                        <div class="col-xl-2 col-lg-2">
+                            <div class="logo">
+                                <a th:href="@{/}"><img th:src="@{/user/img/logo/logo.png}" alt=""></a>
+                            </div>
+                        </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Header End -->
+</header>
+<main>
+    <section class="team-area section-padding40 section-bg1" style="padding-top: 50px">
+        <div class="container">
+            <div class="mt-100 mb-100">
+                <div>
+                    <div class="section-tittle text-center mb-50">
+                        <i class="fa fa-exclamation-triangle" style="color: #ff0000; font-size: 100px"></i>
+                        <h2 th:text="${errorMessage}" class="mt-20"></h2>
+                        <a th:href="@{/}" class="text-white link-success">
+                            <i class="fa fa-backward" style="color: #ffffff;"></i>
+                            Trở lại trang chủ.
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<footer>
+    <div class="footer-wrappr" th:attr="data-background=@{/user/img/footer-bg.png}">
+        <div class="footer-bottom-area">
+            <div class="container">
+                <div class="footer-border">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="footer-copy-right text-center">
+                                <p>
+                                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- JS here -->
+<script th:src="@{/user/js/vendor/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/user/js/bootstrap.min.js}"></script>
+<script th:src="@{/user/js/slick.min.js}"></script>
+<script th:src="@{/user/js/wow.min.js}"></script>
+
+
+<!-- JS here -->
+<script th:src="@{/user/js/vendor/modernizr-3.5.0.min.js}"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script th:src="@{/user/js/vendor/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/user/js/popper.min.js}"></script>
+<script th:src="@{/user/js/bootstrap.min.js}"></script>
+<!-- Jquery Mobile Menu -->
+<script th:src="@{/user/js/jquery.slicknav.min.js}"></script>
+
+<!-- Jquery Slick , Owl-Carousel Plugins -->
+<script th:src="@{/user/js/owl.carousel.min.js}"></script>
+<script th:src="@{/user/js/slick.min.js}"></script>
+<!-- One Page, Animated-HeadLin -->
+<script th:src="@{/user/js/wow.min.js}"></script>
+<script th:src="@{/user/js/animated.headline.js}"></script>
+<script th:src="@{/user/js/jquery.magnific-popup.js}"></script>
+
+<!-- Date Picker -->
+<script th:src="@{/user/js/gijgo.min.js}"></script>
+
+<!-- Video bg -->
+<script th:src="@{/user/js/jquery.vide.js}"></script>
+
+<!-- Nice-select, sticky -->
+<script th:src="@{/user/js/jquery.nice-select.min.js}"></script>
+<script th:src="@{/user/js/jquery.sticky.js}"></script>
+<!-- Progress -->
+<script th:src="@{/user/js/jquery.barfiller.js}"></script>
+
+<!-- counter , waypoint, Hover Direction -->
+<script th:src="@{/user/js/jquery.counterup.min.js}"></script>
+<script th:src="@{/user/js/waypoints.min.js}"></script>
+<script th:src="@{/user/js/jquery.countdown.min.js}"></script>
+<script th:src="@{/user/js/hover-direction-snake.min.js}"></script>
+
+<!-- contact js -->
+<script th:src="@{/user/js/contact.js}"></script>
+<script th:src="@{/user/js/jquery.form.js}"></script>
+<script th:src="@{/user/js/jquery.validate.min.js}"></script>
+<script th:src="@{/user/js/jquery.ajaxchimp.min.js}"></script>
+
+<!-- Jquery Plugins, main Jquery -->
+<script th:src="@{/user/js/plugins.js}"></script>
+<script th:src="@{/user/js/main.js}"></script>
+
+
+</body>
+</html>

@@ -9,7 +9,7 @@
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/user/img/logo/loader.png}">
 
     <!-- CSS here -->
-    <link rel="stylesheet" th:href="@{/user/css/nice-select.css}">
+<!--    <link rel="stylesheet" th:href="@{/user/css/nice-select.css}">-->
     <link rel="stylesheet" th:href="@{/user/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/user/css/style.css}">
 </head>
@@ -78,15 +78,16 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="card sidebar-filters">
-                        <div class="card-body">
+                        <form class="card-body">
                             <div class="row justify-content-between mx-1">
                                 <h5 class="card-title mb-4">Bộ lọc</h5>
                                 <a href="" class="link-success">Làm mới</a>
                             </div>
 
-                            <div class="mb-4">
+                            <!-- Lĩnh vực -->
+                            <div class="form-group mb-4">
                                 <label class="form-label">Lĩnh vực</label>
-                                <select class="form-select" name="industry">
+                                <select class="form-control" name="industry" id="industry-select">
                                     <option value="">-- Chọn ngành nghề --</option>
                                     <option th:each="industry : ${industries}"
                                             th:value="${industry.id}"
@@ -94,19 +95,17 @@
                                     </option>
                                 </select>
                             </div>
-                            <div class="mb-4">
+
+                            <!-- Vị trí -->
+                            <div class="form-group mb-4">
                                 <label class="form-label">Vị trí</label>
-                                <select class="form-select" name="position">
+                                <select class="form-control" name="position" id="position-select">
                                     <option value="">-- Chọn vị trí --</option>
-                                    <option th:each="position : ${positions}"
-                                            th:value="${position.id}"
-                                            th:text="${position.name}">
-                                    </option>
                                 </select>
                             </div>
-                            <div class="mb-4">
+                            <div class="form-group mb-4">
                                 <label class="form-label">Phong cách</label>
-                                <select class="form-select" name="style">
+                                <select class="form-control" name="style">
                                     <option value="">-- Chọn phong cách --</option>
                                     <option th:each="style : ${styles}"
                                             th:value="${style.id}"
@@ -114,77 +113,23 @@
                                     </option>
                                 </select>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
 
                 <div class="col-md-9">
                     <div class="row g-4">
-                        <div class="col-md-4 mb-20">
+                        <div class="col-md-4 mb-20" th:each="template_cv : ${template_cvs}">
                             <div class="card h-100 template-card">
                                 <div class="card-button-group button-group-area mt-10">
                                     <a data-toggle="modal" data-target="#exampleModalCenter" class="genric-btn primary-border circle">Xem trước</a>
                                     <a class="genric-btn success-border circle" href="editResume.html">Chọn</a>
                                 </div>
-                                <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4" class="card-img" alt="Modern Template">
-                                <span class="badge bg-primary position-absolute tag-overlay">Professional</span>
+                                <img th:src="@{'/user/img/templates/' + ${template_cv.image}}" class="card-img" alt="Modern Template">
+                                <span class="badge bg-primary position-absolute tag-overlay" th:text="${template_cv.id}"></span>
                             </div>
                         </div>
 
-                        <div class="col-md-4 mb-20">
-                            <div class="card h-100 template-card">
-                                <div class="card-button-group button-group-area mt-10">
-                                    <button class="genric-btn primary-border circle">Xem trước</button>
-                                    <button class="genric-btn success-border circle">Chọn</button>
-                                </div>
-                                <img src="https://images.unsplash.com/photo-1586282391129-76a6df230234" class="card-img" alt="Creative Template">
-                                <span class="badge bg-success position-absolute tag-overlay">Advanced</span>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 mb-20">
-                            <div class="card h-100 template-card">
-                                <div class="card-button-group button-group-area mt-10">
-                                    <button class="genric-btn primary-border circle">Xem trước</button>
-                                    <button class="genric-btn success-border circle">Chọn</button>
-                                </div>
-                                <img src="https://images.unsplash.com/photo-1586282023378-83c4c64a058f" class="card-img" alt="Classic Template">
-                                <span class="badge bg-info position-absolute tag-overlay">Basic</span>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 mb-20">
-                            <div class="card h-100 template-card">
-                                <div class="card-button-group button-group-area mt-10">
-                                    <button class="genric-btn primary-border circle">Xem trước</button>
-                                    <button class="genric-btn success-border circle">Chọn</button>
-                                </div>
-                                <img src="https://images.unsplash.com/photo-1586282391129-76a6df230234" class="card-img" alt="Executive Template">
-                                <span class="badge bg-warning position-absolute tag-overlay">Professional</span>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 mb-20">
-                            <div class="card h-100 template-card">
-                                <div class="card-button-group button-group-area mt-10">
-                                    <button class="genric-btn primary-border circle">Xem trước</button>
-                                    <button class="genric-btn success-border circle">Chọn</button>
-                                </div>
-                                <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4" class="card-img" alt="Minimalist Template">
-                                <span class="badge bg-secondary position-absolute tag-overlay">Basic</span>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 mb-20">
-                            <div class="card h-100 template-card">
-                                <div class="card-button-group button-group-area mt-10">
-                                    <button class="genric-btn primary-border circle">Xem trước</button>
-                                    <button class="genric-btn success-border circle">Chọn</button>
-                                </div>
-                                <img src="https://images.unsplash.com/photo-1586282023378-83c4c64a058f" class="card-img" alt="Tech Template">
-                                <span class="badge bg-danger position-absolute tag-overlay">Advanced</span>
-                            </div>
-                        </div>
                     </div>
                     <nav class="mb-20">
                         <ul class="pagination justify-content-center">
@@ -251,9 +196,32 @@
 <script th:src="@{/user/js/jquery.slicknav.min.js}"></script>
 <script th:src="@{/user/js/owl.carousel.min.js}"></script>
 <script th:src="@{/user/js/slick.min.js}"></script>
-<script th:src="@{/user/js/jquery.nice-select.min.js}"></script>
+<!--<script th:src="@{/user/js/jquery.nice-select.min.js}"></script>-->
 
 <script th:src="@{/user/js/main.js}"></script>
+<script th:inline="javascript">
+    document.getElementById("industry-select").addEventListener("change", function () {
+        const industryId = this.value;
+        const positionSelect = document.getElementById("position-select");
+
+        positionSelect.innerHTML = '<option value="">-- Chọn vị trí --</option>';
+        const apiBaseUrl = /*[[${apiBaseUrl}]]*/ 'http://localhost:8090/api';
+        const apiUrl = apiBaseUrl + "/positions/getPositionByIndustryId?industryId=" + industryId;
+        if (industryId) {
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(position => {
+                        const option = document.createElement("option");
+                        option.value = position.id;
+                        option.text = position.name;
+                        positionSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Lỗi khi load vị trí:", error));
+        }
+    });
+</script>
 
 </body>
 </html>

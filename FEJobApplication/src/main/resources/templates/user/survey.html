@@ -97,7 +97,7 @@
                         </div>
                     </div>
                     <div class="row justify-content-center">
-                        <a th:href="@{/templates}" class="borders-btn btn-survey btn-style m-2" th:each="style : ${styles}" th:text="${style.style_name}"></a>
+                        <a href="#" class="borders-btn btn-survey btn-style m-2" th:each="style : ${styles}" th:data-style-id="${style.id}" th:text="${style.style_name}"></a>
                     </div>
                 </div>
             </div>
@@ -130,7 +130,8 @@
     document.addEventListener("DOMContentLoaded", function () {
         const industryButtons = document.querySelectorAll(".btn-industry");
         const positionsContainer = document.getElementById("position-container");
-
+        let selectedPositionId = null;
+        const styleButtons = document.querySelectorAll(".btn-style");
         industryButtons.forEach(btn => {
             btn.addEventListener("click", function (e) {
                 e.preventDefault();
@@ -150,12 +151,33 @@
                             a.href = "#style";
                             a.className = "borders-btn btn-survey btn-experience btn-position m-2";
                             a.innerText = pos.name;
+                            a.setAttribute("data-id", pos.id);
+
+                            a.addEventListener("click", function () {
+                                selectedPositionId = pos.id;
+                                console.log("Selected Position ID:", selectedPositionId);
+                            });
                             positionsContainer.appendChild(a);
                         });
                     })
                     .catch(err => {
-                        alert("Không thể tải danh sách vị trí: " + err.message);
+                        console.error(err);
+                        var errorMessage = "Không thể tải dữ liệu ngành nghề. Vui lòng thử lại sau.";
+                        window.location.href = `/error-page?errorMessage=${errorMessage}`;
                     });
+            });
+        });
+        styleButtons.forEach(btn => {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                const styleId = btn.getAttribute("data-style-id");
+
+                if (!selectedPositionId) {
+                    alert("Vui lòng chọn một vị trí trước khi chọn style.");
+                    return;
+                }
+
+                window.location.href = `/templates?positionId=${selectedPositionId}&styleId=${styleId}`;
             });
         });
     });

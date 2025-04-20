@@ -76,17 +76,17 @@ public class Template_cvsController {
     }
     @GetMapping("/filter")
     public ResponseEntity<?> filterBySectionAndStyle(
-            @RequestParam("position_id") Integer position_id,
-            @RequestParam("style_id") Integer style_id
+            @RequestParam(value = "positionId", required = false) Integer positionId,
+            @RequestParam(value = "styleId", required = false) Integer styleId
     ) {
         try {
             List<Template_cvs> templates;
-            if (position_id != null && style_id != null) {
-                templates = templateCvsService.findByPositionIdAndStyleId(position_id, style_id);
-            } else if (position_id != null) {
-                templates = templateCvsService.getAllTemplateCvsbyPositionID(position_id);
-            } else if (style_id != null) {
-                templates = templateCvsService.getAllTemplateCvsbstyleID(style_id);
+            if (positionId != null && styleId != null) {
+                templates = templateCvsService.findByPositionIdAndStyleId(positionId, styleId);
+            } else if (positionId != null) {
+                templates = templateCvsService.getAllTemplateCvsbyPositionID(positionId);
+            } else if (styleId != null) {
+                templates = templateCvsService.getAllTemplateCvsbstyleID(styleId);
             } else {
                templates = templateCvsService.getAllTemplateCvs();
             }

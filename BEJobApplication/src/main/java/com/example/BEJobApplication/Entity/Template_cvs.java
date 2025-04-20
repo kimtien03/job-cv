@@ -16,19 +16,24 @@ public class Template_cvs {
 
     @NotNull
     @Column(name = "position_id", nullable = false)
-    private Integer section_id;
+    private Integer positionId;
 
     @NotNull
     @Column(name = "style_id", nullable = false)
-    private Integer style_id;
+    private Integer styleId;
+
+    @NotNull
+    @Column(name = "image", nullable = false)
+    private String image;
 
     // Constructors
     public Template_cvs() {}
 
-    public Template_cvs(Integer id, Integer section_id, Integer style_id) {
+    public Template_cvs(Integer id, Integer positionId, Integer styleId, String image) {
         this.id = id;
-        this.section_id = section_id;
-        this.style_id = style_id;
+        this.positionId = positionId;
+        this.styleId = styleId;
+        this.image = image;
     }
 
     // Getters and Setters
@@ -40,20 +45,28 @@ public class Template_cvs {
         this.id = id;
     }
 
-    public Integer getSection_id() {
-        return section_id;
+    public Integer getPositionId() {
+        return positionId;
     }
 
-    public void setSection_id(Integer section_id) {
-        this.section_id = section_id;
+    public void setPositionId(Integer positionId) {
+        this.positionId = positionId;
     }
 
-    public Integer getStyle_id() {
-        return style_id;
+    public Integer getStyleId() {
+        return styleId;
     }
 
-    public void setStyle_id(Integer style_id) {
-        this.style_id = style_id;
+    public void setStyleId(Integer styleId) {
+        this.styleId = styleId;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     // toString
@@ -61,8 +74,11 @@ public class Template_cvs {
     public String toString() {
         return "Template_cvs{" +
                 "id=" + id +
-                ", section_id=" + section_id +
-                ", style_id=" + style_id +
+                ", positionId=" + positionId +
+                ", styleId=" + styleId +
+                ", image=" + image +
                 '}';
     }
+
+
 }

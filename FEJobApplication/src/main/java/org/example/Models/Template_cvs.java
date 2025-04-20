@@ -5,17 +5,19 @@ public class Template_cvs {
 
     private Integer id;
 
-    private Integer section_id;
+    private Integer positionId;
 
-    private Integer style_id;
+    private Integer styleId;
+    private String Image;
 
     // Constructors
     public Template_cvs() {}
 
-    public Template_cvs(Integer id, Integer section_id, Integer style_id) {
+    public Template_cvs(Integer id, Integer positionId, Integer styleId, String Image) {
         this.id = id;
-        this.section_id = section_id;
-        this.style_id = style_id;
+        this.positionId = positionId;
+        this.styleId = styleId;
+        this.Image = Image;
     }
 
     // Getters and Setters
@@ -27,20 +29,27 @@ public class Template_cvs {
         this.id = id;
     }
 
-    public Integer getSection_id() {
-        return section_id;
+    public Integer getPositionId() {
+        return positionId;
     }
 
-    public void setSection_id(Integer section_id) {
-        this.section_id = section_id;
+    public void setPositionId(Integer section_id) {
+        this.positionId = section_id;
     }
 
-    public Integer getStyle_id() {
-        return style_id;
+    public Integer getStyleId() {
+        return styleId;
     }
 
-    public void setStyle_id(Integer style_id) {
-        this.style_id = style_id;
+    public void setStyleId(Integer style_id) {
+        this.styleId = style_id;
     }
 
+    public String getImage() {
+        return Image;
+    }
+
+    public void setImage(String image) {
+        Image = image;
+    }
 }

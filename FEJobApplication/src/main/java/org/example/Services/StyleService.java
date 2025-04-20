@@ -5,7 +5,7 @@ import org.example.Models.Styles;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +23,13 @@ public class StyleService {
 
     public List<Styles> getAllStyles() {
         String url = apiBaseUrl + "/styles";
-        ResponseEntity<Styles[]> response = restTemplate.getForEntity(url, Styles[].class);
-        return Arrays.asList(response.getBody());
+        try {
+            ResponseEntity<Styles[]> response = restTemplate.getForEntity(url, Styles[].class);
+            return Arrays.asList(response.getBody());
+        } catch (HttpClientErrorException | HttpServerErrorException | ResourceAccessException ex) {
+            throw new RuntimeException("Lỗi khi gọi API /styles: " + ex.getMessage(), ex);
+        } catch (RestClientException ex) {
+            throw new RuntimeException("Lỗi không xác định khi gọi API: " + ex.getMessage(), ex);
+        }
     }
 }
