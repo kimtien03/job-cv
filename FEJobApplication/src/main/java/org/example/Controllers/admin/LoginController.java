@@ -1,4 +1,5 @@
 package org.example.Controllers.admin;
+
 import org.example.Models.LoginRequest;
 import org.example.Models.LoginResponse;
 import org.example.Models.User;
@@ -17,6 +18,7 @@ import java.util.Map;
 @RequestMapping("")
 public class LoginController {
     private final JobApiService jobService;
+
     @Autowired
     public LoginController(JobApiService jobService) {
         this.jobService = jobService;
@@ -24,9 +26,26 @@ public class LoginController {
 
     @GetMapping("/login")
     public String home(Model model) {
-
         model.addAttribute("user", new User());
         return "Auth/login";
+    }
+
+    @GetMapping("/register")
+    public String register(Model model) {
+        model.addAttribute("user", new User());
+        return "Auth/register";
+    }
+
+    @GetMapping("/forget")
+    public String forget(Model model) {
+        model.addAttribute("user", new User());
+        return "Auth/forget";
+    }
+
+    @GetMapping("/forget/otp")
+    public String otp(Model model) {
+        model.addAttribute("user", new User());
+        return "Auth/otp";
     }
 
     @PostMapping("/login")
@@ -36,10 +55,9 @@ public class LoginController {
             ResponseEntity<LoginResponse> response = jobService.login(loginRequest);
             if (response.getBody().getToken() != null && response.getBody().getUser() != null) {
                 model.addAttribute("message", "Đăng nhập thành công!");
-                if(response.getBody().getUser().getRole().equals("ADMIN") ) {
+                if (response.getBody().getUser().getRole().equals("ADMIN")) {
                     return "redirect:admin/";
-                }
-                else {
+                } else {
                     return "redirect:/";
                 }
             } else {
@@ -53,8 +71,9 @@ public class LoginController {
 
         }
     }
+
     @PostMapping("/google")
-    @ResponseBody // 👈 thêm dòng này để trả về JSON thay vì view
+    @ResponseBody
     public ResponseEntity<Map<String, Object>> loginWithGoogle(@RequestBody Map<String, String> payload) {
         Map<String, Object> responseData = new HashMap<>();
 

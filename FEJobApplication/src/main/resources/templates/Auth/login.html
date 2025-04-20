@@ -27,7 +27,7 @@
     <link rel="stylesheet" th:href="@{/user/css/style.css}">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
-<body th:style="|background-image: url('user/img/logo/backgroundlogin.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 100vh;|">
+<body th:style="|background-image: url('user/img/logo/backgroundlogin.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 100vh; |">
 <div id="preloader-active">
     <div class="preloader d-flex align-items-center justify-content-center">
         <div class="preloader-inner position-relative">
@@ -40,11 +40,11 @@
 </div>
 
 
-<main class="login-body">
+<main class="login-body" >
     <form class="form-default" th:action="@{/login}" th:object="${user}" method="post">
-        <div class="login-form" style="box-shadow: 0 4px 15px rgba(128, 0, 128, 0.5)">
+        <div class="login-form" style="box-shadow: 0 4px 15px rgba(128, 0, 128, 0.5) ">
             <div class="logo-login">
-                <a href="#"><img th:src="@{/user/img/logo/loader.png}" alt=""></a>
+                <a ><img th:src="@{/user/img/logo/loader.png}" alt=""></a>
             </div>
             <h2>Login Here</h2>
             <!-- Email -->
@@ -76,7 +76,7 @@
                  data-logo_alignment="left">
             </div>
             <!-- Error or Success message -->
-            <a href="#" class="forget">Forget Password</a>
+            <a th:href="@{/forget}" class="forget">Forget Password</a>
             <a th:href="@{/register}" class="registration">Registration</a>
         </div>
     </form>
@@ -95,25 +95,14 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ idToken: idToken })
+            body: JSON.stringify({idToken: idToken})
         })
             .then(response => response.json())
             .then(data => {
                 console.log(data);
                 if (data) {
-                    Toastify({
-                        text: data.LoginResponse.body.message,
-                        duration: 3000,
-                        newWindow: true,
-                        close: true,
-                        gravity: "top",
-                        position: "right",
-                        stopOnFocus: true,
-                        style: {
-                            background: "linear-gradient(to right, #9f00c5, #d100f8)"
-                        },
-                        onClick: function(){} // Callback after click
-                    }).showToast();
+                    const message = data.LoginResponse.body.message;
+                    localStorage.setItem('toastMessage', message);
                     if(data.LoginResponse.body.role=== "ADMIN"){
                         window.location.href="/admin";
                     }else {
