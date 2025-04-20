@@ -1,0 +1,79 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>OTP Verification</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" th:href="@{/user/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/style.css}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<body th:style="|background-image: url('user/img/logo/backgroundlogin.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 100vh; |">
+
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img th:src="@{/user/img/logo/loader.png}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<main class="login-body">
+    <form class="form-default" th:action="@{/verify-otp}" method="post">
+        <div class="login-form" style="box-shadow: 0 4px 15px rgba(128, 0, 128, 0.5)">
+            <div class="logo-login">
+                <a><img th:src="@{/user/img/logo/loader.png}" alt=""></a>
+            </div>
+            <h2>Xác minh mã OTP</h2>
+
+            <p style="text-align: center; color: #fff">Chúng tôi đã gửi mã OTP đến email/số điện thoại của bạn</p>
+
+            <!-- OTP Input -->
+            <div class="form-input">
+                <label for="otp">Nhập mã OTP</label>
+                <input type="text" id="otp" name="otp" placeholder="Nhập mã OTP" required>
+            </div>
+
+            <!-- Submit -->
+            <div class="form-input pt-30">
+                <input type="submit" value="Xác nhận">
+            </div>
+
+            <div class="text-center mt-2">
+                <a th:href="@{/resend-otp}" class="registration">Gửi lại mã?</a>
+            </div>
+        </div>
+    </form>
+</main>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var otpError = /*[[${otpError}]]*/ '';
+    if (otpError && otpError.trim() !== '') {
+        Toastify({
+            text: otpError,
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            style: {
+                background: "linear-gradient(to right, #ff416c, #ff4b2b)"
+            }
+        }).showToast();
+    }
+    /*]]>*/
+</script>
+
+<!-- Scripts -->
+<script th:src="@{/user/js/vendor/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/user/js/bootstrap.min.js}"></script>
+<script th:src="@{/user/js/main.js}"></script>
+
+</body>
+</html>

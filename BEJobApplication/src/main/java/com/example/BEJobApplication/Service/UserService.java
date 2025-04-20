@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collector;
@@ -96,7 +97,6 @@ public class UserService {
     public UserDTO updateUser(Integer id, UserCreateDTO userDTO) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new NoFoundException("Không tìm thấy người dùng với ID: " + id));
-
         validateUser(userDTO);
         existingUser.setUsername(userDTO.getUsername());
         existingUser.setEmail(userDTO.getEmail());
@@ -105,6 +105,7 @@ public class UserService {
         existingUser.setRole(userDTO.getRole());
         existingUser = userRepository.save(existingUser);
         return UserMapper.toUserDTO(existingUser);
+
     }
 
 }

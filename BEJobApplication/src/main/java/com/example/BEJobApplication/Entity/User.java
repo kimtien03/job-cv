@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
+
 @Entity
 @Table(name = "user")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -37,7 +39,8 @@ public class User {
     @Column(name = "role")
     private String role;
 
-    public User() {}
+    public User() {
+    }
 
     public String getRole() {
         return role;
@@ -47,37 +50,71 @@ public class User {
         this.role = role;
     }
 
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    public Integer getId() {
+        return id;
+    }
 
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getUsername() {
+        return username;
+    }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
+    public String getEmail() {
+        return email;
+    }
 
-    public LocalDate getBirth_day() { return birth_day; }
-    public void setBirth_day(LocalDate birth_day) { this.birth_day = birth_day; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public LocalDate getBirth_date() { return birth_day; }
-   public void setBirth_date(LocalDate Birth_day) { this.birth_day = Birth_day; }
+    public String getPassword() {
+        return password;
+    }
 
-    public String getGender() { return gender; }
-    public void setGender(String gender) { this.gender = gender; }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public LocalDate getBirth_day() {
+        return birth_day;
+    }
+
+    public void setBirth_day(LocalDate birth_day) {
+        this.birth_day = birth_day;
+    }
+
+    public LocalDate getBirth_date() {
+        return birth_day;
+    }
+
+    public void setBirth_date(LocalDate Birth_day) {
+        this.birth_day = Birth_day;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", birth_date=" + birth_day +
-                ", gender=" + gender +
-                ", password=" + password +
-                '}';
+        return "User{"
+                + "id=" + id
+                + ", username='" + username + '\''
+                + ", email='" + email + '\''
+                + ", birth_date=" + birth_day
+                + ", gender=" + gender
+                + ", password=" + password
+                + '}';
     }
 }

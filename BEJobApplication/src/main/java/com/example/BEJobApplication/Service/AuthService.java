@@ -24,7 +24,7 @@ public class AuthService {
     public boolean isValidFormat(String email) {
         return EMAIL_REGEX.matcher(email).matches();
     }
-
+    
     // ✅ Gọi API kiểm tra email thật sự có tồn tại không
     public boolean isEmailDeliverable(String email) {
         String uri = UriComponentsBuilder

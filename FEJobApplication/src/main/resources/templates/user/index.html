@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/user/img/logo/loader.png}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
     <!-- CSS here -->
     <link rel="stylesheet" th:href="@{/user/css/bootstrap.min.css}">
@@ -15,88 +16,114 @@
     <link rel="stylesheet" th:href="@{/user/css/style.css}">
 </head>
 <body>
-    <!-- ? Preloader Start -->
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="preloader-circle"></div>
-                <div class="preloader-img pere-text">
-                    <img th:src="@{/user/img/logo/loader.png}" alt="">
-                </div>
+<!-- ? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img th:src="@{/user/img/logo/loader.png}" alt="">
             </div>
         </div>
     </div>
-    <!-- Preloader End -->
-    <main class="fullscreen">
-        <!-- Slider Area Start-->
-        <div class="slider-area slider-bg">
-            <div class="slider-active">
-                <!-- Single Slider -->
-                <div class="single-slider d-flex align-items-center slider-height">
-                    <div class="container" style="margin-bottom: 200px">
-                        <div class="row align-items-center justify-content-between">
-                            <div class="col-xl-7 col-lg-5 col-md-9">
-                                <div class="hero__caption">
-                                    <span data-animation="fadeInLeft" data-delay=".3s">CV Builder – Công cụ tạo CV mạnh mẽ cho kỷ nguyên số</span>
-                                    <h1 data-animation="fadeInLeft" data-delay=".6s">Tạo CV chuyên nghiệp chỉ trong vài phút</h1>
-                                    <p data-animation="fadeInLeft" data-delay=".8s">Thiết kế, chỉnh sửa và xuất CV với công nghệ hiện đại, hỗ trợ AI và tùy biến linh hoạt.
-                                        Chọn mẫu – Tùy chỉnh – Xuất bản. Mọi thứ bạn cần để ghi điểm với nhà tuyển dụng.</p>
-                                    <!-- Slider btn -->
-                                    <div class="slider-btns">
-                                        <!-- Hero-btn -->
-                                        <a data-animation="fadeInLeft" data-delay="1s" th:href="@{/survey}" class="btn radius-btn">Bắt đầu</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-lg-6">
-                                <div class="hero__img d-none d-lg-block f-right">
-                                    <img th:src="@{/user/img/hero/hero_right.png}" alt="" data-animation="fadeInRight" data-delay="1s">
+</div>
+<!-- Preloader End -->
+<main class="fullscreen">
+    <!-- Slider Area Start-->
+    <div class="slider-area slider-bg">
+        <div class="slider-active">
+            <!-- Single Slider -->
+            <div class="single-slider d-flex align-items-center slider-height">
+                <div class="container" style="margin-bottom: 200px">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-xl-7 col-lg-5 col-md-9">
+                            <div class="hero__caption">
+                                <span data-animation="fadeInLeft" data-delay=".3s">CV Builder – Công cụ tạo CV mạnh mẽ cho kỷ nguyên số</span>
+                                <h1 data-animation="fadeInLeft" data-delay=".6s">Tạo CV chuyên nghiệp chỉ trong vài
+                                    phút</h1>
+                                <p data-animation="fadeInLeft" data-delay=".8s">Thiết kế, chỉnh sửa và xuất CV với công
+                                    nghệ hiện đại, hỗ trợ AI và tùy biến linh hoạt.
+                                    Chọn mẫu – Tùy chỉnh – Xuất bản. Mọi thứ bạn cần để ghi điểm với nhà tuyển dụng.</p>
+                                <!-- Slider btn -->
+                                <div class="slider-btns">
+                                    <!-- Hero-btn -->
+                                    <a data-animation="fadeInLeft" data-delay="1s" th:href="@{/survey}"
+                                       class="btn radius-btn">Bắt đầu</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <!-- Single Slider -->
-                <div class="single-slider d-flex align-items-center slider-height">
-                    <div class="container">
-                        <div class="row align-items-center">
-                            <div class="col-lg-6 col-md-9">
-                                <div class="hero__caption">
-                                    <span data-animation="fadeInLeft" data-delay=".3s">Best Domain & hosting service provider</span>
-                                    <h1 data-animation="fadeInLeft" data-delay=".6s">Powerful web hosting</h1>
-                                    <p data-animation="fadeInLeft" data-delay=".8s">Supercharge your WordPress hosting with detailed
-                                        website analytics, marketing tools, security, and data
-                                        backups all in one place.</p>
-                                    <!-- Slider btn -->
-                                    <div class="slider-btns">
-                                        <!-- Hero-btn -->
-                                        <a data-animation="fadeInLeft" data-delay="1s" href="industries.html" class="btn radius-btn">get started</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="hero__img d-none d-lg-block f-right">
-                                    <img th:src="@{/user/img/hero/hero_right.png}" alt="" data-animation="fadeInRight" data-delay="1s">
-                                </div>
+                        <div class="col-xl-4 col-lg-6">
+                            <div class="hero__img d-none d-lg-block f-right">
+                                <img th:src="@{/user/img/hero/hero_right.png}" alt="" data-animation="fadeInRight"
+                                     data-delay="1s">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Slider Shape -->
-            <div class="slider-shape d-none d-lg-block">
-                <img th:src="@{/user/img/hero/top-left-shape.png}" alt="">
+            <!-- Single Slider -->
+            <div class="single-slider d-flex align-items-center slider-height">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 col-md-9">
+                            <div class="hero__caption">
+                                <span data-animation="fadeInLeft" data-delay=".3s">Best Domain & hosting service provider</span>
+                                <h1 data-animation="fadeInLeft" data-delay=".6s">Powerful web hosting</h1>
+                                <p data-animation="fadeInLeft" data-delay=".8s">Supercharge your WordPress hosting with
+                                    detailed
+                                    website analytics, marketing tools, security, and data
+                                    backups all in one place.</p>
+                                <!-- Slider btn -->
+                                <div class="slider-btns">
+                                    <!-- Hero-btn -->
+                                    <a data-animation="fadeInLeft" data-delay="1s" href="industries.html"
+                                       class="btn radius-btn">get started</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="hero__img d-none d-lg-block f-right">
+                                <img th:src="@{/user/img/hero/hero_right.png}" alt="" data-animation="fadeInRight"
+                                     data-delay="1s">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <!-- Slider Shape -->
+        <div class="slider-shape d-none d-lg-block">
+            <img th:src="@{/user/img/hero/top-left-shape.png}" alt="">
+        </div>
+    </div>
 </main>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const toastMessage = localStorage.getItem('toastMessage');
+        if (toastMessage) {
+            Toastify({
+                text: toastMessage,
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "linear-gradient(to right, #9f00c5, #d100f8)"
+                }
+            }).showToast();
+            // Xóa để không hiện lại khi refresh
+            localStorage.removeItem('toastMessage');
+        }
+    });
+</script>
+<!-- JS here -->
 
-    <!-- JS here -->
-
-    <script th:src="@{/user/js/vendor/jquery-1.12.4.min.js}"></script>
-    <script th:src="@{/user/js/bootstrap.min.js}"></script>
-    <script th:src="@{/user/js/slick.min.js}"></script>
-    <script th:src="@{/user/js/wow.min.js}"></script>
-    <script th:src="@{/user/js/main.js}"></script>
+<script th:src="@{/user/js/vendor/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/user/js/bootstrap.min.js}"></script>
+<script th:src="@{/user/js/slick.min.js}"></script>
+<script th:src="@{/user/js/wow.min.js}"></script>
+<script th:src="@{/user/js/main.js}"></script>
 
 </body>
 </html>

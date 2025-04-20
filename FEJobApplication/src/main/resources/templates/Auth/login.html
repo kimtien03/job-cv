@@ -1,0 +1,184 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title> Login</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" th:href="@{/site.webmanifest}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/user/img/favicon.ico}">
+
+
+    <!-- CSS here -->
+    <link rel="stylesheet" th:href="@{/user/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/slicknav.css}">
+    <link rel="stylesheet" th:href="@{/user/css/flaticon.css}">
+    <link rel="stylesheet" th:href="@{/user/css/progressbar_barfiller.css}">
+    <link rel="stylesheet" th:href="@{/user/css/gijgo.css}">
+    <link rel="stylesheet" th:href="@{/user/css/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/animated-headline.css}">
+    <link rel="stylesheet" th:href="@{/user/css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/user/css/fontawesome-all.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/user/css/slick.css}">
+    <link rel="stylesheet" th:href="@{/user/css/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/user/css/style.css}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<body th:style="|background-image: url('user/img/logo/backgroundlogin.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 100vh; |">
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img th:src="@{/user/img/logo/loader.png}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<main class="login-body" >
+    <form class="form-default" th:action="@{/login}" th:object="${user}" method="post">
+        <div class="login-form" style="box-shadow: 0 4px 15px rgba(128, 0, 128, 0.5) ">
+            <div class="logo-login">
+                <a ><img th:src="@{/user/img/logo/loader.png}" alt=""></a>
+            </div>
+            <h2>Login Here</h2>
+            <!-- Email -->
+            <div class="form-input">
+                <label th:for="*{username}">Username hoặc Email</label>
+                <input type="text" th:field="*{username}" placeholder="Username hoặc Email" required>
+            </div>
+            <!-- Password -->
+            <div class="form-input">
+                <label th:for="*{password}">Password</label>
+                <input type="password" th:field="*{password}" placeholder="Password" required>
+            </div>
+            <!-- Submit -->
+            <div class="form-input pt-30">
+                <input type="submit" value="Login">
+            </div>
+            <div id="g_id_onload"
+                 data-client_id="426309553735-kpe1v03uuk21meijnmmf72qlojmltham.apps.googleusercontent.com"
+                 data-callback="handleCredentialResponse"
+                 data-auto_prompt="false">
+            </div>
+
+            <div class="g_id_signin"
+                 data-type="standard"
+                 data-size="large"
+                 data-theme="outline"
+                 data-text="sign_in_with"
+                 data-shape="rectangular"
+                 data-logo_alignment="left">
+            </div>
+            <!-- Error or Success message -->
+            <a th:href="@{/forget}" class="forget">Forget Password</a>
+            <a th:href="@{/register}" class="registration">Registration</a>
+        </div>
+    </form>
+</main>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+    var message = /*[[${message}]]*/ '';
+
+    function handleCredentialResponse(response) {
+        const idToken = response.credential;
+        console.log("ID Token:", idToken);
+
+        fetch('/google', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({idToken: idToken})
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data) {
+                    const message = data.LoginResponse.body.message;
+                    localStorage.setItem('toastMessage', message);
+                    if(data.LoginResponse.body.role=== "ADMIN"){
+                        window.location.href="/admin";
+                    }else {
+                        window.location.href = "/";
+                    }
+                } else {
+                    Toastify({
+                        text: data.LoginResponse.body.message,
+                        duration: 3000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "top",
+                        position: "right",
+                        stopOnFocus: true,
+                        style: {
+                            background: "linear-gradient(to right, #9f00c5, #d100f8)"
+                        },
+                        onClick: function(){} // Callback after click
+                    }).showToast();
+                }
+            })
+            .catch(error => {
+                // console.error("Login error:", error);
+                alert("Đăng nhập thất bại!");
+            });
+    }
+</script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var loginError = /*[[${loginError}]]*/ '';
+    if (loginError && loginError.trim() !== '') {
+        Toastify({
+            text: loginError,
+            duration: 3000,
+            newWindow: true,
+            close: true,
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true,
+            style: {
+                background: "linear-gradient(to right, #9f00c5, #d100f8)"
+            },
+            onClick: function(){} // Callback after click
+        }).showToast();
+    }
+    /*]]>*/
+</script>
+<!-- Scripts -->
+<script th:src="@{/user/js/vendor/modernizr-3.5.0.min.js}"></script>
+<script th:src="@{/user/js/vendor/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/user/js/popper.min.js}"></script>
+<script th:src="@{/user/js/bootstrap.min.js}"></script>
+<script th:src="@{/user/js/jquery.slicknav.min.js}"></script>
+<script th:src="@{/user/js/jquery.vide.js}"></script>
+<script th:src="@{/user/js/owl.carousel.min.js}"></script>
+<script th:src="@{/user/js/slick.min.js}"></script>
+<script th:src="@{/user/js/wow.min.js}"></script>
+<script th:src="@{/user/js/animated.headline.js}"></script>
+<script th:src="@{/user/js/jquery.magnific-popup.js}"></script>
+<script th:src="@{/user/js/gijgo.min.js}"></script>
+<script th:src="@{/user/js/jquery.nice-select.min.js}"></script>
+<script th:src="@{/user/js/jquery.sticky.js}"></script>
+<script th:src="@{/user/js/jquery.barfiller.js}"></script>
+<script th:src="@{/user/js/jquery.counterup.min.js}"></script>
+<script th:src="@{/user/js/waypoints.min.js}"></script>
+<script th:src="@{/user/js/jquery.countdown.min.js}"></script>
+<script th:src="@{/user/js/hover-direction-snake.min.js}"></script>
+<script th:src="@{/user/js/contact.js}"></script>
+<script th:src="@{/user/js/jquery.form.js}"></script>
+<script th:src="@{/user/js/jquery.validate.min.js}"></script>
+<script th:src="@{/user/js/mail-script.js}"></script>
+<script th:src="@{/user/js/jquery.ajaxchimp.min.js}"></script>
+<script th:src="@{/user/js/plugins.js}"></script>
+<script th:src="@{/user/js/main.js}"></script>
+
+
+</body>
+</html>

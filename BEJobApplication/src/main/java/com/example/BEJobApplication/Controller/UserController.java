@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +30,9 @@ public class UserController {
         try {
             List<UserDTO> users = userService.getAllUsers();
             return ResponseEntity.ok(users);
-        } catch (NoFoundException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
+        } catch (Exception e) {
+            // Xử lý các lỗi khác (nếu có)
+            return ResponseEntity.status(500).body("Đã xảy ra lỗi trong khi xử lý yêu cầu.");
         }
     }
     // Chỉ ADMIN có thể xóa người dùng
