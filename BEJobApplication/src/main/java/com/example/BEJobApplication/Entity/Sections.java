@@ -17,7 +17,7 @@ public class Sections {
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "sections_key", nullable = false)
+    @Column(name = "section_key", nullable = false)
     private String sections_key;
 
     @Size(max = 255)

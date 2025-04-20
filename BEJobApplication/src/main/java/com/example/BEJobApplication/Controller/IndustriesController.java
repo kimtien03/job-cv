@@ -3,13 +3,14 @@ package com.example.BEJobApplication.Controller;
 import com.example.BEJobApplication.Entity.Industries;
 import com.example.BEJobApplication.Service.IndustriesService;
 import com.example.BEJobApplication.Exception.NoFoundException;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+//@SecurityRequirement(name = "Bearer Authentication")
 @RestController
 @RequestMapping("/api/industries")
 public class IndustriesController {

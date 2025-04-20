@@ -1,10 +1,9 @@
 package com.example.BEJobApplication.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +12,7 @@ import java.time.LocalDateTime;
 public class User_cvs {
 
     @Id
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -29,17 +28,19 @@ public class User_cvs {
     @Column(name = "cv_name", nullable = false)
     private String cv_name;
 
-    @NotNull
-    @Column(name = "createAt", nullable = false)
-    private LocalDateTime createAt;
+
 
     @NotNull
     @Column(name = "style_id", nullable = false)
     private Integer style_id;
 
-    @NotNull
-    @Column(name = "updateAt", nullable = false)
+    @Column(name = "createAt", updatable = false)
+    private LocalDateTime createAt;
+
+    @Column(name = "updateAt")
     private LocalDateTime updateAt;
+    public User_cvs() {
+    }
 
     // Getters
     public Integer getId() {
@@ -97,20 +98,5 @@ public class User_cvs {
 
     public void setUpdateAt(LocalDateTime updateAt) {
         this.updateAt = updateAt;
-    }
-
-    // toString()
-    @Override
-    public String toString() {
-        return "User_cvs{"
-                + "id=" + id
-                + ", user_id=" + user_id
-                + ", templates_id=" + templates_id
-                + ", cv_name='" + cv_name + '\''
-                + ", createDate=" + createAt
-                + ", style_id=" + style_id
-                + ", updateDate=" + updateAt
-                + '}';
-        
     }
 }

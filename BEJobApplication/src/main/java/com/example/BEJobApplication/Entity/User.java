@@ -59,9 +59,12 @@ public class User {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
+
     public LocalDate getBirth_day() { return birth_day; }
     public void setBirth_day(LocalDate birth_day) { this.birth_day = birth_day; }
 
+    public LocalDate getBirth_date() { return birth_day; }
+   public void setBirth_date(LocalDate Birth_day) { this.birth_day = Birth_day; }
 
     public String getGender() { return gender; }
     public void setGender(String gender) { this.gender = gender; }

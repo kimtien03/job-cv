@@ -3,6 +3,7 @@ package com.example.BEJobApplication.Controller;
 import com.example.BEJobApplication.Entity.Template_cvs;
 import com.example.BEJobApplication.Service.Template_cvsService;
 import com.example.BEJobApplication.Exception.NoFoundException;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+//@SecurityRequirement(name = "Bearer Authentication")
 @RestController
 @RequestMapping("/api/template-cvs")
 public class Template_cvsController {
@@ -71,4 +74,26 @@ public class Template_cvsController {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/filter")
+    public ResponseEntity<?> filterBySectionAndStyle(
+            @RequestParam("position_id") Integer position_id,
+            @RequestParam("style_id") Integer style_id
+    ) {
+        try {
+            List<Template_cvs> templates;
+            if (position_id != null && style_id != null) {
+                templates = templateCvsService.findByPositionIdAndStyleId(position_id, style_id);
+            } else if (position_id != null) {
+                templates = templateCvsService.getAllTemplateCvsbyPositionID(position_id);
+            } else if (style_id != null) {
+                templates = templateCvsService.getAllTemplateCvsbstyleID(style_id);
+            } else {
+               templates = templateCvsService.getAllTemplateCvs();
+            }
+            return new ResponseEntity<>(templates, HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>("Lỗi server: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package com.example.BEJobApplication.Controller;
 import com.example.BEJobApplication.Entity.Positions;
 import com.example.BEJobApplication.Service.PositionsService;
 import com.example.BEJobApplication.Exception.NoFoundException;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+//@SecurityRequirement(name = "Bearer Authentication")
 @RestController
 @RequestMapping("/api/positions")
 public class PositionsController {
@@ -39,23 +42,10 @@ public class PositionsController {
         }
     }
 
-    // Lấy vị trí theo IndustryID
-    @GetMapping("/getPositionByIndustryId")
-    public ResponseEntity<List<Positions>> getPositionByIndustryId(@RequestParam Integer industryId) {
-        try {
-            List<Positions> positionsList = positionsService.getPositionByIndustryId(industryId);
-            return new ResponseEntity<>(positionsList, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-    }
-
-
     // Tạo mới một vị trí
     @PostMapping
     public ResponseEntity<Positions> createPosition(@RequestBody Positions position) {
         try {
-            System.out.println("position: " + position.toString());
             Positions createdPosition = positionsService.createPosition(position);
             return new ResponseEntity<>(createdPosition, HttpStatus.CREATED);
         } catch (Exception ex) {
@@ -66,7 +56,7 @@ public class PositionsController {
     // Cập nhật vị trí
     @PutMapping("/{id}")
     public ResponseEntity<Positions> updatePosition(@PathVariable("id") Integer id,
-            @RequestBody Positions positionDetails) {
+                                                    @RequestBody Positions positionDetails) {
         try {
             Positions updatedPosition = positionsService.updatePosition(id, positionDetails);
             return new ResponseEntity<>(updatedPosition, HttpStatus.OK);
