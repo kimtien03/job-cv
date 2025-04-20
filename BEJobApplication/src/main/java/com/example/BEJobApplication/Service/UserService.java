@@ -1,6 +1,9 @@
 package com.example.BEJobApplication.Service;
 
+import com.example.BEJobApplication.DTO.UserCreateDTO;
+import com.example.BEJobApplication.DTO.UserDTO;
 import com.example.BEJobApplication.Entity.User;
+import com.example.BEJobApplication.Mapper.UserMapper;
 import com.example.BEJobApplication.Exception.NoFoundException;
 import com.example.BEJobApplication.Responsitory.UserReponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -26,19 +31,22 @@ public class UserService {
         return userRepository.findByEmailOrUsername(email, username);
     }
 
-    public List<User> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
         if (users.isEmpty()) {
             throw new NoFoundException("Không có người dùng nào trong hệ thống.");
         }
-        return users;
+        return users.stream()
+                .map(UserMapper::toUserDTO)
+                .collect(Collectors.toList());
     }
 
-    public User getUserById(Integer id) {
-        return userRepository.findById(id)
+    public UserDTO getUserById(Integer id) {
+        User user= userRepository.findById(id)
                 .orElseThrow(() -> new NoFoundException("Không tìm thấy người dùng với ID: " + id));
+        return UserMapper.toUserDTO(user) ;
     }
-
+//
     public Boolean deleteUser(Integer id) {
         if (!userRepository.existsById(id)) {
             throw new NoFoundException("Không tìm thấy người dùng với ID: " + id);
@@ -47,25 +55,30 @@ public class UserService {
         return true;
     }
 
-    public User createUser(User user) {
-        validateUser(user);
+    public UserDTO createUser(UserCreateDTO userDTO) {
+        validateUser(userDTO);
+        User user = UserMapper.toUserEntity(userDTO);
+//        user.setPassword("123456");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        user = userRepository.save(user);
+        return  UserMapper.toUserDTO(user);
     }
 
-    private void validateUser(User user) {
+
+    private void validateUser(UserCreateDTO user) {
         if (user.getUsername() == null || user.getUsername().isEmpty()) {
             throw new NoFoundException("Username không được để trống");
         }
+        if (user.getEmail() == null || !user.getEmail().matches("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$")) {
+            throw new NoFoundException("Email không hợp lệ");
+        }
+        if (user.getRole() == null ||
+                (!user.getRole().equalsIgnoreCase("ADMIN") && !user.getRole().equalsIgnoreCase("USER"))) {
+            throw new NoFoundException("Role phải là 'ADMIN' hoặc 'USER'");
+        }
 
-//        if (user.getEmail() == null || !user.getEmail().matches("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$")) {
-//            throw new NoFoundException("Email không hợp lệ");
-//        }
-        String password = user.getPassword();
-        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
-
-        if (password == null || !password.matches(regex)) {
-            throw new NoFoundException("Password phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt");
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new NoFoundException("Email đã tồn tại");
         }
         String gender = user.getGender();
         System.out.println("gender: "+gender);
@@ -73,28 +86,18 @@ public class UserService {
             throw new NoFoundException("Giới tính phải là 'Nam' hoặc 'Nữ'");
         }
     }
-
-    public User updateUser(Integer id, User updatedUser) {
-        if (updatedUser.getId() != null && !updatedUser.getId().equals(id)) {
-            throw new NoFoundException("ID không thể thay đổi");
-        }
-
+    public UserDTO updateUser(Integer id, UserCreateDTO userDTO) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new NoFoundException("Không tìm thấy người dùng với ID: " + id));
 
-        validateUser(updatedUser);
-
-        existingUser.setUsername(updatedUser.getUsername());
-        existingUser.setEmail(updatedUser.getEmail());
-
-        if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
-            existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-        }
-
-        existingUser.setBirth_day(updatedUser.getBirth_day());
-        existingUser.setGender(updatedUser.getGender());
-
-        return userRepository.save(existingUser);
+        validateUser(userDTO);
+        existingUser.setUsername(userDTO.getUsername());
+        existingUser.setEmail(userDTO.getEmail());
+        existingUser.setBirth_day(userDTO.getBirthDate());
+        existingUser.setGender(userDTO.getGender());
+        existingUser.setRole(userDTO.getRole());
+        existingUser = userRepository.save(existingUser);
+        return UserMapper.toUserDTO(existingUser);
     }
 
 }

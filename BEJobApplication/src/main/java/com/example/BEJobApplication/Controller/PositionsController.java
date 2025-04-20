@@ -1,8 +1,7 @@
 package com.example.BEJobApplication.Controller;
 
-import com.example.BEJobApplication.Entity.Positions;
+import com.example.BEJobApplication.DTO.PositionsDTO;
 import com.example.BEJobApplication.Service.PositionsService;
-import com.example.BEJobApplication.Exception.NoFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,63 +13,47 @@ import java.util.List;
 @RequestMapping("/api/positions")
 public class PositionsController {
 
+    private final PositionsService positionsService;
+
     @Autowired
-    private PositionsService positionsService;
+    public PositionsController(PositionsService positionsService) {
+        this.positionsService = positionsService;
+    }
 
     // Lấy tất cả các vị trí
     @GetMapping
-    public ResponseEntity<List<Positions>> getAllPositions() {
-        try {
-            List<Positions> positionsList = positionsService.getAllPositions();
-            return new ResponseEntity<>(positionsList, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<List<PositionsDTO>> getAllPositions() {
+        List<PositionsDTO> positions = positionsService.getAllPositions();
+        return new ResponseEntity<>(positions, HttpStatus.OK);
     }
 
     // Lấy vị trí theo ID
     @GetMapping("/{id}")
-    public ResponseEntity<Positions> getPositionById(@PathVariable("id") Integer id) {
-        try {
-            Positions position = positionsService.getPositionById(id);
-            return new ResponseEntity<>(position, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<PositionsDTO> getPositionById(@PathVariable Integer id) {
+        PositionsDTO position = positionsService.getPositionById(id);
+        return new ResponseEntity<>(position, HttpStatus.OK);
     }
 
-    // Tạo mới một vị trí
+    // Tạo mới vị trí
     @PostMapping
-    public ResponseEntity<Positions> createPosition(@RequestBody Positions position) {
-        try {
-            System.out.println("position: " + position.toString());
-            Positions createdPosition = positionsService.createPosition(position);
-            return new ResponseEntity<>(createdPosition, HttpStatus.CREATED);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<PositionsDTO> createPosition(@RequestBody PositionsDTO positionsDTO) {
+        PositionsDTO createdPosition = positionsService.createPosition(positionsDTO);
+        return new ResponseEntity<>(createdPosition, HttpStatus.CREATED);
+ 
     }
 
-    // Cập nhật vị trí
+    // Cập nhật vị trí theo ID
     @PutMapping("/{id}")
-    public ResponseEntity<Positions> updatePosition(@PathVariable("id") Integer id,
-            @RequestBody Positions positionDetails) {
-        try {
-            Positions updatedPosition = positionsService.updatePosition(id, positionDetails);
-            return new ResponseEntity<>(updatedPosition, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+
+    public ResponseEntity<PositionsDTO> updatePosition(@PathVariable Integer id, @RequestBody PositionsDTO positionsDTO) {
+        PositionsDTO updatedPosition = positionsService.updatePosition(id, positionsDTO);
+        return new ResponseEntity<>(updatedPosition, HttpStatus.OK);
     }
 
-    // Xóa một vị trí theo ID
+    // Xóa vị trí theo ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePosition(@PathVariable("id") Integer id) {
-        try {
-            positionsService.deletePosition(id);
-            return new ResponseEntity<>("Vị trí đã được xóa thành công.", HttpStatus.NO_CONTENT);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Void> deletePosition(@PathVariable Integer id) {
+        positionsService.deletePosition(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

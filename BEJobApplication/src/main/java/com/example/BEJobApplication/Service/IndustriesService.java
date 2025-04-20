@@ -1,53 +1,65 @@
 package com.example.BEJobApplication.Service;
 
+import com.example.BEJobApplication.DTO.IndustriesDTO;
 import com.example.BEJobApplication.Entity.Industries;
 import com.example.BEJobApplication.Exception.NoFoundException;
+import com.example.BEJobApplication.Mapper.IndustriesMapper;
 import com.example.BEJobApplication.Responsitory.IndustriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class IndustriesService {
 
-    @Autowired
-    private IndustriesRepository industriesRepository;
+    private final IndustriesRepository industriesRepository;
 
-    // Lấy tất cả các industries
-    public List<Industries> getAllIndustries() {
+    @Autowired
+    public IndustriesService(IndustriesRepository industriesRepository) {
+        this.industriesRepository = industriesRepository;
+    }
+
+    // Lấy tất cả các ngành
+    public List<IndustriesDTO> getAllIndustries() {
         List<Industries> industries = industriesRepository.findAll();
-        if (industries.isEmpty()) {
-            throw new NoFoundException("Không có ngành nào.");
-        }
-        return industries;
+        return industries.stream()
+                .map(IndustriesMapper::toIndustriesDTO)
+                .collect(Collectors.toList());
     }
 
     // Lấy ngành theo ID
-    public Industries getIndustryById(Integer id) {
-        return industriesRepository.findById(id)
+    public IndustriesDTO getIndustryById(Integer id) {
+        Industries industries = industriesRepository.findById(id)
                 .orElseThrow(() -> new NoFoundException("Không tìm thấy ngành với ID: " + id));
+        return IndustriesMapper.toIndustriesDTO(industries);
     }
 
-    // Thêm mới ngành
-    public Industries createIndustry(Industries industry) {
-        return industriesRepository.save(industry);
+    // Tạo mới một ngành
+    public IndustriesDTO createIndustry(IndustriesDTO industriesDTO) {
+        Industries industry = IndustriesMapper.toIndustriesEntity(industriesDTO);
+        industry = industriesRepository.save(industry);
+        return IndustriesMapper.toIndustriesDTO(industry);
     }
 
-    // Cập nhật ngành
-    public Industries updateIndustry(Integer id, Industries updatedIndustry) {
+    // Cập nhật ngành theo ID
+    public IndustriesDTO updateIndustry(Integer id, IndustriesDTO industriesDTO) {
         Industries existingIndustry = industriesRepository.findById(id)
                 .orElseThrow(() -> new NoFoundException("Không tìm thấy ngành với ID: " + id));
 
-        existingIndustry.setName(updatedIndustry.getName());
-        return industriesRepository.save(existingIndustry);
+        // Cập nhật thông tin ngành
+        existingIndustry.setName(industriesDTO.getName());
+
+        // Lưu lại thông tin đã cập nhật
+        existingIndustry = industriesRepository.save(existingIndustry);
+        return IndustriesMapper.toIndustriesDTO(existingIndustry);
     }
 
-    // Xóa ngành
+    // Xóa ngành theo ID
     public void deleteIndustry(Integer id) {
-        if (!industriesRepository.existsById(id)) {
-            throw new NoFoundException("Không tìm thấy ngành với ID: " + id);
-        }
-        industriesRepository.deleteById(id);
+        Industries existingIndustry = industriesRepository.findById(id)
+                .orElseThrow(() -> new NoFoundException("Không tìm thấy ngành với ID: " + id));
+        industriesRepository.delete(existingIndustry);
     }
 }

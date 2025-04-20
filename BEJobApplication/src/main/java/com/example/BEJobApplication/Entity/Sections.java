@@ -1,9 +1,6 @@
 package com.example.BEJobApplication.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -12,12 +9,13 @@ import jakarta.validation.constraints.Size;
 public class Sections {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "sections_key", nullable = false)
+    @Column(name = "section_key", nullable = false)
     private String sections_key;
 
     @Size(max = 255)

@@ -1,8 +1,7 @@
 package com.example.BEJobApplication.Controller;
 
-import com.example.BEJobApplication.Entity.Styles;
+import com.example.BEJobApplication.DTO.StylesDTO;
 import com.example.BEJobApplication.Service.StylesService;
-import com.example.BEJobApplication.Exception.NoFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,61 +13,45 @@ import java.util.List;
 @RequestMapping("/api/styles")
 public class StylesController {
 
+    private final StylesService stylesService;
+
     @Autowired
-    private StylesService stylesService;
+    public StylesController(StylesService stylesService) {
+        this.stylesService = stylesService;
+    }
 
-    // Lấy tất cả styles
+    // Lấy tất cả các style
     @GetMapping
-    public ResponseEntity<List<Styles>> getAllStyles() {
-        try {
-            List<Styles> stylesList = stylesService.getAllStyles();
-            return new ResponseEntity<>(stylesList, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<List<StylesDTO>> getAllStyles() {
+        List<StylesDTO> styles = stylesService.getAllStyles();
+        return new ResponseEntity<>(styles, HttpStatus.OK);
     }
 
-    // Lấy style theo ID
+    // Lấy thông tin style theo ID
     @GetMapping("/{id}")
-    public ResponseEntity<Styles> getStyleById(@PathVariable("id") Integer id) {
-        try {
-            Styles style = stylesService.getStyleById(id);
-            return new ResponseEntity<>(style, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<StylesDTO> getStyleById(@PathVariable Integer id) {
+        StylesDTO style = stylesService.getStyleById(id);
+        return new ResponseEntity<>(style, HttpStatus.OK);
     }
 
-    // Tạo mới style
+    // Thêm mới một style
     @PostMapping
-    public ResponseEntity<Styles> createStyle(@RequestBody Styles style) {
-        try {
-            Styles createdStyle = stylesService.createStyle(style);
-            return new ResponseEntity<>(createdStyle, HttpStatus.CREATED);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<StylesDTO> createStyle(@RequestBody StylesDTO stylesDTO) {
+        StylesDTO createdStyle = stylesService.createStyle(stylesDTO);
+        return new ResponseEntity<>(createdStyle, HttpStatus.CREATED);
     }
 
-    // Cập nhật style
+    // Cập nhật thông tin một style theo ID
     @PutMapping("/{id}")
-    public ResponseEntity<Styles> updateStyle(@PathVariable("id") Integer id, @RequestBody Styles updatedStyle) {
-        try {
-            Styles style = stylesService.updateStyle(id, updatedStyle);
-            return new ResponseEntity<>(style, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<StylesDTO> updateStyle(@PathVariable Integer id, @RequestBody StylesDTO stylesDTO) {
+        StylesDTO updatedStyle = stylesService.updateStyle(id, stylesDTO);
+        return new ResponseEntity<>(updatedStyle, HttpStatus.OK);
     }
 
-    // Xóa style
+    // Xóa một style theo ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteStyle(@PathVariable("id") Integer id) {
-        try {
-            stylesService.deleteStyle(id);
-            return new ResponseEntity<>("Style đã được xóa thành công.", HttpStatus.NO_CONTENT);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Void> deleteStyle(@PathVariable Integer id) {
+        stylesService.deleteStyle(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
