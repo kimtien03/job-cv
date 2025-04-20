@@ -29,6 +29,15 @@ public class PositionsService {
                 .orElseThrow(() -> new NoFoundException("Không tìm thấy vị trí với ID: " + id));
     }
 
+    // Lấy một vị trí theo IndustryID
+    public List<Positions> getPositionByIndustryId(Integer industryId) {
+        List<Positions> positions = positionsRepository.findByIndustryId(industryId);
+        if (positions.isEmpty()) {
+            throw new NoFoundException("Không tìm thấy vị trí nào thuộc ngành ID: " + industryId);
+        }
+        return positions;
+    }
+
     // Tạo mới một vị trí
     public Positions createPosition(Positions position) {
         return positionsRepository.save(position);

@@ -42,6 +42,17 @@ public class PositionsController {
         }
     }
 
+    // Lấy vị trí theo IndustryID
+    @GetMapping("/getPositionByIndustryId")
+    public ResponseEntity<List<Positions>> getPositionByIndustryId(@RequestParam Integer industryId) {
+        try {
+            List<Positions> positionsList = positionsService.getPositionByIndustryId(industryId);
+            return new ResponseEntity<>(positionsList, HttpStatus.OK);
+        } catch (NoFoundException ex) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
     // Tạo mới một vị trí
     @PostMapping
     public ResponseEntity<Positions> createPosition(@RequestBody Positions position) {

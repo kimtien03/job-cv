@@ -21,13 +21,13 @@ public class Positions {
 
     @NotNull
     @Column(name = "industry_id", nullable = false)
-    private Integer industry_id;
+    private Integer industryId;
     public Positions(){}
-    public Positions(Integer id,String name,Integer industry_id)
+    public Positions(Integer id,String name,Integer industryId)
     {
         this.id=id;
         this.name=name;
-        this.industry_id=industry_id;
+        this.industryId=industryId;
     }
     public Integer getId() {
         return id;
