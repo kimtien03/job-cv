@@ -12,14 +12,17 @@ public class TemplateCvsDTO {
     @NotNull
     private Integer styleId;
 
+    @NotNull
+    private String image;
     // Constructors
     public TemplateCvsDTO() {
     }
 
-    public TemplateCvsDTO(Integer id, Integer positionId, Integer styleId) {
+    public TemplateCvsDTO(Integer id, Integer positionId, Integer styleId, String image) {
         this.id = id;
         this.positionId = positionId;
         this.styleId = styleId;
+        this.image = image;
     }
 
     // Getters and Setters
@@ -45,6 +48,13 @@ public class TemplateCvsDTO {
 
     public void setStyleId(Integer styleId) {
         this.styleId = styleId;
+    }
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
