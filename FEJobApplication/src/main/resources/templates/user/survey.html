@@ -97,7 +97,7 @@
                         </div>
                     </div>
                     <div class="row justify-content-center">
-                        <a href="#" class="borders-btn btn-survey btn-style m-2" th:each="style : ${styles}" th:data-style-id="${style.id}" th:text="${style.style_name}"></a>
+                        <a href="#" class="borders-btn btn-survey btn-style m-2" th:each="style : ${styles}" th:data-style-id="${style.id}" th:text="${style.styleName}"></a>
                     </div>
                 </div>
             </div>
@@ -131,11 +131,13 @@
         const industryButtons = document.querySelectorAll(".btn-industry");
         const positionsContainer = document.getElementById("position-container");
         let selectedPositionId = null;
+        let selectedIndustryId = null;
         const styleButtons = document.querySelectorAll(".btn-style");
         industryButtons.forEach(btn => {
             btn.addEventListener("click", function (e) {
                 e.preventDefault();
                 const industryId = btn.getAttribute("data-id");
+                selectedIndustryId = industryId;
                 const apiBaseUrl = /*[[${apiBaseUrl}]]*/ 'http://localhost:8090/api';
                 const apiUrl = apiBaseUrl + "/positions/getPositionByIndustryId?industryId=" + industryId;
 
@@ -162,8 +164,7 @@
                     })
                     .catch(err => {
                         console.error(err);
-                        var errorMessage = "Không thể tải dữ liệu ngành nghề. Vui lòng thử lại sau.";
-                        window.location.href = `/error-page?errorMessage=${errorMessage}`;
+                        alert("Không thể tải dữ liệu ngành nghề!")
                     });
             });
         });
@@ -176,8 +177,7 @@
                     alert("Vui lòng chọn một vị trí trước khi chọn style.");
                     return;
                 }
-
-                window.location.href = `/templates?positionId=${selectedPositionId}&styleId=${styleId}`;
+                window.location.href = `/templates?industryId=${selectedIndustryId}&positionId=${selectedPositionId}&styleId=${styleId}`;
             });
         });
     });

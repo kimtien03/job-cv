@@ -13,7 +13,8 @@
     <link rel="stylesheet" th:href="@{/user/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/user/css/style.css}">
 </head>
-<body>
+
+
 <!-- ? Preloader Start -->
 <div id="preloader-active">
     <div class="preloader d-flex align-items-center justify-content-center">
@@ -78,20 +79,21 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="card sidebar-filters">
-                        <form class="card-body">
+                        <form class="card-body" id="filterForm" method="get" th:action="@{/templates}">
                             <div class="row justify-content-between mx-1">
                                 <h5 class="card-title mb-4">Bộ lọc</h5>
-                                <a href="" class="link-success">Làm mới</a>
+                                <a th:href="@{/templates}" class="text-dark link-success">Làm mới</a>
                             </div>
 
                             <!-- Lĩnh vực -->
                             <div class="form-group mb-4">
                                 <label class="form-label">Lĩnh vực</label>
-                                <select class="form-control" name="industry" id="industry-select">
+                                <select class="form-control" id="industry-select" name="industryId">
                                     <option value="">-- Chọn ngành nghề --</option>
                                     <option th:each="industry : ${industries}"
                                             th:value="${industry.id}"
-                                            th:text="${industry.name}">
+                                            th:text="${industry.name}"
+                                            th:selected="${industry.id == selectedIndustryId}">
                                     </option>
                                 </select>
                             </div>
@@ -99,17 +101,18 @@
                             <!-- Vị trí -->
                             <div class="form-group mb-4">
                                 <label class="form-label">Vị trí</label>
-                                <select class="form-control" name="position" id="position-select">
+                                <select class="form-control" name="positionId" id="position-select">
                                     <option value="">-- Chọn vị trí --</option>
                                 </select>
                             </div>
                             <div class="form-group mb-4">
                                 <label class="form-label">Phong cách</label>
-                                <select class="form-control" name="style">
+                                <select class="form-control" name="styleId" id="style-select">
                                     <option value="">-- Chọn phong cách --</option>
                                     <option th:each="style : ${styles}"
                                             th:value="${style.id}"
-                                            th:text="${style.style_name}">
+                                            th:text="${style.styleName}"
+                                            th:selected="${style.id == selectedStyleId}">
                                     </option>
                                 </select>
                             </div>
@@ -119,30 +122,43 @@
 
                 <div class="col-md-9">
                     <div class="row g-4">
-                        <div class="col-md-4 mb-20" th:each="template_cv : ${template_cvs}">
+                        <div class="col-12 text-center justify-content-center align-content-center" style="min-height:400px" th:if="${#lists.isEmpty(template_cvs)}">
+                            <img class="img-fluid" style="width: 200px" th:src="@{/user/img/templates/empty.png}">
+                            <p class="text-muted">Không tìm thấy template phù hợp với bộ lọc.</p>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-lg-4 mb-20" th:each="template_cv : ${template_cvs}" th:unless="${#lists.isEmpty(template_cvs)}">
                             <div class="card h-100 template-card">
                                 <div class="card-button-group button-group-area mt-10">
                                     <a data-toggle="modal" data-target="#exampleModalCenter" class="genric-btn primary-border circle">Xem trước</a>
-                                    <a class="genric-btn success-border circle" href="editResume.html">Chọn</a>
+                                    <a class="genric-btn success-border circle" th:href="@{editResume(id=${template_cv.id})}">Chọn</a>
                                 </div>
-                                <img th:src="@{'/user/img/templates/' + ${template_cv.image}}" class="card-img" alt="Modern Template">
+                                <img th:src="@{'/user/img/templates/' + ${template_cv.image}}" class="card-img img-fluid" alt="Modern Template">
                                 <span class="badge bg-primary position-absolute tag-overlay" th:text="${template_cv.id}"></span>
                             </div>
                         </div>
-
                     </div>
-                    <nav class="mb-20">
+                    <nav class="mb-20" th:unless="${#lists.isEmpty(template_cvs)}" id="pagination">
                         <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" aria-label="Previous">
+                            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                                <a class="page-link"
+                                   th:href="@{/templates(page=${currentPage - 1}, industryId=${selectedIndustryId}, positionId=${selectedPositionId}, styleId=${selectedStyleId})}"
+                                   aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
+
+                            <li class="page-item"
+                                th:each="i : ${#numbers.sequence(1, totalPages)}"
+                                th:classappend="${i == currentPage} ? 'active'">
+                                <a class="page-link"
+                                   th:href="@{/templates(page=${i}, industryId=${selectedIndustryId}, positionId=${selectedPositionId}, styleId=${selectedStyleId})}"
+                                   th:text="${i}">1</a>
+                            </li>
+
+                            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                                <a class="page-link"
+                                   th:href="@{/templates(page=${currentPage + 1}, industryId=${selectedIndustryId}, positionId=${selectedPositionId}, styleId=${selectedStyleId})}"
+                                   aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
@@ -207,6 +223,7 @@
         positionSelect.innerHTML = '<option value="">-- Chọn vị trí --</option>';
         const apiBaseUrl = /*[[${apiBaseUrl}]]*/ 'http://localhost:8090/api';
         const apiUrl = apiBaseUrl + "/positions/getPositionByIndustryId?industryId=" + industryId;
+        const selectedPositionId = /*[[${selectedPositionId}]]*/ null;
         if (industryId) {
             fetch(apiUrl)
                 .then(response => response.json())
@@ -221,7 +238,44 @@
                 .catch(error => console.error("Lỗi khi load vị trí:", error));
         }
     });
+    const selectedIndustryId = /*[[${selectedIndustryId}]]*/ null;
+    const selectedPositionId = /*[[${selectedPositionId}]]*/ null;
+
+    const positionSelect = document.getElementById("position-select");
+
+    if (selectedIndustryId) {
+        const apiBaseUrl = /*[[${apiBaseUrl}]]*/ 'http://localhost:8090/api';
+        const apiUrl = apiBaseUrl + "/positions/getPositionByIndustryId?industryId=" + selectedIndustryId;
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(position => {
+                    const option = document.createElement("option");
+                    option.value = position.id;
+                    option.text = position.name;
+                    if (selectedPositionId && parseInt(position.id) === parseInt(selectedPositionId)) {
+                        option.selected = true;
+                    }
+                    positionSelect.appendChild(option);
+                });
+            }).catch(error => console.error("Lỗi tải vị trí:", error));
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("filterForm");
+        const selects = form.querySelectorAll("select");
+        selects.forEach(function (select) {
+            select.addEventListener("change", function () {
+                selects.forEach(function (s) {
+                    if (!s.value) {
+                        s.removeAttribute("name");
+                    }
+                });
+                form.submit();
+            });
+        });
+    });
 </script>
 
-</body>
+
 </html>

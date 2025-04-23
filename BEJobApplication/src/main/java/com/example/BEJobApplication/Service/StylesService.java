@@ -1,56 +1,62 @@
 package com.example.BEJobApplication.Service;
 
+import com.example.BEJobApplication.DTO.StylesDTO;
 import com.example.BEJobApplication.Entity.Styles;
 import com.example.BEJobApplication.Exception.NoFoundException;
+import com.example.BEJobApplication.Mapper.StylesMapper;
 import com.example.BEJobApplication.Responsitory.StylesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StylesService {
 
     @Autowired
-    private StylesRepository stylesRepository;
+    private com.example.BEJobApplication.Responsitory.StylesRepository stylesRepository;
 
-    // Lấy tất cả style
-    public List<Styles> getAllStyles() {
-        List<Styles> stylesList = stylesRepository.findAll();
-        if (stylesList.isEmpty()) {
-            throw new NoFoundException("Không có style nào trong hệ thống.");
-        }
-        return stylesList;
+    // Lấy tất cả các styles
+    public List<StylesDTO> getAllStyles() {
+        List<Styles> styles = stylesRepository.findAll();
+        return styles.stream()
+                .map(StylesMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     // Lấy style theo ID
-    public Styles getStyleById(Integer id) {
-        return stylesRepository.findById(id)
-                .orElseThrow(() -> new NoFoundException("Không tìm thấy style với id: " + id));
+    public StylesDTO getStyleById(Integer id) {
+        Styles style = stylesRepository.findById(id)
+                .orElseThrow(() -> new NoFoundException("Không tìm thấy Style với ID: " + id));
+        return StylesMapper.toDTO(style);
     }
 
-    // Tạo mới style
-    public Styles createStyle(Styles style) {
-        return stylesRepository.save(style);
+    // Thêm mới một Style
+    public StylesDTO createStyle(StylesDTO stylesDTO) {
+        Styles style = StylesMapper.toEntity(stylesDTO);
+        style = stylesRepository.save(style);
+        return StylesMapper.toDTO(style);
     }
 
-    // Cập nhật style
-    public Styles updateStyle(Integer id, Styles updatedStyle) {
+    // Cập nhật thông tin một Style
+    public StylesDTO updateStyle(Integer id, StylesDTO stylesDTO) {
         Styles existingStyle = stylesRepository.findById(id)
-                .orElseThrow(() -> new NoFoundException("Không tìm thấy style với id: " + id));
+                .orElseThrow(() -> new NoFoundException("Không tìm thấy Style với ID: " + id));
 
-        existingStyle.setStyle_name(updatedStyle.getStyle_name());
-        existingStyle.setFile_name(updatedStyle.getFile_name());
-        existingStyle.setCss_name(updatedStyle.getCss_name());
+        // Cập nhật các trường
+        existingStyle.setStyle_name(stylesDTO.getStyleName());
+        existingStyle.setFile_name(stylesDTO.getFileName());
+        existingStyle.setCss_name(stylesDTO.getCssName());
 
-        return stylesRepository.save(existingStyle);
+        existingStyle = stylesRepository.save(existingStyle);
+        return StylesMapper.toDTO(existingStyle);
     }
 
-    // Xóa style
+    // Xóa Style theo ID
     public void deleteStyle(Integer id) {
-        if (!stylesRepository.existsById(id)) {
-            throw new NoFoundException("Không tìm thấy style với id: " + id);
-        }
-        stylesRepository.deleteById(id);
+        Styles style = stylesRepository.findById(id)
+                .orElseThrow(() -> new NoFoundException("Không tìm thấy Style với ID: " + id));
+        stylesRepository.delete(style);
     }
 }

@@ -1,9 +1,6 @@
 package com.example.BEJobApplication.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -11,32 +8,36 @@ import jakarta.validation.constraints.NotNull;
 public class Template_cvs {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @NotNull
-    @Column(name = "position_id", nullable = false)
-    private Integer positionId;
+    @ManyToOne
+    @JoinColumn(name = "position_id", nullable = false)
+    private Positions positions;
 
     @NotNull
-    @Column(name = "style_id", nullable = false)
-    private Integer styleId;
+    @ManyToOne
+    @JoinColumn(name = "style_id", nullable = false)
+    private Styles style;
 
     @NotNull
     @Column(name = "image", nullable = false)
     private String image;
-
     // Constructors
-    public Template_cvs() {}
+    public Template_cvs() {
+    }
 
-    public Template_cvs(Integer id, Integer positionId, Integer styleId, String image) {
+    public Template_cvs(Integer id, Positions positions, Styles style, String image) {
         this.id = id;
-        this.positionId = positionId;
-        this.styleId = styleId;
+        this.positions = positions;
+        this.style = style;
         this.image = image;
     }
 
     // Getters and Setters
+
     public Integer getId() {
         return id;
     }
@@ -45,20 +46,20 @@ public class Template_cvs {
         this.id = id;
     }
 
-    public Integer getPositionId() {
-        return positionId;
+    public Positions getPositions() {
+        return positions;
     }
 
-    public void setPositionId(Integer positionId) {
-        this.positionId = positionId;
+    public void setPositions(Positions positions) {
+        this.positions = positions;
     }
 
-    public Integer getStyleId() {
-        return styleId;
+    public Styles getStyle() {
+        return style;
     }
 
-    public void setStyleId(Integer styleId) {
-        this.styleId = styleId;
+    public void setStyle(Styles style) {
+        this.style = style;
     }
 
     public String getImage() {
@@ -68,17 +69,4 @@ public class Template_cvs {
     public void setImage(String image) {
         this.image = image;
     }
-
-    // toString
-    @Override
-    public String toString() {
-        return "Template_cvs{" +
-                "id=" + id +
-                ", positionId=" + positionId +
-                ", styleId=" + styleId +
-                ", image=" + image +
-                '}';
-    }
-
-
 }

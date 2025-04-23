@@ -79,7 +79,8 @@
                 <div>
                     <div class="section-tittle text-center mb-50">
                         <i class="fa fa-exclamation-triangle" style="color: #ff0000; font-size: 100px"></i>
-                        <h2 th:text="${errorMessage}" class="mt-20"></h2>
+                        <h2 th:text="${statusCode}" class="mt-20"></h2>
+                        <h2 th:text="${message}" class="mt-20"></h2>
                         <a th:href="@{/}" class="text-white link-success">
                             <i class="fa fa-backward" style="color: #ffffff;"></i>
                             Trở lại trang chủ.

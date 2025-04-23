@@ -1,6 +1,7 @@
 package com.example.BEJobApplication.Controller;
 
-import com.example.BEJobApplication.Entity.User_cvs;
+import com.example.BEJobApplication.DTO.UserCvsDTO;
+import com.example.BEJobApplication.DTO.UserDTO;
 import com.example.BEJobApplication.Service.User_cvsService;
 import com.example.BEJobApplication.Exception.NoFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user-cvs")
@@ -18,57 +20,57 @@ public class User_cvsController {
     private User_cvsService userCvsService;
 
     // Lấy tất cả CV của user
-    @GetMapping
-    public ResponseEntity<List<User_cvs>> getAllUserCvs() {
+    @GetMapping("/GetAllUserCVS")
+    public ResponseEntity<List<UserCvsDTO>> getAllUserCvs() {
         try {
-            List<User_cvs> usersCvs = userCvsService.getAllUser();
+            List<UserCvsDTO> usersCvs = userCvsService.getAllUserCvs();
             return new ResponseEntity<>(usersCvs, HttpStatus.OK);
         } catch (NoFoundException ex) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 
-    // Lấy CV theo ID
+    @PostMapping("/CreateUsercv")
+    public ResponseEntity<?> createUserCvs(@RequestBody UserCvsDTO userCvsDTO) {
+        try {
+            UserCvsDTO createdUserCvs = userCvsService.createUserCvs(userCvsDTO);
+            return ResponseEntity.ok(createdUserCvs);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage(), "status", 400));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("error", "Lỗi máy chủ", "message", e.getMessage()));
+        }
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<User_cvs> getUserCvsById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> getUserCvsById(@PathVariable Integer id) {
         try {
-            User_cvs userCvs = userCvsService.getUserCvsById(id);
-            return new ResponseEntity<>(userCvs, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            UserCvsDTO userCvsDTO = userCvsService.getUserCvsById(id);
+            return ResponseEntity.ok(userCvsDTO);
+        } catch (NoFoundException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
         }
     }
 
-    // Thêm mới một CV
-    @PostMapping
-    public ResponseEntity<User_cvs> createUserCvs(@RequestBody User_cvs userCvs) {
-        try {
-            User_cvs createdUserCvs = userCvsService.createUserCvs(userCvs);
-            return new ResponseEntity<>(createdUserCvs, HttpStatus.CREATED);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-    }
 
-    // Cập nhật một CV theo ID
     @PutMapping("/{id}")
-    public ResponseEntity<User_cvs> updateUserCvs(@PathVariable("id") Integer id, @RequestBody User_cvs userCvsDetails) {
+    public ResponseEntity<?> updateUserCvs(@PathVariable Integer id, @RequestBody UserCvsDTO userCvsDTO) {
+
         try {
-            User_cvs updatedUserCvs = userCvsService.updateUserCvs(id, userCvsDetails);
-            return new ResponseEntity<>(updatedUserCvs, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            UserCvsDTO updatedUserCvs = userCvsService.updateUserCvs(id, userCvsDTO);
+            return ResponseEntity.ok(updatedUserCvs);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage(), "status", 400));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("error", "Lỗi máy chủ", "message", e.getMessage()));
         }
     }
 
-    // Xóa một CV theo ID
-        @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUserCvs(@PathVariable("id") Integer id) {
-        try {
-            userCvsService.deleteUserCvs(id);
-            return new ResponseEntity<>("CV đã được xóa thành công.", HttpStatus.NO_CONTENT);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUserCvs(@PathVariable Integer id) {
+        userCvsService.deleteUserCvs(id);
+        return ResponseEntity.ok(Map.of("message", "Xóa người dùng thành công"));
     }
+
+
 }

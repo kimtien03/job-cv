@@ -1,9 +1,7 @@
 package com.example.BEJobApplication.Controller;
 
-import com.example.BEJobApplication.Entity.Sections;
+import com.example.BEJobApplication.DTO.SectionsDTO;
 import com.example.BEJobApplication.Service.SectionsService;
-import com.example.BEJobApplication.Exception.NoFoundException;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,67 +9,49 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@SecurityRequirement(name = "Bearer Authentication")
 @RestController
 @RequestMapping("/api/sections")
 public class SectionsController {
 
+    private final SectionsService sectionsService;
+
     @Autowired
-    private SectionsService sectionsService;
+    public SectionsController(SectionsService sectionsService) {
+        this.sectionsService = sectionsService;
+    }
 
-    // Lấy tất cả sections
+    // Lấy tất cả các section
     @GetMapping
-    public ResponseEntity<List<Sections>> getAllSections() {
-        try {
-            List<Sections> sectionsList = sectionsService.getAllSections();
-            return new ResponseEntity<>(sectionsList, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<List<SectionsDTO>> getAllSections() {
+        List<SectionsDTO> sections = sectionsService.getAllSections();
+        return new ResponseEntity<>(sections, HttpStatus.OK);
     }
 
-    // Lấy section theo ID
+    // Lấy thông tin Section theo ID
     @GetMapping("/{id}")
-    public ResponseEntity<Sections> getSectionById(@PathVariable("id") Integer id) {
-        try {
-            Sections section = sectionsService.getSectionById(id);
-            return new ResponseEntity<>(section, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<SectionsDTO> getSectionById(@PathVariable Integer id) {
+        SectionsDTO section = sectionsService.getSectionById(id);
+        return new ResponseEntity<>(section, HttpStatus.OK);
     }
 
-    // Tạo mới một section
+    // Tạo mới Section
     @PostMapping
-    public ResponseEntity<Sections> createSection(@RequestBody Sections section) {
-        try {
-            Sections createdSection = sectionsService.createSection(section);
-            return new ResponseEntity<>(createdSection, HttpStatus.CREATED);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<SectionsDTO> createSection(@RequestBody SectionsDTO sectionsDTO) {
+        SectionsDTO createdSection = sectionsService.createSection(sectionsDTO);
+        return new ResponseEntity<>(createdSection, HttpStatus.CREATED);
     }
 
-    // Cập nhật section
+    // Cập nhật Section theo ID
     @PutMapping("/{id}")
-    public ResponseEntity<Sections> updateSection(@PathVariable("id") Integer id,
-                                                  @RequestBody Sections sectionDetails) {
-        try {
-            Sections updatedSection = sectionsService.updateSection(id, sectionDetails);
-            return new ResponseEntity<>(updatedSection, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<SectionsDTO> updateSection(@PathVariable Integer id, @RequestBody SectionsDTO sectionsDTO) {
+        SectionsDTO updatedSection = sectionsService.updateSection(id, sectionsDTO);
+        return new ResponseEntity<>(updatedSection, HttpStatus.OK);
     }
 
-    // Xóa section theo ID
+    // Xóa Section theo ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteSection(@PathVariable("id") Integer id) {
-        try {
-            sectionsService.deleteSection(id);
-            return new ResponseEntity<>("Section đã được xóa thành công.", HttpStatus.NO_CONTENT);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Void> deleteSection(@PathVariable Integer id) {
+        sectionsService.deleteSection(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

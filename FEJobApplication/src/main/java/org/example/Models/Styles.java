@@ -4,20 +4,20 @@ public class Styles {
 
     private Integer id;
 
-    private String style_name;
+    private String styleName;
 
-    private String file_name;
+    private String fileName;
 
-    private String css_name;
+    private String cssName;
 
     // Constructors
     public Styles() {}
 
-    public Styles(Integer id, String style_name, String file_name, String css_name) {
+    public Styles(Integer id, String styleName, String fileName, String cssName) {
         this.id = id;
-        this.style_name = style_name;
-        this.file_name = file_name;
-        this.css_name = css_name;
+        this.styleName = styleName;
+        this.fileName = fileName;
+        this.cssName = cssName;
     }
 
     // Getters and Setters
@@ -29,28 +29,28 @@ public class Styles {
         this.id = id;
     }
 
-    public String getStyle_name() {
-        return style_name;
+    public String getStyleName() {
+        return styleName;
     }
 
-    public void setStyle_name(String style_name) {
-        this.style_name = style_name;
+    public void setStyleName(String styleName) {
+        this.styleName = styleName;
     }
 
-    public String getFile_name() {
-        return file_name;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setFile_name(String file_name) {
-        this.file_name = file_name;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
-    public String getCss_name() {
-        return css_name;
+    public String getCssName() {
+        return cssName;
     }
 
-    public void setCss_name(String css_name) {
-        this.css_name = css_name;
+    public void setCssName(String cssName) {
+        this.cssName = cssName;
     }
 
 }

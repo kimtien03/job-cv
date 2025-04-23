@@ -1,8 +1,7 @@
 package com.example.BEJobApplication.Controller;
 
-import com.example.BEJobApplication.Entity.Template_data;
+import com.example.BEJobApplication.DTO.TemplateDataDTO;
 import com.example.BEJobApplication.Service.Template_dataService;
-import com.example.BEJobApplication.Exception.NoFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,61 +13,45 @@ import java.util.List;
 @RequestMapping("/api/template-data")
 public class Template_dataController {
 
+    private final Template_dataService templateDataService;
+
     @Autowired
-    private Template_dataService templateDataService;
+    public Template_dataController(Template_dataService templateDataService) {
+        this.templateDataService = templateDataService;
+    }
 
-    // Lấy tất cả dữ liệu template
+    // Lấy tất cả TemplateData
     @GetMapping
-    public ResponseEntity<List<Template_data>> getAllTemplateData() {
-        try {
-            List<Template_data> dataList = templateDataService.getAllTemplateData();
-            return new ResponseEntity<>(dataList, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<List<TemplateDataDTO>> getAllTemplateData() {
+        List<TemplateDataDTO> templateDataList = templateDataService.getAllTemplateData();
+        return new ResponseEntity<>(templateDataList, HttpStatus.OK);
     }
 
-    // Lấy dữ liệu template theo ID
+    // Lấy thông tin TemplateData theo ID
     @GetMapping("/{id}")
-    public ResponseEntity<Template_data> getTemplateDataById(@PathVariable("id") Integer id) {
-        try {
-            Template_data templateData = templateDataService.getTemplateDataById(id);
-            return new ResponseEntity<>(templateData, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<TemplateDataDTO> getTemplateDataById(@PathVariable Integer id) {
+        TemplateDataDTO templateData = templateDataService.getById(id);
+        return new ResponseEntity<>(templateData, HttpStatus.OK);
     }
 
-    // Tạo mới dữ liệu template
+    // Tạo mới TemplateData
     @PostMapping
-    public ResponseEntity<Template_data> createTemplateData(@RequestBody Template_data templateData) {
-        try {
-            Template_data createdTemplateData = templateDataService.createTemplateData(templateData);
-            return new ResponseEntity<>(createdTemplateData, HttpStatus.CREATED);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<TemplateDataDTO> createTemplateData(@RequestBody TemplateDataDTO templateDataDTO) {
+        TemplateDataDTO savedTemplateData = templateDataService.createTemplateData(templateDataDTO);
+        return new ResponseEntity<>(savedTemplateData, HttpStatus.CREATED);
     }
 
-    // Cập nhật dữ liệu template
+    // Cập nhật TemplateData theo ID
     @PutMapping("/{id}")
-    public ResponseEntity<Template_data> updateTemplateData(@PathVariable("id") Integer id, @RequestBody Template_data templateDataDetails) {
-        try {
-            Template_data updatedTemplateData = templateDataService.updateTemplateData(id, templateDataDetails);
-            return new ResponseEntity<>(updatedTemplateData, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<TemplateDataDTO> updateTemplateData(@PathVariable Integer id, @RequestBody TemplateDataDTO templateDataDTO) {
+        TemplateDataDTO updatedTemplateData = templateDataService.updateTemplateData(id, templateDataDTO);
+        return new ResponseEntity<>(updatedTemplateData, HttpStatus.OK);
     }
 
-    // Xóa dữ liệu template
+    // Xóa TemplateData theo ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTemplateData(@PathVariable("id") Integer id) {
-        try {
-            templateDataService.deleteTemplateData(id);
-            return new ResponseEntity<>("Dữ liệu template đã được xóa thành công.", HttpStatus.NO_CONTENT);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Void> deleteTemplateData(@PathVariable Integer id) {
+        templateDataService.deleteTemplateData(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

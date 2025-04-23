@@ -1,4 +1,6 @@
 package org.example.Controllers.user;
+import org.example.Models.PaginatedResponse;
+import org.example.Models.Template_cvs;
 import org.example.Services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,9 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.util.UriUtils;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -35,38 +39,37 @@ public class HomeController {
     }
     @GetMapping("/survey")
     public String survey(Model model) {
-        try {
-            model.addAttribute("industries", industryService.getAllIndustries());
-            model.addAttribute("styles", styleService.getAllStyles());
-            model.addAttribute("apiBaseUrl", apiBaseUrl);
-            return "user/survey";
-        } catch (RuntimeException ex) {
-            logger.error("Lỗi khi load survey: {}", ex.getMessage(), ex);
-            String errorMsg = "Không thể tải dữ liệu ngành nghề. Vui lòng thử lại sau.";
-            return "redirect:/error-page?errorMessage=" + UriUtils.encode(errorMsg, StandardCharsets.UTF_8);
-        }
+        model.addAttribute("industries", industryService.getAllIndustries());
+        model.addAttribute("styles", styleService.getAllStyles());
+        model.addAttribute("apiBaseUrl", apiBaseUrl);
+        return "user/survey";
     }
     @GetMapping("/templates")
     public String templates(
+            @RequestParam(value = "industryId", required = false) Integer industryId,
             @RequestParam(value = "positionId", required = false) Integer positionId,
             @RequestParam(value = "styleId", required = false) Integer styleId,
+            @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
             Model model) {
-        try {
-            model.addAttribute("apiBaseUrl", apiBaseUrl);
-            model.addAttribute("industries",industryService.getAllIndustries());
-            model.addAttribute("positions",positionService.getAllPositions());
-            model.addAttribute("styles",styleService.getAllStyles());
-            model.addAttribute("positionId",positionId);
-            model.addAttribute("styleId",styleId);
-            if (positionId == null && styleId == null) model.addAttribute("template_cvs",templateCvService.getAllTemplateCvs());
-            else model.addAttribute("template_cvs",templateCvService.getTemplateCvsByFilter(positionId,styleId));
-            return "user/templates";
-        } catch (RuntimeException ex) {
-            logger.error("Lỗi khi load template: {}", ex.getMessage(), ex);
-            String errorMsg = "Không thể tải dữ liệu template. Vui lòng thử lại sau.";
-            return "redirect:/error-page?errorMessage=" + UriUtils.encode(errorMsg, StandardCharsets.UTF_8);
-        }
+        model.addAttribute("apiBaseUrl", apiBaseUrl);
+        model.addAttribute("industries", industryService.getAllIndustries());
+        model.addAttribute("styles", styleService.getAllStyles());
+        model.addAttribute("selectedIndustryId", industryId);
+        model.addAttribute("selectedPositionId", positionId);
+        model.addAttribute("selectedStyleId", styleId);
+        PaginatedResponse pageResponse = templateCvService.getTemplateCvs(industryId, positionId, styleId, page);
+        model.addAttribute("template_cvs", pageResponse.getContent());
+        model.addAttribute("currentPage", pageResponse.getNumber() + 1);
+        model.addAttribute("totalPages", pageResponse.getTotalPages());
+        return "user/templates";
+    }
 
+    @GetMapping("/editResume")
+    public String editResume(
+            @RequestParam(value = "id") Integer id,
+            Model model) {
+
+        return "user/editResume";
     }
 
 }

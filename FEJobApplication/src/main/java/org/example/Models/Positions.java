@@ -6,15 +6,15 @@ public class Positions {
 
     private String name;
 
-    private Integer industry_id;
+    private Integer industryId;
 
     public Positions() {
     }
 
-    public Positions(Integer id, String name, Integer industry_id) {
+    public Positions(Integer id, String name, Integer industryId) {
         this.id = id;
         this.name = name;
-        this.industry_id = industry_id;
+        this.industryId = industryId;
     }
 
     public Integer getId() {
@@ -33,12 +33,12 @@ public class Positions {
         this.name = name;
     }
 
-    public Integer getIndustry_id() {
-        return industry_id;
+    public Integer getIndustryId() {
+        return industryId;
     }
 
-    public void setIndustry_id(Integer industry_id) {
-        this.industry_id = industry_id;
+    public void setIndustryId(Integer industryId) {
+        this.industryId = industryId;
     }
 
 

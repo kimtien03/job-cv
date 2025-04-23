@@ -1,14 +1,15 @@
 package org.example.Services;
 
-import org.example.Models.Styles;
+import org.example.Models.PaginatedResponse;
 import org.example.Models.Template_cvs;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,41 +18,43 @@ public class TemplateCvService {
     private final RestTemplate restTemplate;
     @Value("${api.base-url}")
     private String apiBaseUrl;
-
+    private static final int TEMPLATES_PER_PAGE = 6;
     public TemplateCvService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    public List<Template_cvs> getAllTemplateCvs() {
-        String url = apiBaseUrl + "/template-cvs";
-        try {
-            ResponseEntity<Template_cvs[]> response = restTemplate.getForEntity(url, Template_cvs[].class);
-            return Arrays.asList(response.getBody());
-        } catch (HttpClientErrorException | HttpServerErrorException | ResourceAccessException ex) {
-            throw new RuntimeException("Lỗi khi gọi API /template-cvs: " + ex.getMessage(), ex);
-        } catch (RestClientException ex) {
-            throw new RuntimeException("Lỗi không xác định khi gọi API: " + ex.getMessage(), ex);
+    public PaginatedResponse getTemplateCvs(Integer industryId, Integer positionId, Integer styleId, Integer page) {
+        StringBuilder urlBuilder = new StringBuilder(apiBaseUrl + "/template-cvs");
+        List<String> params = new ArrayList<>();
+        if (industryId != null) {
+            params.add("industryId=" + industryId);
         }
-    }
-    public List<Template_cvs> getTemplateCvsByFilter(Integer positionId, Integer styleId) {
-        StringBuilder urlBuilder = new StringBuilder(apiBaseUrl + "/template-cvs/filter?");
         if (positionId != null) {
-            urlBuilder.append("positionId=").append(positionId);
+            params.add("positionId=" + positionId);
         }
         if (styleId != null) {
-            if (urlBuilder.charAt(urlBuilder.length() - 1) != '?') {
-                urlBuilder.append("&");
-            }
-            urlBuilder.append("styleId=").append(styleId);
+            params.add("styleId=" + styleId);
+        }
+        if (page != null) {
+            params.add("page=" + page);
+        }
+        if (!params.isEmpty()) {
+            urlBuilder.append("?").append(String.join("&", params));
         }
         String url = urlBuilder.toString();
         try {
-            ResponseEntity<Template_cvs[]> response = restTemplate.getForEntity(url, Template_cvs[].class);
-            return Arrays.asList(response.getBody());
-        } catch (HttpClientErrorException | HttpServerErrorException | ResourceAccessException ex) {
-            throw new RuntimeException("Lỗi khi gọi API /templates-cvs/filter: " + ex.getMessage(), ex);
-        } catch (RestClientException ex) {
-            throw new RuntimeException("Lỗi không xác định khi gọi API: " + ex.getMessage(), ex);
+            ParameterizedTypeReference<PaginatedResponse> responseType =
+                    new ParameterizedTypeReference<PaginatedResponse>() {};
+
+            ResponseEntity<PaginatedResponse> response = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    null,
+                    responseType
+            );
+            return response.getBody();
+        } catch (HttpClientErrorException.NotFound ex) {
+            return new PaginatedResponse();
         }
     }
 }
