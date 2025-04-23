@@ -14,6 +14,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
+    private final String[] PUBLIC_ENDPOINT = {
+            "/api/auth/login",
+            "/api/auth/register",
+            "/api/User/GetAllUser",
+
+    };
 
     private final CustomUserDetailsService userDetailsService;
 
@@ -29,7 +35,7 @@ public class SecurityConfig {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService); // không dùng new, dùng injected bean
+        authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
@@ -40,15 +46,34 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // tất cả API đều cho phép truy cập
+                .authorizeHttpRequests((authz) -> authz
+//                        .requestMatchers(
+//                                "/auth/login",
+//                                "/auth/register",
+//                                "/swagger-ui/**",
+//                                "/swagger-ui.html",
+//                                "/v3/api-docs",
+//                                "/v3/api-docs/**",
+//                                "/api-docs",
+//                                "/api-docs/swagger-config" ,
+//                                "/api-docs/**"
+//                        ).permitAll()
+//                        .requestMatchers(PUBLIC_ENDPOINT).permitAll()
+//                        .requestMatchers("/admin/**").hasRole("ADMIN") // Bảo vệ admin endpoints
+//                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN") // Bảo vệ user endpoints
+//                        .anyRequest().authenticated() // Các yêu cầu còn lại phải xác thực
+                        .anyRequest().permitAll()
                 )
-                .authenticationProvider(authenticationProvider())
-                .formLogin(login -> login.disable()); // không dùng form login mặc định
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll()
+                );
 
         return http.build();
     }
+
+
 }

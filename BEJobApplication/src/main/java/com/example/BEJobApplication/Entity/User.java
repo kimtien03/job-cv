@@ -1,15 +1,12 @@
 package com.example.BEJobApplication.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,14 +27,25 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "birth_date")
-    private LocalDate birth_date;
+//    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "birth_day")
+    private LocalDate birth_day;
 
     @Column(name = "gender")
-    private Boolean gender;
+    private String gender;
+
+    @Column(name = "role")
+    private String role;
 
     public User() {}
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
@@ -51,11 +59,12 @@ public class User {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
-    public LocalDate getBirth_date() { return birth_date; }
-   public void setBirth_date(LocalDate Birth_date) { this.birth_date = Birth_date; }
+    public LocalDate getBirth_day() { return birth_day; }
+    public void setBirth_day(LocalDate birth_day) { this.birth_day = birth_day; }
 
-    public Boolean getGender() { return gender; }
-    public void setGender(Boolean gender) { this.gender = gender; }
+
+    public String getGender() { return gender; }
+    public void setGender(String gender) { this.gender = gender; }
 
     @Override
     public String toString() {
@@ -63,7 +72,7 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", birthDate=" + birth_date +
+                ", birth_date=" + birth_day +
                 ", gender=" + gender +
                 ", password=" + password +
                 '}';
