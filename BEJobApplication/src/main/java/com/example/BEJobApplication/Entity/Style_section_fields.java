@@ -1,9 +1,6 @@
 package com.example.BEJobApplication.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -11,20 +8,23 @@ import jakarta.validation.constraints.NotNull;
 public class Style_section_fields {
 
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull
-    @Column(name = "section_id", nullable = false)
-    private Integer section_id;
+    @ManyToOne
+    @JoinColumn(name = "section_id", nullable = false)
+    private Sections section;
 
     @NotNull
-    @Column(name = "style_id", nullable = false)
-    private Integer style_id;
+    @ManyToOne
+    @JoinColumn(name = "style_id", nullable = false)
+    private Styles style;
 
     @NotNull
-    @Column(name = "field_id", nullable = false)
-    private Integer field_id;
+    @ManyToOne
+    @JoinColumn(name = "field_id", nullable = false)
+    private Fields field;
 
     @NotNull
     @Column(name = "visible", nullable = false)
@@ -33,15 +33,16 @@ public class Style_section_fields {
     // Constructors
     public Style_section_fields() {}
 
-    public Style_section_fields(Integer id, Integer section_id, Integer style_id, Integer field_id, Boolean visible) {
+    public Style_section_fields(Integer id, Sections section, Styles style, Fields field, Boolean visible) {
         this.id = id;
-        this.section_id = section_id;
-        this.style_id = style_id;
-        this.field_id = field_id;
+        this.section = section;
+        this.style = style;
+        this.field = field;
         this.visible = visible;
     }
 
     // Getters and Setters
+
     public Integer getId() {
         return id;
     }
@@ -50,28 +51,28 @@ public class Style_section_fields {
         this.id = id;
     }
 
-    public Integer getSection_id() {
-        return section_id;
+    public Sections getSection() {
+        return section;
     }
 
-    public void setSection_id(Integer section_id) {
-        this.section_id = section_id;
+    public void setSection(Sections section) {
+        this.section = section;
     }
 
-    public Integer getStyle_id() {
-        return style_id;
+    public Styles getStyle() {
+        return style;
     }
 
-    public void setStyle_id(Integer style_id) {
-        this.style_id = style_id;
+    public void setStyle(Styles style) {
+        this.style = style;
     }
 
-    public Integer getField_id() {
-        return field_id;
+    public Fields getField() {
+        return field;
     }
 
-    public void setField_id(Integer field_id) {
-        this.field_id = field_id;
+    public void setField(Fields field) {
+        this.field = field;
     }
 
     public Boolean getVisible() {
@@ -82,14 +83,13 @@ public class Style_section_fields {
         this.visible = visible;
     }
 
-    // toString
     @Override
     public String toString() {
         return "Style_section_fields{" +
                 "id=" + id +
-                ", section_id=" + section_id +
-                ", style_id=" + style_id +
-                ", field_id=" + field_id +
+                ", section=" + (section != null ? section.getId() : null) +
+                ", style=" + (style != null ? style.getId() : null) +
+                ", field=" + (field != null ? field.getId() : null) +
                 ", visible=" + visible +
                 '}';
     }

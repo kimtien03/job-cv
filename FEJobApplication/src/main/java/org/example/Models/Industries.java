@@ -1,16 +1,17 @@
 package org.example.Models;
 
-public class Job {
+public class Industries {
 
     private Integer id;
 
     private String name;
 
-    // Constructor mặc định
-    public Job() {
-    }
+    public Industries() {}
 
-    // Getters and Setters
+    public Industries(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;
@@ -27,4 +28,5 @@ public class Job {
     public void setName(String name) {
         this.name = name;
     }
+
 }

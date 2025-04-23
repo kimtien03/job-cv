@@ -10,5 +10,8 @@ public interface UserReponsitory extends JpaRepository<User, Integer> {
     Optional<User> findByEmailOrUsername(String email, String username);
 
     Optional<User> findByEmail(String email);
+    boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
+
 
 }

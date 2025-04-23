@@ -75,13 +75,7 @@
                         </div>
                     </div>
                     <div class="row justify-content-center">
-                        <a href="#position" class="borders-btn btn-survey btn-industry m-2">Công nghệ thông tin</a>-->
-                        <a href="#position" class="borders-btn btn-survey btn-industry m-2">Kinh doanh / Marketing</a>-->
-                        <a href="#position" class="borders-btn btn-survey btn-industry m-2">Thiết kế / Nghệ thuật</a>-->
-                        <a href="#position" class="borders-btn btn-survey btn-industry m-2">Giáo dục / Sư phạm</a>-->
-                        <a href="#position" class="borders-btn btn-survey btn-industry m-2">Dịch vụ / Nhà hàng / Khách sạn</a>-->
-                        <a href="#position" class="borders-btn btn-survey btn-industry m-2">Y tế / Chăm sóc sức khỏe</a>-->
-                        <a href="#position" class="borders-btn btn-survey btn-industry m-2">Khác: _______</a>-->
+                        <a href="#position" class="borders-btn btn-survey btn-industry m-2" th:each="industry : ${industries}" th:attr="data-id=${industry.id}" th:text="${industry.name}"></a>
                     </div>
                 </div>
 
@@ -92,13 +86,7 @@
                             <h3 class="text-white">Chọn layout phù hợp: mạnh về kỹ năng hay kinh nghiệm.</h3>
                         </div>
                     </div>
-                    <div class="row justify-content-center">
-                        <a href="#style" class="borders-btn btn-survey btn-experience m-2">FE Developer</a>-->
-                        <a href="#style" class="borders-btn btn-survey btn-experience m-2">BE Developer</a>-->
-                        <a href="#style" class="borders-btn btn-survey btn-experience m-2">FullStack Developer</a>-->
-                        <a href="#style" class="borders-btn btn-survey btn-experience m-2">Helper System</a>-->
-                        <a href="#style" class="borders-btn btn-survey btn-experience m-2">Data Analyst</a>-->
-                    </div>
+                    <div class="row justify-content-center" id="position-container"></div>
                 </div>
 
                 <div id="style" class="survey mt-100 mb-100">
@@ -109,10 +97,7 @@
                         </div>
                     </div>
                     <div class="row justify-content-center">
-                        <a th:href="@{/templates}" class="borders-btn btn-survey btn-style m-2">Đơn giản, chuyên nghiệp</a>-->
-                        <a th:href="@{/templates}" class="borders-btn btn-survey btn-style m-2">Hiện đại, sáng tạo</a>-->
-                        <a th:href="@{/templates}" class="borders-btn btn-survey btn-style m-2">Truyền thống, nghiêm túc</a>-->
-                        <a th:href="@{/templates}" class="borders-btn btn-survey btn-style m-2">Tối giản, thanh lịch</a>-->
+                        <a href="#" class="borders-btn btn-survey btn-style m-2" th:each="style : ${styles}" th:data-style-id="${style.id}" th:text="${style.styleName}"></a>
                     </div>
                 </div>
             </div>
@@ -140,12 +125,72 @@
     </div>
 </footer>
 <!-- JS here -->
+
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        const industryButtons = document.querySelectorAll(".btn-industry");
+        const positionsContainer = document.getElementById("position-container");
+        let selectedPositionId = null;
+        let selectedIndustryId = null;
+        const styleButtons = document.querySelectorAll(".btn-style");
+        industryButtons.forEach(btn => {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                const industryId = btn.getAttribute("data-id");
+                selectedIndustryId = industryId;
+                const apiBaseUrl = /*[[${apiBaseUrl}]]*/ 'http://localhost:8090/api';
+                const apiUrl = apiBaseUrl + "/positions/getPositionByIndustryId?industryId=" + industryId;
+
+                fetch(apiUrl)
+                    .then(response => {
+                        if (!response.ok) throw new Error("Lỗi khi lấy positions");
+                        return response.json();
+                    })
+                    .then(data => {
+                        positionsContainer.innerHTML = "";
+                        data.forEach(pos => {
+                            const a = document.createElement("a");
+                            a.href = "#style";
+                            a.className = "borders-btn btn-survey btn-experience btn-position m-2";
+                            a.innerText = pos.name;
+                            a.setAttribute("data-id", pos.id);
+
+                            a.addEventListener("click", function () {
+                                selectedPositionId = pos.id;
+                                console.log("Selected Position ID:", selectedPositionId);
+                            });
+                            positionsContainer.appendChild(a);
+                        });
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert("Không thể tải dữ liệu ngành nghề!")
+                    });
+            });
+        });
+        styleButtons.forEach(btn => {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                const styleId = btn.getAttribute("data-style-id");
+
+                if (!selectedPositionId) {
+                    alert("Vui lòng chọn một vị trí trước khi chọn style.");
+                    return;
+                }
+                window.location.href = `/templates?industryId=${selectedIndustryId}&positionId=${selectedPositionId}&styleId=${styleId}`;
+            });
+        });
+    });
+</script>
+
 <script th:src="@{/user/js/vendor/jquery-1.12.4.min.js}"></script>
 <script th:src="@{/user/js/bootstrap.min.js}"></script>
 <script th:src="@{/user/js/jquery.slicknav.min.js}"></script>
 <script th:src="@{/user/js/owl.carousel.min.js}"></script>
 <script th:src="@{/user/js/slick.min.js}"></script>
 <script th:src="@{/user/js/main.js}"></script>
+
+
 
 </body>
 </html>

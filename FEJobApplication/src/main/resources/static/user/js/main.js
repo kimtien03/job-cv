@@ -31,41 +31,33 @@
     });
 
     $(document).ready(function () {
-      $('a[href^="#"]').on('click', function (e) {
-        // e.preventDefault();
+      $(document).on('click', 'a[href^="#"]', function (e) {
         const target = this.getAttribute('href');
         const $target = $(target);
-        // Thêm .active vào section được cuộn tới
-        $target.addClass('active');
         if ($target.length) {
-          // Cuộn mượt đến phần tử
+          e.preventDefault();
+          $target.addClass('active');
           $('html, body').animate({
-            scrollTop: $target.offset().top - 50 // chỉnh khoảng cách nếu cần
+            scrollTop: $target.offset().top - 50
           }, 100);
-
         }
       });
     });
 
+
     $(document).ready(function () {
-      $('.btn-survey.btn-industry').on('click', function () {
-        // Xoá 'active' khỏi tất cả các nút
+      $(document).on('click', '.btn-survey.btn-industry', function () {
         $('.btn-survey.btn-industry').removeClass('active');
-        // Thêm 'active' cho nút được click
         $(this).addClass('active');
       });
 
-      $('.btn-survey.btn-experience').on('click', function () {
-        // Xoá 'active' khỏi tất cả các nút
+      $(document).on('click', '.btn-survey.btn-experience', function () {
         $('.btn-survey.btn-experience').removeClass('active');
-        // Thêm 'active' cho nút được click
         $(this).addClass('active');
       });
 
-      $('.btn-survey.btn-style').on('click', function () {
-        // Xoá 'active' khỏi tất cả các nút
+      $(document).on('click', '.btn-survey.btn-style', function () {
         $('.btn-survey.btn-style').removeClass('active');
-        // Thêm 'active' cho nút được click
         $(this).addClass('active');
       });
     });

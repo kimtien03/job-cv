@@ -1,5 +1,6 @@
 package com.example.BEJobApplication.Config;
 
+import com.example.BEJobApplication.Utils.JwtUtils;
 import org.springframework.context.annotation.Bean;
 import com.example.BEJobApplication.Entity.User;
 import org.springframework.context.annotation.Configuration;
@@ -7,24 +8,41 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 @Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     private final String[] PUBLIC_ENDPOINT = {
             "/api/auth/login",
             "/api/auth/register",
-            "/api/User/GetAllUser",
+            "/api/auth/logingoogle",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/api-docs",
+            "/api-docs/swagger-config",
+            "/api-docs/**"
+//            "/api/fields/**"
 
     };
+    private final JwtUtils jwtUtils; // Inject JwtUtils
 
     private final CustomUserDetailsService userDetailsService;
 
-    public SecurityConfig(CustomUserDetailsService userDetailsService) {
+    public SecurityConfig(CustomUserDetailsService userDetailsService,JwtUtils jwtUtils) {
         this.userDetailsService = userDetailsService;
+        this.jwtUtils = jwtUtils;
     }
 
     @Bean
@@ -49,28 +67,24 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests((authz) -> authz
-//                        .requestMatchers(
-//                                "/auth/login",
-//                                "/auth/register",
-//                                "/swagger-ui/**",
-//                                "/swagger-ui.html",
-//                                "/v3/api-docs",
-//                                "/v3/api-docs/**",
-//                                "/api-docs",
-//                                "/api-docs/swagger-config" ,
-//                                "/api-docs/**"
-//                        ).permitAll()
+
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Cấu hình stateless
+//                .authorizeHttpRequests((authz) -> authz
 //                        .requestMatchers(PUBLIC_ENDPOINT).permitAll()
-//                        .requestMatchers("/admin/**").hasRole("ADMIN") // Bảo vệ admin endpoints
-//                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN") // Bảo vệ user endpoints
-//                        .anyRequest().authenticated() // Các yêu cầu còn lại phải xác thực
-                        .anyRequest().permitAll()
+//                        .requestMatchers("/admin/**").hasRole("ADMIN")
+//                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+//                        .anyRequest().authenticated()
+
+                .authorizeHttpRequests(request -> request
+                        .anyRequest().permitAll() // tất cả API đều cho phép truy cập
+
                 )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .permitAll()
-                );
+                .authenticationProvider(authenticationProvider());
+        http.addFilterBefore(
+                new JWTAuthenticationFilter(jwtUtils, userDetailsService),
+                UsernamePasswordAuthenticationFilter.class
+        );
 
         return http.build();
     }

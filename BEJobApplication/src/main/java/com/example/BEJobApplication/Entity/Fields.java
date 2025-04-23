@@ -1,9 +1,6 @@
 package com.example.BEJobApplication.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -14,9 +11,9 @@ public class Fields {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @NotNull
-    @Column(name = "section_id", nullable = false)
-    private Integer section_id;
+    @ManyToOne
+    @JoinColumn(name = "section_id", nullable = false)
+    private Sections section;
 
     @NotNull
     @Column(name = "field_name", nullable = false)
@@ -27,16 +24,18 @@ public class Fields {
     private String field_type;
 
     // Constructors
-    public Fields() {}
+    public Fields() {
+    }
 
-    public Fields(Integer id, Integer section_id, String field_name, String field_type) {
+    public Fields(Integer id, Sections section, String field_name, String field_type) {
         this.id = id;
-        this.section_id = section_id;
+        this.section = section;
         this.field_name = field_name;
         this.field_type = field_type;
     }
 
     // Getters and Setters
+
     public Integer getId() {
         return id;
     }
@@ -45,12 +44,12 @@ public class Fields {
         this.id = id;
     }
 
-    public Integer getSection_id() {
-        return section_id;
+    public Sections getSection() {
+        return section;
     }
 
-    public void setSection_id(Integer section_id) {
-        this.section_id = section_id;
+    public void setSection(Sections section) {
+        this.section = section;
     }
 
     public String getField_name() {
@@ -70,11 +69,12 @@ public class Fields {
     }
 
     // toString
+
     @Override
     public String toString() {
         return "Fields{" +
                 "id=" + id +
-                ", section_id=" + section_id +
+                ", section=" + (section != null ? section.getId() : null) +
                 ", field_name='" + field_name + '\'' +
                 ", field_type='" + field_type + '\'' +
                 '}';

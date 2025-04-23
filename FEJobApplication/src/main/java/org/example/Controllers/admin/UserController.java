@@ -1,7 +1,7 @@
 package org.example.Controllers.admin;
 
+import org.example.Models.User;
 import org.example.Services.JobApiService;
-import org.example.Models.User; // Nhớ import model User
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

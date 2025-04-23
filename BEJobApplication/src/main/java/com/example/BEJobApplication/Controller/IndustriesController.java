@@ -1,8 +1,7 @@
 package com.example.BEJobApplication.Controller;
 
-import com.example.BEJobApplication.Entity.Industries;
+import com.example.BEJobApplication.DTO.IndustriesDTO;
 import com.example.BEJobApplication.Service.IndustriesService;
-import com.example.BEJobApplication.Exception.NoFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,62 +13,45 @@ import java.util.List;
 @RequestMapping("/api/industries")
 public class IndustriesController {
 
+    private final IndustriesService industriesService;
+
     @Autowired
-    private IndustriesService industriesService;
+    public IndustriesController(IndustriesService industriesService) {
+        this.industriesService = industriesService;
+    }
 
     // Lấy tất cả các ngành
     @GetMapping
-    public ResponseEntity<List<Industries>> getAllIndustries() {
-        try {
-            List<Industries> industriesList = industriesService.getAllIndustries();
-            return new ResponseEntity<>(industriesList, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<List<IndustriesDTO>> getAllIndustries() {
+        List<IndustriesDTO> industries = industriesService.getAllIndustries();
+        return new ResponseEntity<>(industries, HttpStatus.OK);
     }
 
     // Lấy ngành theo ID
     @GetMapping("/{id}")
-    public ResponseEntity<Industries> getIndustryById(@PathVariable("id") Integer id) {
-        try {
-            Industries industry = industriesService.getIndustryById(id);
-            return new ResponseEntity<>(industry, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<IndustriesDTO> getIndustryById(@PathVariable Integer id) {
+        IndustriesDTO industry = industriesService.getIndustryById(id);
+        return new ResponseEntity<>(industry, HttpStatus.OK);
     }
 
     // Tạo mới ngành
     @PostMapping
-    public ResponseEntity<Industries> createIndustry(@RequestBody Industries industry) {
-        try {
-            Industries createdIndustry = industriesService.createIndustry(industry);
-            return new ResponseEntity<>(createdIndustry, HttpStatus.CREATED);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<IndustriesDTO> createIndustry(@RequestBody IndustriesDTO industriesDTO) {
+        IndustriesDTO createdIndustry = industriesService.createIndustry(industriesDTO);
+        return new ResponseEntity<>(createdIndustry, HttpStatus.CREATED);
     }
 
-    // Cập nhật ngành
+    // Cập nhật ngành theo ID
     @PutMapping("/{id}")
-    public ResponseEntity<Industries> updateIndustry(@PathVariable("id") Integer id,
-                                                     @RequestBody Industries updatedIndustry) {
-        try {
-            Industries updated = industriesService.updateIndustry(id, updatedIndustry);
-            return new ResponseEntity<>(updated, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<IndustriesDTO> updateIndustry(@PathVariable Integer id, @RequestBody IndustriesDTO industriesDTO) {
+        IndustriesDTO updatedIndustry = industriesService.updateIndustry(id, industriesDTO);
+        return new ResponseEntity<>(updatedIndustry, HttpStatus.OK);
     }
 
     // Xóa ngành theo ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteIndustry(@PathVariable("id") Integer id) {
-        try {
-            industriesService.deleteIndustry(id);
-            return new ResponseEntity<>("Ngành đã được xóa thành công.", HttpStatus.NO_CONTENT);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Void> deleteIndustry(@PathVariable Integer id) {
+        industriesService.deleteIndustry(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

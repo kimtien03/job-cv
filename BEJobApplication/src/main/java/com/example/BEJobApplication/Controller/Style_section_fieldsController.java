@@ -1,8 +1,7 @@
 package com.example.BEJobApplication.Controller;
 
-import com.example.BEJobApplication.Entity.Style_section_fields;
+import com.example.BEJobApplication.DTO.StyleSectionFieldsDTO;
 import com.example.BEJobApplication.Service.Style_section_fieldsService;
-import com.example.BEJobApplication.Exception.NoFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,62 +13,38 @@ import java.util.List;
 @RequestMapping("/api/style-section-fields")
 public class Style_section_fieldsController {
 
+    private final Style_section_fieldsService styleSectionFieldsService;
+
     @Autowired
-    private Style_section_fieldsService styleSectionFieldsService;
-
-    // Lấy tất cả style_section_fields
-    @GetMapping
-    public ResponseEntity<List<Style_section_fields>> getAllStyleSectionFields() {
-        try {
-            List<Style_section_fields> list = styleSectionFieldsService.getAllStyleSectionFields();
-            return new ResponseEntity<>(list, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    public Style_section_fieldsController(Style_section_fieldsService styleSectionFieldsService) {
+        this.styleSectionFieldsService = styleSectionFieldsService;
     }
 
-    // Lấy style_section_field theo ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Style_section_fields> getStyleSectionFieldById(@PathVariable("id") Integer id) {
-        try {
-            Style_section_fields styleSectionField = styleSectionFieldsService.getById(id);
-            return new ResponseEntity<>(styleSectionField, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-    }
-
-    // Tạo mới style_section_field
+    // Tạo mới hoặc cập nhật một Style_section_field
     @PostMapping
-    public ResponseEntity<Style_section_fields> createStyleSectionField(@RequestBody Style_section_fields data) {
-        try {
-            Style_section_fields createdData = styleSectionFieldsService.create(data);
-            return new ResponseEntity<>(createdData, HttpStatus.CREATED);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<StyleSectionFieldsDTO> saveStyleSectionField(@RequestBody StyleSectionFieldsDTO styleSectionFieldsDTO) {
+        StyleSectionFieldsDTO savedStyleSectionField = styleSectionFieldsService.save(styleSectionFieldsDTO);
+        return new ResponseEntity<>(savedStyleSectionField, HttpStatus.CREATED);
     }
 
-    // Cập nhật style_section_field
-    @PutMapping("/{id}")
-    public ResponseEntity<Style_section_fields> updateStyleSectionField(@PathVariable("id") Integer id,
-                                                                        @RequestBody Style_section_fields updatedData) {
-        try {
-            Style_section_fields updated = styleSectionFieldsService.update(id, updatedData);
-            return new ResponseEntity<>(updated, HttpStatus.OK);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    // Lấy thông tin một Style_section_field theo ID
+    @GetMapping("/{id}")
+    public ResponseEntity<StyleSectionFieldsDTO> getStyleSectionFieldById(@PathVariable Integer id) {
+        StyleSectionFieldsDTO styleSectionField = styleSectionFieldsService.getById(id);
+        return new ResponseEntity<>(styleSectionField, HttpStatus.OK);
     }
 
-    // Xóa style_section_field
+    // Lấy tất cả các Style_section_field
+    @GetMapping
+    public ResponseEntity<List<StyleSectionFieldsDTO>> getAllStyleSectionFields() {
+        List<StyleSectionFieldsDTO> styleSectionFields = styleSectionFieldsService.getAll();
+        return new ResponseEntity<>(styleSectionFields, HttpStatus.OK);
+    }
+
+    // Xóa một Style_section_field theo ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteStyleSectionField(@PathVariable("id") Integer id) {
-        try {
-            styleSectionFieldsService.delete(id);
-            return new ResponseEntity<>("style_section_field đã được xóa thành công.", HttpStatus.NO_CONTENT);
-        } catch (NoFoundException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Void> deleteStyleSectionField(@PathVariable Integer id) {
+        styleSectionFieldsService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
