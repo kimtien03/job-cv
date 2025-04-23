@@ -108,4 +108,18 @@ public class UserService {
 
     }
 
+    public void updatePassword(String email, String newPassword) {
+        // Mã hóa mật khẩu nếu cần
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z\\d])[A-Za-z\\d\\W]{8,}$";
+
+        if (newPassword == null || !newPassword.matches(regex)) {
+            throw new NoFoundException("Password phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt");
+        }
+        if (email == null || !email.matches("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$")) {
+            throw new NoFoundException("Email không hợp lệ");
+        }
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        userRepository.updatePasswordByEmail(email,encodedPassword);
+    }
+
 }

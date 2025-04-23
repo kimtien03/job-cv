@@ -1,0 +1,131 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reset Password</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/user/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/style.css}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<body th:style="|background-image: url('/user/img/logo/backgroundlogin.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 100vh;|">
+<main class="login-body">
+    <form id="resetPasswordForm" class="form-default"  onsubmit="return validatePassword(event);">
+        <div class="login-form" style="box-shadow: 0 4px 15px rgba(0,0,0,0.3)">
+            <div class="logo-login">
+                <a><img th:src="@{/user/img/logo/loader.png}" alt=""></a>
+            </div>
+            <h2>Đặt Lại Mật Khẩu</h2>
+
+            <!-- Email ẩn hoặc hiển thị nếu cần -->
+            <input type="hidden" name="email" id="emailInput" />
+
+            <div class="form-input">
+                <label for="newPassword">Mật khẩu mới</label>
+                <input type="password" name="newPassword" id="newPassword" required minlength="6" placeholder="Nhập mật khẩu mới">
+            </div>
+
+            <div class="form-input">
+                <label for="confirmPassword">Xác nhận mật khẩu</label>
+                <input type="password" name="confirmPassword" id="confirmPassword" required placeholder="Xác nhận mật khẩu">
+            </div>
+
+            <div class="form-input pt-30">
+                <input type="submit" value="Đặt lại mật khẩu">
+            </div>
+        </div>
+    </form>
+</main>
+
+<!-- Scripts -->
+<script th:src="@{/user/js/vendor/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/user/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<script>
+    // Tự động lấy email từ localStorage nếu có
+    document.addEventListener("DOMContentLoaded", function () {
+        const email = localStorage.getItem("email");
+        // const email ="buitaia9@gmail.com";
+        if (email) {
+            document.getElementById("emailInput").value = email;
+        }
+    });
+
+    function validatePassword(event) {
+        event.preventDefault();
+        const pass = document.getElementById("newPassword").value.trim();
+        const confirm = document.getElementById("confirmPassword").value.trim();
+
+        if (pass !== confirm) {
+            Toastify({
+                text: "Mật khẩu xác nhận không khớp!",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "linear-gradient(to right, #ff416c, #ff4b2b)"
+                }
+            }).showToast();
+            return false;
+        }
+        const formData = new FormData(document.getElementById("resetPasswordForm"));
+        const email = formData.get("email");
+        console.log("email: "+email)
+        const newPassword = formData.get("newPassword");
+
+        fetch("/reset-password", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                newPassword: newPassword
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                if (data.success) {
+                    Toastify({
+                        text: "Mật khẩu đã được thay đổi thành công!",
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        style: {
+                            background: "linear-gradient(to right, #00b09b, #96c93d)"
+                        }
+                    }).showToast();
+                    window.location.href = "/login";
+                    // Redirect or show success message as needed
+                } else {
+                    Toastify({
+                        text: "Đã có lỗi xảy ra!",
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        style: {
+                            background: "linear-gradient(to right, #ff416c, #ff4b2b)"
+                        }
+                    }).showToast();
+                }
+            })
+            .catch(error => {
+                Toastify({
+                    text: "Lỗi kết nối!",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    style: {
+                        background: "linear-gradient(to right, #ff416c, #ff4b2b)"
+                    }
+                }).showToast();
+            });
+        return true;
+    }
+</script>
+</body>
+</html>

@@ -25,6 +25,44 @@
     <link rel="stylesheet" th:href="@{/user/css/slick.css}">
     <link rel="stylesheet" th:href="@{/user/css/nice-select.css}">
     <link rel="stylesheet" th:href="@{/user/css/style.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+    <style>
+        .custom-select-wrapper {
+            position: relative;
+            width: 40%;
+            padding: 5px 5px;
+            border-radius: 2px;
+        }
+
+        .custom-select-style {
+
+            border: 1px solid #ccc;
+            background-color: #fff;
+            font-size: 16px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            box-shadow: 0 2px 5px rgba(128, 0, 128, 0.1);
+            transition: border-color 0.3s ease;
+        }
+
+        .form-label {
+            margin: 0;
+            width: 40%;
+        }
+
+        .form-input {
+            display: flex;
+        }
+
+        .custom-select-style:focus {
+            outline: none;
+            border-color: #800080;
+            box-shadow: 0 0 5px rgba(128, 0, 128, 0.4);
+        }
+    </style>
 </head>
 <body th:style="|background-image: url('user/img/logo/backgroundlogin.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 100vh;|">
 
@@ -48,36 +86,107 @@
         <div class="login-form" style="box-shadow: 0 4px 15px rgba(128, 0, 128, 0.5); padding-top: 45px;">
             <!-- Logo -->
             <div class="logo-login">
-                <a ><img th:src="@{/user/img/logo/loader.png}" alt=""></a>
+                <a><img th:src="@{/user/img/logo/loader.png}" alt=""></a>
             </div>
             <h2>Registration Here</h2>
 
+            <!-- Full name -->
             <div class="form-input">
                 <label th:for="username">Full name</label>
-                <input type="text" th:field="*{username}" placeholder="Full name">
+                <input type="text" th:field="*{username}" placeholder="Full name" required >
             </div>
+
+            <!-- Email -->
             <div class="form-input">
                 <label th:for="email">Email Address</label>
-                <input type="email" th:field="*{email}" placeholder="Email Address">
+                <input type="email" th:field="*{email}" placeholder="Email Address" required >
             </div>
+
+            <!-- Password -->
             <div class="form-input">
                 <label th:for="password">Password</label>
-                <input type="password" th:field="*{password}" placeholder="Password">
+                <input type="password" th:field="*{password}" placeholder="Password" required >
             </div>
+
+            <!-- Confirm Password -->
             <div class="form-input">
                 <label th:for="confirmPassword">Confirm Password</label>
-                <input type="password" name="confirmPassword" placeholder="Confirm Password">
+                <input type="password" name="confirmPassword" placeholder="Confirm Password" required >
             </div>
+
+            <!-- Birthdate -->
+            <div class="form-input d-flex align-items-center" style="width: 100%;">
+                <label for="birthDate" class="form-label mb-0" style="width: 35%; margin-bottom: 0;color: #FFFFFF">Birth Date</label>
+                <div style="position: relative; width: 60%;">
+                    <input type="text" id="birthDate" class="form-control flatpickr"
+                           th:field="*{birthDate}" placeholder="Select your birth date" required >
+                    <span style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none;">📅</span>
+                </div>
+            </div>
+            <!-- Gender -->
+            <div class="form-input">
+                <label th:for="gender" class="form-label">Gender</label>
+                <div class="custom-select-wrapper">
+                    <select th:field="*{gender}" class="form-select custom-select-style">
+                        <option value="" disabled selected>-- Select Gender --</option>
+                        <option value="NAM">NAM</option>
+                        <option value="NỮ">NỮ</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Submit button -->
             <div class="form-input pt-30">
                 <input type="submit" value="Registration">
             </div>
+
             <!-- Link to login -->
             <a th:href="@{/login}" class="registration">Login</a>
         </div>
     </form>
+
 </main>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 <!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    flatpickr("#birthDate", {
+        dateFormat: "Y-m-d",
+        maxDate: "today",
+        altInput: true,
+        altFormat: "F j, Y",
+        allowInput: true,
+        locale: {
+            firstDayOfWeek: 1 // tuần bắt đầu từ thứ 2
+        }
+    });
+</script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var registerError = /*[[${registerError}]]*/ '';
+    var checkRegister = /*[[${checkRegister}]]*/ '';
+    console.log("checkRegister:"+checkRegister  );
+    console.log("registerError: "+registerError);
+    localStorage.setItem('checkRegister', checkRegister);
+    if (registerError && registerError.trim() !== '') {
+        Toastify({
+            text: registerError,
+            duration: 3000,
+            newWindow: true,
+            close: true,
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true,
+            style: {
+                background: "linear-gradient(to right, #9f00c5, #d100f8)"
+            },
+            onClick: function(){} // Callback after click
+        }).showToast();
+    }
+    /*]]>*/
+</script>
+</script>
 <script th:src="@{/user/js/vendor/modernizr-3.5.0.min.js}"></script>
 <script th:src="@{/user/js/vendor/jquery-1.12.4.min.js}"></script>
 <script th:src="@{/user/js/popper.min.js}"></script>

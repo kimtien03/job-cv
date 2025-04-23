@@ -85,7 +85,6 @@
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
     var message = /*[[${message}]]*/ '';
-
     function handleCredentialResponse(response) {
         const idToken = response.credential;
         console.log("ID Token:", idToken);

@@ -6,13 +6,37 @@
     <title>OTP Verification</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSS here -->
+    <!-- CSS -->
     <link rel="stylesheet" th:href="@{/user/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/user/css/style.css}">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-</head>
-<body th:style="|background-image: url('user/img/logo/backgroundlogin.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 100vh; |">
 
+    <style>
+        .otp-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .otp-input {
+            width: 50px;
+            height: 60px;
+            font-size: 24px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .otp-input:focus {
+            border-color: #7d2ae8;
+            outline: none;
+            box-shadow: 0 0 5px #7d2ae8;
+        }
+    </style>
+</head>
+
+<body th:style="|background-image: url('/user/img/logo/backgroundlogin.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 100vh;|">
 <div id="preloader-active">
     <div class="preloader d-flex align-items-center justify-content-center">
         <div class="preloader-inner position-relative">
@@ -32,13 +56,20 @@
             </div>
             <h2>Xác minh mã OTP</h2>
 
-            <p style="text-align: center; color: #fff">Chúng tôi đã gửi mã OTP đến email/số điện thoại của bạn</p>
+            <p style="text-align: center; color: #fff">Chúng tôi đã gửi mã OTP đến email của bạn</p>
 
-            <!-- OTP Input -->
-            <div class="form-input">
-                <label for="otp">Nhập mã OTP</label>
-                <input type="text" id="otp" name="otp" placeholder="Nhập mã OTP" required>
+            <!-- Giao diện OTP từng ô -->
+            <div class="otp-container">
+                <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 1)">
+                <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 2)">
+                <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 3)">
+                <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 4)">
+                <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 5)">
+                <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 6)">
             </div>
+
+            <!-- Truyền OTP đầy đủ qua input ẩn -->
+            <input type="hidden" name="otp" id="otpValue" required>
 
             <!-- Submit -->
             <div class="form-input pt-30">
@@ -52,18 +83,22 @@
     </form>
 </main>
 
+<script th:src="@{/user/js/vendor/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/user/js/bootstrap.min.js}"></script>
+<script th:src="@{/user/js/main.js}"></script>
+<!-- Toastify -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var otpError = /*[[${otpError}]]*/ '';
-    if (otpError && otpError.trim() !== '') {
+    var otpMessage = /*[[${otpMessage}]]*/ '';
+    if (otpMessage && otpMessage.trim() !== '') {
         Toastify({
-            text: otpError,
+            text: otpMessage,
             duration: 3000,
             gravity: "top",
             position: "right",
             style: {
-                background: "linear-gradient(to right, #ff416c, #ff4b2b)"
+                background: "linear-gradient(to right, #00b09b, #96c93d)"
             }
         }).showToast();
     }
@@ -71,9 +106,114 @@
 </script>
 
 <!-- Scripts -->
-<script th:src="@{/user/js/vendor/jquery-1.12.4.min.js}"></script>
-<script th:src="@{/user/js/bootstrap.min.js}"></script>
-<script th:src="@{/user/js/main.js}"></script>
+
+
+<!-- JS xử lý chuyển ô và gom mã -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const inputs = document.querySelectorAll(".otp-input");
+
+        inputs.forEach((input, index) => {
+            input.addEventListener("input", function () {
+                input.value = input.value.replace(/[^0-9]/g, '');
+                if (input.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+                updateOtpValue();
+            });
+
+            input.addEventListener("keydown", function (e) {
+                if (e.key === "Backspace" && input.value === "" && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+
+            input.addEventListener("paste", function (e) {
+                e.preventDefault();
+                const pasteData = (e.clipboardData || window.clipboardData).getData("text").trim();
+                if (pasteData.length === 6) {
+                    for (let i = 0; i < 6; i++) {
+                        inputs[i].value = pasteData[i];
+                    }
+                    inputs[5].focus();
+                    updateOtpValue();
+                }
+            });
+        });
+
+        function updateOtpValue() {
+            let otp = '';
+            inputs.forEach(input => otp += input.value);
+            document.getElementById("otpValue").value = otp;
+        }
+    });
+    document.querySelector(".form-default").addEventListener("submit", function (event) {
+        event.preventDefault(); // Ngăn submit form truyền thống
+
+        const inputOtp = document.getElementById("otpValue").value.trim();
+        //
+
+        const savedOtp = localStorage.getItem("otp");
+        const otpTime = localStorage.getItem("otp_time");
+        const currentTime = new Date().getTime();
+        const timeDiff = currentTime - otpTime;
+        if (!savedOtp || !otpTime) {
+            return;
+        }
+        if (!savedOtp) {
+            Toastify({
+                text: "Không tìm thấy mã OTP. Vui lòng quay lại gửi lại mã.",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "linear-gradient(to right, #ff416c, #ff4b2b)"
+                }
+            }).showToast();
+            return;
+        }
+        console.log("timeDiff:"+timeDiff);
+        if (timeDiff > 5 * 60 * 1000) { // 5 phút
+            Toastify({
+                text: "Mã OTP đã hết hạn. Vui lòng yêu cầu lại mã mới!",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "linear-gradient(to right, #ff416c, #ff4b2b)"
+                }
+            }).showToast();
+        } else {
+            if (inputOtp === savedOtp) {
+                Toastify({
+                    text: "Xác minh OTP thành công!",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    style: {
+                        background: "linear-gradient(to right, #00b09b, #96c93d)"
+                    }
+                }).showToast();
+                localStorage.removeItem("otp");
+                localStorage.removeItem("email");
+                localStorage.removeItem("otp_time");
+                //temp
+                setTimeout(() => {
+                    window.location.href = "/forget/resetpass";
+                }, 1000);
+            } else {
+                Toastify({
+                    text: "Mã OTP không đúng!",
+                    duration: 3000,
+                    style: {
+                        background: "linear-gradient(to right, #ff416c, #ff4b2b)"
+                    }
+                }).showToast();
+            }
+        }
+    });
+</script>
+
 
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.example.BEJobApplication.Controller;
 import com.example.BEJobApplication.DTO.LoginRequest;
 import com.example.BEJobApplication.DTO.LoginResponse;
 import com.example.BEJobApplication.DTO.UserCreateDTO;
+import com.example.BEJobApplication.DTO.PasswordResetDTO;
 
 import com.example.BEJobApplication.DTO.GoogleLoginRequest;
 import com.example.BEJobApplication.Entity.User;
@@ -79,7 +80,6 @@ public class AuthController {
         // Bước 2: Kiểm tra user đã tồn tại trong DB chưa
         Optional<User> useroptional = userService.findByEmail(email);
 
-
         if (useroptional.isEmpty()) {
             return ResponseEntity.ok(new LoginResponse("Người dùng không tồn tại", null, null));
         }
@@ -115,6 +115,23 @@ public class AuthController {
 
     }
 
-    
+    @PutMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody PasswordResetDTO request) {
+        try {
+            Optional<User> optionalUser = userService.findByEmail(request.getEmail());
+
+            if (optionalUser.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Email không tồn tại trong hệ thống.");
+            }
+
+            userService.updatePassword(request.getEmail(), request.getNewPassword());
+
+            return ResponseEntity.ok("Đặt lại mật khẩu thành công.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Lỗi máy chủ", "message", e.getMessage()));
+        }
+    }
 
 }
