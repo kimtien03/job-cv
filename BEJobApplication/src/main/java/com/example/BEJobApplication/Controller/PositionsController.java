@@ -1,6 +1,7 @@
 package com.example.BEJobApplication.Controller;
 
 import com.example.BEJobApplication.DTO.PositionsDTO;
+import com.example.BEJobApplication.Exception.NoFoundException;
 import com.example.BEJobApplication.Service.PositionsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,17 @@ public class PositionsController {
     public ResponseEntity<PositionsDTO> getPositionById(@PathVariable Integer id) {
         PositionsDTO position = positionsService.getPositionById(id);
         return new ResponseEntity<>(position, HttpStatus.OK);
+    }
+
+    // Lấy vị trí theo IndustryID
+    @GetMapping("/getPositionByIndustryId")
+    public ResponseEntity<List<PositionsDTO>> getPositionByIndustryId(@RequestParam Integer industryId) {
+        try {
+            List<PositionsDTO> positionsList = positionsService.getPositionByIndustryId(industryId);
+            return new ResponseEntity<>(positionsList, HttpStatus.OK);
+        } catch (NoFoundException ex) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     // Tạo mới vị trí

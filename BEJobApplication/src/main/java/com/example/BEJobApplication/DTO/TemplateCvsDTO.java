@@ -63,6 +63,7 @@ public class TemplateCvsDTO {
                 "id=" + id +
                 ", positionId=" + positionId +
                 ", styleId=" + styleId +
+                ", image=" + image +
                 '}';
     }
 }

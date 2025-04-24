@@ -4,6 +4,9 @@ import com.example.BEJobApplication.DTO.TemplateCvsDTO;
 import com.example.BEJobApplication.Service.Template_cvsService;
 import com.example.BEJobApplication.Exception.NoFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,34 +17,35 @@ import java.util.List;
 @RequestMapping("/api/template-cvs")
 public class Template_cvsController {
 
+    private static final int TEMPLATES_PER_PAGE = 6;
+
     @Autowired
     private Template_cvsService template_cvsService;
 
-    // Lấy tất cả TemplateCVs
-    @GetMapping
-    public List<TemplateCvsDTO> getAllTemplateCvs() {
-        return template_cvsService.getAllTemplateCvs();
+
+    // Lấy thông tin Template CV theo ID
+    @GetMapping("/{id}")
+    public ResponseEntity<TemplateCvsDTO> getTemplateCvsById(@PathVariable Integer id) {
+        TemplateCvsDTO templateCvs = template_cvsService.getTemplateCvsById(id);
+        return new ResponseEntity<>(templateCvs, HttpStatus.OK);
     }
 
-    // Lấy TemplateCVs theo PositionId và StyleId
-    @GetMapping("/search")
-    public ResponseEntity<?> getTemplateByPositionAndStyle(
+    // Lấy template cv theo filter
+    @GetMapping()
+    public ResponseEntity<?> getTemplateCvs(
+            @RequestParam(value = "industryId", required = false) Integer industryId,
             @RequestParam(value = "positionId", required = false) Integer positionId,
-            @RequestParam(value = "styleId", required = false) Integer styleId) {
-
+            @RequestParam(value = "styleId", required = false) Integer styleId,
+            @RequestParam(value = "page", required = false, defaultValue = "1") Integer page
+    ) {
         try {
-            // Gọi service để lấy dữ liệu
-            List<TemplateCvsDTO> templates = template_cvsService.getTemplateByPositionAndStyle(positionId, styleId);
-            return new ResponseEntity<>(templates, HttpStatus.OK);  // Trả về danh sách templates nếu không có lỗi
+            Pageable pageable = PageRequest.of(page-1, TEMPLATES_PER_PAGE);
+            Page<TemplateCvsDTO> result = template_cvsService.filterTemplates(industryId, positionId, styleId, pageable);
+            return ResponseEntity.ok(result);
         } catch (NoFoundException ex) {
-            // Nếu có lỗi NoFoundException, trả về lỗi 404
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        } catch (IllegalArgumentException ex) {
-            // Nếu có lỗi IllegalArgumentException (ví dụ: tham số không hợp lệ)
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Not Found: " + ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
-            // Bắt tất cả các lỗi khác và trả về lỗi 500
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Lỗi server: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
