@@ -2,33 +2,67 @@ package com.example.BEJobApplication.Controller;
 
 import com.example.BEJobApplication.DTO.TemplateCvsDTO;
 import com.example.BEJobApplication.Service.Template_cvsService;
+import com.example.BEJobApplication.Exception.NoFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/template-cvs")
 public class Template_cvsController {
 
-    private final Template_cvsService templateCvsService;
-
     @Autowired
-    public Template_cvsController(Template_cvsService templateCvsService) {
-        this.templateCvsService = templateCvsService;
+    private Template_cvsService template_cvsService;
+
+    // Lấy tất cả TemplateCVs
+    @GetMapping
+    public List<TemplateCvsDTO> getAllTemplateCvs() {
+        return template_cvsService.getAllTemplateCvs();
     }
 
-    // Tạo hoặc cập nhật Template CV
+    // Lấy TemplateCVs theo PositionId và StyleId
+    @GetMapping("/search")
+    public ResponseEntity<?> getTemplateByPositionAndStyle(
+            @RequestParam(value = "positionId", required = false) Integer positionId,
+            @RequestParam(value = "styleId", required = false) Integer styleId) {
+
+        try {
+            // Gọi service để lấy dữ liệu
+            List<TemplateCvsDTO> templates = template_cvsService.getTemplateByPositionAndStyle(positionId, styleId);
+            return new ResponseEntity<>(templates, HttpStatus.OK);  // Trả về danh sách templates nếu không có lỗi
+        } catch (NoFoundException ex) {
+            // Nếu có lỗi NoFoundException, trả về lỗi 404
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException ex) {
+            // Nếu có lỗi IllegalArgumentException (ví dụ: tham số không hợp lệ)
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } catch (Exception ex) {
+            // Bắt tất cả các lỗi khác và trả về lỗi 500
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // Tạo mới TemplateCVs
     @PostMapping
-    public ResponseEntity<TemplateCvsDTO> saveTemplateCvs(@RequestBody TemplateCvsDTO templateCvsDTO) {
-        TemplateCvsDTO savedTemplateCvs = templateCvsService.saveTemplateCvs(templateCvsDTO);
-        return new ResponseEntity<>(savedTemplateCvs, HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public TemplateCvsDTO createTemplateCvs(@RequestBody TemplateCvsDTO dto) {
+        return template_cvsService.createTemplateCvs(dto);
     }
 
-    // Lấy thông tin Template CV theo ID
-    @GetMapping("/{id}")
-    public ResponseEntity<TemplateCvsDTO> getTemplateCvsById(@PathVariable Integer id) {
-        TemplateCvsDTO templateCvs = templateCvsService.getTemplateCvsById(id);
-        return new ResponseEntity<>(templateCvs, HttpStatus.OK);
+    // Cập nhật TemplateCVs theo ID
+    @PutMapping("/{id}")
+    public TemplateCvsDTO updateTemplateCvs(@PathVariable Integer id, @RequestBody TemplateCvsDTO dto) {
+        return template_cvsService.updateTemplateCvs(id, dto);
     }
+
+    // Xóa TemplateCVs theo ID
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTemplateCvs(@PathVariable Integer id) {
+        template_cvsService.deleteTemplateCvs(id);
+    }
+
 }

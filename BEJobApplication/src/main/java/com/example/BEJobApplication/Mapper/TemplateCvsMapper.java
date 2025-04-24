@@ -15,10 +15,9 @@ public class TemplateCvsMapper {
         TemplateCvsDTO dto = new TemplateCvsDTO();
         dto.setId(templateCvs.getId());
 
-        // Nếu có, gán các ID của các mối quan hệ
         dto.setPositionId(templateCvs.getPositions() != null ? templateCvs.getPositions().getId() : null);
         dto.setStyleId(templateCvs.getStyle() != null ? templateCvs.getStyle().getId() : null);
-
+        dto.setImage(templateCvs.getImage());
         return dto;
     }
 
@@ -31,6 +30,7 @@ public class TemplateCvsMapper {
         entity.setId(dto.getId());
         entity.setPositions(positions);
         entity.setStyle(style);
+        entity.setImage(dto.getImage());
 
         return entity;
     }
