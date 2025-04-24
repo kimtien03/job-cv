@@ -47,6 +47,15 @@ public class AuthController {
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // Thêm dòng này
 
+    @PostMapping("/check-email")
+    public ResponseEntity<Boolean> checkEmail(@RequestBody String email) {
+        System.out.println("Email nhận được: " + email); // Log email nhận được
+        email = email.replace("\"", "").trim();
+        boolean exists = userService.emailExists(email);
+        System.out.println("Email tồn tại: " + exists);
+        return ResponseEntity.ok(exists);
+    }
+
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
         // Sử dụng Optional để kiểm tra người dùng có tồn tại không

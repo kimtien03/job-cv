@@ -133,6 +133,8 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     var loginError = /*[[${loginError}]]*/ '';
+    var toastMessage = /*[[${toastMessage}]]*/ '';
+    console.log("toastMessage: "+toastMessage)
     if (loginError && loginError.trim() !== '') {
         Toastify({
             text: loginError,
@@ -147,6 +149,28 @@
             },
             onClick: function(){} // Callback after click
         }).showToast();
+        loginError='';
+    }
+    /*]]>*/
+
+    if (!toastMessage || toastMessage.trim() === '') {
+        toastMessage = localStorage.getItem('toastMessage');
+    }
+    if (toastMessage && toastMessage.trim() !== '') {
+        Toastify({
+            text: toastMessage,
+            duration: 3000,
+            newWindow: true,
+            close: true,
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true,
+            style: {
+                background: "linear-gradient(to right, #9f00c5, #d100f8)"
+            },
+            onClick: function(){} // Callback after click
+        }).showToast();
+        localStorage.removeItem('toastMessage');
     }
     /*]]>*/
 </script>

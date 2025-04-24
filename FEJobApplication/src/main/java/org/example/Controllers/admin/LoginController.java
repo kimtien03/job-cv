@@ -1,5 +1,7 @@
 package org.example.Controllers.admin;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.example.Models.*;
 
 import org.example.Services.JobApiService;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,47 +49,71 @@ public class LoginController {
         model.addAttribute("user", new User());
         return "Auth/otp";
     }
+
     @GetMapping("/forget/resetpass")
     public String resetPass(Model model) {
         model.addAttribute("user", new User());
         return "Auth/resetPass";
     }
+
+    @PostMapping("/check-email")
+    public ResponseEntity<Boolean> checkEmailFromBE(@RequestBody String email) {
+        boolean exists = jobService.checkEmailExists(email);
+        return ResponseEntity.ok(exists);
+    }
+
     @PostMapping("/login")
-    public String login(@ModelAttribute("user") User user, Model model) {
+    public String login(@ModelAttribute("user") User user,
+                        RedirectAttributes redirectAttributes,
+                        Model model,
+                        HttpServletResponse response) {
         LoginRequest loginRequest = new LoginRequest(user.getUsername(), user.getPassword());
         try {
-            ResponseEntity<LoginResponse> response = jobService.login(loginRequest);
-            if (response.getBody().getToken() != null && response.getBody().getUser() != null) {
-                model.addAttribute("message", "Đăng nhập thành công!");
-                if (response.getBody().getUser().getRole().equals("ADMIN")) {
-                    return "redirect:admin/";
+            ResponseEntity<LoginResponse> loginResponse = jobService.login(loginRequest);
+            if (loginResponse.getBody().getToken() != null && loginResponse.getBody().getUser() != null) {
+                // Thêm cookie có thời hạn 1 tiếng (3600 giây)
+                Cookie tokenCookie = new Cookie("token", loginResponse.getBody().getToken());
+                tokenCookie.setMaxAge(3600); // 1 giờ
+                tokenCookie.setPath("/");
+                tokenCookie.setHttpOnly(true); // Tùy chọn bảo mật
+                Cookie usernameCookie = new Cookie("username", loginResponse.getBody().getUser().getUsername());
+                usernameCookie.setMaxAge(3600);
+                usernameCookie.setPath("/");
+                // Gửi cookie về client
+                response.addCookie(tokenCookie);
+                response.addCookie(usernameCookie);
+                // Toast và chuyển hướng
+                redirectAttributes.addFlashAttribute("toastMessage", "Đăng nhập thành công!");
+                if ("ADMIN".equals(loginResponse.getBody().getUser().getRole())) {
+                    return "redirect:/admin/";
                 } else {
                     return "redirect:/";
                 }
             } else {
-                model.addAttribute("loginError", response.getBody().getMessage());
+                model.addAttribute("loginError", loginResponse.getBody().getMessage());
                 return "Auth/login";
             }
 
         } catch (Exception e) {
             model.addAttribute("loginError", "Lỗi kết nối máy chủ!");
             return "Auth/login";
-
         }
     }
+
     @PostMapping("/register")
-    public String register(@ModelAttribute("user") UserCreate user, Model model) {
+    public String register(@ModelAttribute("user") UserCreate user, RedirectAttributes redirectAttributes, Model model) {
         try {
             user.setRole("USER");
             ResponseEntity<?> response = jobService.register(user);
             // Kiểm tra xem response có thành công không
             if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
-                model.addAttribute("checkRegister", true);
+                redirectAttributes.addFlashAttribute("toastMessage", "Đăng ký thành công!");
                 return "redirect:/login";
             } else {
                 // Nếu không thành công, xử lý lỗi trả về
                 if (response.getBody() != null) {
                     ErrorResponse errorResponse = (ErrorResponse) response.getBody();
+                    System.out.println(errorResponse.getMessage());
                     model.addAttribute("registerError", errorResponse.getMessage());
                 } else {
                     model.addAttribute("registerError", "Lỗi không xác định.");
@@ -101,26 +128,48 @@ public class LoginController {
 
     @PostMapping("/google")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> loginWithGoogle(@RequestBody Map<String, String> payload) {
+    public ResponseEntity<Map<String, Object>> loginWithGoogle(@RequestBody Map<String, String> payload,
+                                                               HttpServletResponse response) {
         Map<String, Object> responseData = new HashMap<>();
 
         try {
             String idToken = payload.get("idToken");
-            ResponseEntity<LoginResponse> response = jobService.loginWithGoogle(idToken);
+            ResponseEntity<LoginResponse> loginResponse = jobService.loginWithGoogle(idToken);
 
-            if (response.getBody().getToken() != null && response.getBody().getUser() != null) {
-                responseData.put("LoginResponse", response);
+            if (loginResponse.getBody().getToken() != null && loginResponse.getBody().getUser() != null) {
+                // Thêm cookie: token, username, email...
+                Cookie tokenCookie = new Cookie("token", loginResponse.getBody().getToken());
+                tokenCookie.setMaxAge(3600); // 1 giờ
+                tokenCookie.setHttpOnly(true);
+                tokenCookie.setPath("/");
+
+                Cookie emailCookie = new Cookie("email", loginResponse.getBody().getUser().getEmail());
+                emailCookie.setMaxAge(3600);
+                emailCookie.setPath("/");
+
+                Cookie fullnameCookie = new Cookie("fullname", loginResponse.getBody().getUser().getUsername());
+                fullnameCookie.setMaxAge(3600);
+                fullnameCookie.setPath("/");
+
+                // Gửi cookie về client
+                response.addCookie(tokenCookie);
+                response.addCookie(emailCookie);
+                response.addCookie(fullnameCookie);
+
+                responseData.put("LoginResponse", loginResponse);
                 return ResponseEntity.ok(responseData);
             } else {
-                responseData.put("LoginResponse", response);
+                responseData.put("LoginResponse", loginResponse);
                 return ResponseEntity.ok(responseData);
             }
+
         } catch (Exception e) {
             responseData.put("success", false);
             responseData.put("message", "Lỗi hệ thống khi đăng nhập bằng Google!");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseData);
         }
     }
+
     @PutMapping("/reset-password")
     public ResponseEntity<Map<String, Object>> resetPassword(@RequestBody ResetPasswordRequest request) {
         try {

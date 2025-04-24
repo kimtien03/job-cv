@@ -101,10 +101,43 @@
     document.getElementById("otpForm").addEventListener("submit", function (event) {
         event.preventDefault();
         const email = document.getElementById("email").value;
-        console.log("email: " + email)
-        const otp = generateOtp();
-        console.log("otp: " + otp)
-        sendOtp(email, otp);
+        fetch("/check-email", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(email)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data === true) {
+                    const otp = generateOtp();
+                    sendOtp(email, otp);
+                } else {
+                    Toastify({
+                        text: "Email không tồn tại trong hệ thống!",
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        style: {
+                            background: "linear-gradient(to right, #ff416c, #ff4b2b)"
+                        }
+                    }).showToast();
+                }
+            })
+            .catch(err => {
+                console.error("Lỗi khi kiểm tra email:", err);
+                Toastify({
+                    text: "Không thể kiểm tra email. Vui lòng thử lại!",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    style: {
+                        background: "linear-gradient(to right, #ff416c, #ff4b2b)"
+                    }
+                }).showToast();
+            });
+
     });
 </script>
 <!-- Scripts -->

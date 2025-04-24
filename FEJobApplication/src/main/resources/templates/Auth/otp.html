@@ -77,17 +77,19 @@
             </div>
 
             <div class="text-center mt-2">
-                <a th:href="@{/resend-otp}" class="registration">Gửi lại mã?</a>
+                <a href="#" id="resendOtpBtn" class="registration">Gửi lại mã?</a>
             </div>
         </div>
     </form>
 </main>
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script th:src="@{/user/js/vendor/jquery-1.12.4.min.js}"></script>
 <script th:src="@{/user/js/bootstrap.min.js}"></script>
 <script th:src="@{/user/js/main.js}"></script>
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
 <!-- Toastify -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
     var otpMessage = /*[[${otpMessage}]]*/ '';
@@ -106,7 +108,78 @@
 </script>
 
 <!-- Scripts -->
+<!--//gửi lại mã-->
+<script>
+    // Khởi tạo EmailJS (thay thế bằng user ID của bạn)
+    (function () {
+        emailjs.init({
+            publicKey: "hSyhYyhamsAFDzIDd",
+        });
+    })();
 
+    // Hàm tạo mã OTP
+    function generateOtp() {
+        return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+    function sendOtp(email, otp) {
+        const templateParams = {
+            email: email,
+            otp: otp,
+        };
+
+        emailjs.send('service_lt1yl4t', 'template_cmmu0vm', templateParams)
+            .then(function (response) {
+                console.log("templateParams: " + templateParams.otp)
+                console.log("Success:", response);
+                localStorage.setItem("otp", otp);
+                localStorage.setItem("email", email);
+                localStorage.setItem("otp_time", new Date().getTime());
+                // Chuyển sang trang nhập mã OTP
+                Toastify({
+                    text: "Mã OTP đã được gửi đến email của bạn!",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    style: {
+                        background: "linear-gradient(to right, #ff416c, #ff4b2b)"
+                    }
+                }).showToast();
+            }, function (error) {
+                Toastify({
+                    text: "Gửi email thất bại. Vui lòng kiểm tra lại.",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    style: {
+                        background: "linear-gradient(to right, #ff416c, #ff4b2b)"
+                    }
+                }).showToast();
+                console.error("Error:", error);
+            });
+    }
+    document.getElementById("resendOtpBtn").addEventListener("click", function (event) {
+        event.preventDefault();
+        const email = localStorage.getItem("email");
+        // localStorage.removeItem('email')
+        console.log("email:"+email);
+        if (!email) {
+            Toastify({
+                text: "Không tìm thấy email. Vui lòng quay lại bước đầu.",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "linear-gradient(to right, #ff416c, #ff4b2b)"
+                }
+            }).showToast();
+            return;
+        }
+        const otp = generateOtp();
+        sendOtp(email, otp);
+
+
+    });
+</script>
 
 <!-- JS xử lý chuyển ô và gom mã -->
 <script>
@@ -172,7 +245,6 @@
             }).showToast();
             return;
         }
-        console.log("timeDiff:"+timeDiff);
         if (timeDiff > 5 * 60 * 1000) { // 5 phút
             Toastify({
                 text: "Mã OTP đã hết hạn. Vui lòng yêu cầu lại mã mới!",
@@ -195,7 +267,6 @@
                     }
                 }).showToast();
                 localStorage.removeItem("otp");
-                localStorage.removeItem("email");
                 localStorage.removeItem("otp_time");
                 //temp
                 setTimeout(() => {

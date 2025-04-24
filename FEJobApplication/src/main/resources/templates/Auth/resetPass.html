@@ -90,15 +90,7 @@
             .then(data => {
                 console.log(data)
                 if (data.success) {
-                    Toastify({
-                        text: "Mật khẩu đã được thay đổi thành công!",
-                        duration: 3000,
-                        gravity: "top",
-                        position: "right",
-                        style: {
-                            background: "linear-gradient(to right, #00b09b, #96c93d)"
-                        }
-                    }).showToast();
+                    localStorage.setItem("toastMessage", "Mật khẩu đã được thay đổi thành công!")
                     window.location.href = "/login";
                     // Redirect or show success message as needed
                 } else {

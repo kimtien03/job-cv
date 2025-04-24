@@ -70,6 +70,30 @@ public class JobApiService {
             return new ResponseEntity<>(new LoginResponse("Lỗi kết nối máy chủ!", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    public boolean checkEmailExists(String email) {
+        String url = "http://localhost:8090/api/auth/check-email";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_PLAIN); // dùng TEXT_PLAIN vì gửi chuỗi đơn
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(email, headers);
+
+        try {
+            ResponseEntity<Boolean> response = restTemplate.exchange(
+                    url,
+                    HttpMethod.POST,
+                    requestEntity,
+                    Boolean.class
+            );
+            return response.getBody() != null && response.getBody();
+        } catch (HttpClientErrorException e) {
+            System.out.println("Lỗi BE: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.out.println("Lỗi khác: " + e.getMessage());
+            return false;
+        }
+    }
 
     public ResponseEntity<?> register(UserCreate user) {
         try {
@@ -121,7 +145,7 @@ public class JobApiService {
         } catch (Exception e) {
             return new ResponseEntity<>(new LoginResponse("Lỗi kết nối máy chủ!", null, null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+        }
     public ResponseEntity<?> resetPassword(String email, String newPassword) {
         try {
             String url = "http://localhost:8090/api/auth/reset-password";

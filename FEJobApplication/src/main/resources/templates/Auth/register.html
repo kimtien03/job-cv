@@ -82,7 +82,7 @@
 <!-- Register -->
 <main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
     <!-- Register Form -->
-    <form class="form-default" th:action="@{/register}" method="post" th:object="${user}">
+    <form id="formRegister" class="form-default" th:action="@{/register}" method="post" th:object="${user}">
         <div class="login-form" style="box-shadow: 0 4px 15px rgba(128, 0, 128, 0.5); padding-top: 45px;">
             <!-- Logo -->
             <div class="logo-login">
@@ -105,13 +105,13 @@
             <!-- Password -->
             <div class="form-input">
                 <label th:for="password">Password</label>
-                <input type="password" th:field="*{password}" placeholder="Password" required >
+                <input id="password" type="password" th:field="*{password}" placeholder="Password" required >
             </div>
 
             <!-- Confirm Password -->
             <div class="form-input">
                 <label th:for="confirmPassword">Confirm Password</label>
-                <input type="password" name="confirmPassword" placeholder="Confirm Password" required >
+                <input id="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm Password" required >
             </div>
 
             <!-- Birthdate -->
@@ -127,8 +127,8 @@
             <div class="form-input">
                 <label th:for="gender" class="form-label">Gender</label>
                 <div class="custom-select-wrapper">
-                    <select th:field="*{gender}" class="form-select custom-select-style">
-                        <option value="" disabled selected>-- Select Gender --</option>
+                    <select name="gender" th:field="*{gender}" class="form-select custom-select-style">
+                        <option value= "" selected>-- Select Gender --</option>
                         <option value="NAM">NAM</option>
                         <option value="NỮ">NỮ</option>
                     </select>
@@ -166,8 +166,8 @@
     /*<![CDATA[*/
     var registerError = /*[[${registerError}]]*/ '';
     var checkRegister = /*[[${checkRegister}]]*/ '';
-    console.log("checkRegister:"+checkRegister  );
-    console.log("registerError: "+registerError);
+    console.log("checkRegister:" + checkRegister);
+    console.log("registerError: " + registerError);
     localStorage.setItem('checkRegister', checkRegister);
     if (registerError && registerError.trim() !== '') {
         Toastify({
@@ -181,11 +181,50 @@
             style: {
                 background: "linear-gradient(to right, #9f00c5, #d100f8)"
             },
-            onClick: function(){} // Callback after click
+            onClick: function() {} // Callback after click
         }).showToast();
+        // Reset registerError
     }
+    registerError = '';
     /*]]>*/
+    document.getElementById("formRegister").addEventListener("submit", function (e) {
+        const gender = document.querySelector('select[name="gender"]').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        // Kiểm tra giới tính
+        if (!gender) {
+            e.preventDefault(); // Ngừng gửi form
+            Toastify({
+                text: "Vui lòng chọn giới tính.",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "linear-gradient(to right, #ff416c, #ff4b2b)",
+                }
+            }).showToast();
+        }
+
+        // Kiểm tra mật khẩu và xác nhận mật khẩu không khớp
+        if (password !== confirmPassword) {
+            e.preventDefault(); // Ngừng gửi form
+            Toastify({
+                text: "Mật khẩu và xác nhận mật khẩu không khớp.",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "linear-gradient(to right, #ff416c, #ff4b2b)",
+                }
+            }).showToast();
+            return; // Dừng lại ở đây để không tiếp tục kiểm tra lỗi khác
+        }
+        console.log("test1")
+        // Nếu mật khẩu khớp, kiểm tra lỗi từ server (registerError)
+    });
 </script>
+
 </script>
 <script th:src="@{/user/js/vendor/modernizr-3.5.0.min.js}"></script>
 <script th:src="@{/user/js/vendor/jquery-1.12.4.min.js}"></script>
