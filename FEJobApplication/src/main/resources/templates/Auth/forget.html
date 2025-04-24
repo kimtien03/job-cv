@@ -1,0 +1,148 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Forget Password</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/user/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/style.css}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+
+</head>
+<body th:style="|background-image: url('user/img/logo/backgroundlogin.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 100vh;|">
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img th:src="@{/user/img/logo/loader.png}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<main class="login-body">
+
+    <form id="otpForm" class="form-default">
+        <div class="login-form" style="box-shadow: 0 4px 15px rgba(128, 0, 128, 0.5); ">
+            <div class="logo-login">
+                <a><img th:src="@{/user/img/logo/loader.png}" alt=""></a>
+            </div>
+            <h2>Reset Password</h2>
+
+            <div class="form-input">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Nhập địa chỉ email của bạn" required
+                       pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                       title="Vui lòng nhập đúng định dạng email và không bỏ trống!">
+            </div>
+
+            <div class="form-input pt-30">
+                <input type="submit" value="Gửi mã OTP">
+            </div>
+
+            <a th:href="@{/login}" class="registration">Quay lại trang đăng nhập</a>
+        </div>
+    </form>
+</main>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script>
+    // Khởi tạo EmailJS (thay thế bằng user ID của bạn)
+    (function () {
+        emailjs.init({
+            publicKey: "hSyhYyhamsAFDzIDd",
+        });
+    })();
+
+    // Hàm tạo mã OTP
+    function generateOtp() {
+        return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+
+    // Hàm gửi email
+    function sendOtp(email, otp) {
+        const templateParams = {
+            email: email,
+            otp: otp,
+        };
+
+        emailjs.send('service_lt1yl4t', 'template_cmmu0vm', templateParams)
+            .then(function (response) {
+                console.log("templateParams: " + templateParams.otp)
+                console.log("Success:", response);
+                localStorage.setItem("otp", otp);
+                localStorage.setItem("email", email);
+                localStorage.setItem("otp_time", new Date().getTime());
+                // Chuyển sang trang nhập mã OTP
+                localStorage.setItem("otpMessage", "Mã OTP đã được gửi đến email của bạn!");
+                window.location.href = "/forget/otp";
+            }, function (error) {
+                Toastify({
+                    text: "Gửi email thất bại. Vui lòng kiểm tra lại.",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    style: {
+                        background: "linear-gradient(to right, #ff416c, #ff4b2b)"
+                    }
+                }).showToast();
+                console.error("Error:", error);
+            });
+    }
+
+    // Xử lý khi người dùng bấm nút gửi OTP
+    document.getElementById("otpForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const email = document.getElementById("email").value;
+        fetch("/check-email", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(email)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data === true) {
+                    const otp = generateOtp();
+                    sendOtp(email, otp);
+                } else {
+                    Toastify({
+                        text: "Email không tồn tại trong hệ thống!",
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        style: {
+                            background: "linear-gradient(to right, #ff416c, #ff4b2b)"
+                        }
+                    }).showToast();
+                }
+            })
+            .catch(err => {
+                console.error("Lỗi khi kiểm tra email:", err);
+                Toastify({
+                    text: "Không thể kiểm tra email. Vui lòng thử lại!",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    style: {
+                        background: "linear-gradient(to right, #ff416c, #ff4b2b)"
+                    }
+                }).showToast();
+            });
+
+    });
+</script>
+<!-- Scripts -->
+<script th:src="@{/user/js/vendor/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/user/js/bootstrap.min.js}"></script>
+<script th:src="@{/user/js/main.js}"></script>
+</body>
+</html>

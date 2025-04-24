@@ -22,14 +22,14 @@ public class Template_cvs {
     @JoinColumn(name = "style_id", nullable = false)
     private Styles style;
 
-    @NotNull
-    @Column(name = "image", nullable = false)
+    @Column(name = "image", length = 255)
     private String image;
+
     // Constructors
     public Template_cvs() {
     }
 
-    public Template_cvs(Integer id, Positions positions, Styles style, String image) {
+    public Template_cvs(Integer id, Positions positions, Styles style,String image) {
         this.id = id;
         this.positions = positions;
         this.style = style;
@@ -61,7 +61,6 @@ public class Template_cvs {
     public void setStyle(Styles style) {
         this.style = style;
     }
-
     public String getImage() {
         return image;
     }

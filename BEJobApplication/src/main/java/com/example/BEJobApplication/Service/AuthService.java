@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 @Service
 public class AuthService {
 
-    private static final String API_KEY = "98c148c7a3cd4091a489f0dc1b08cb18";
+    private static final String API_KEY = "f90c1775cd7d4af28ffc3aaa86ed4484";
     private static final String VALIDATION_URL = "https://emailvalidation.abstractapi.com/v1/";
 
     // Regex kiểm tra định dạng email
@@ -24,7 +24,7 @@ public class AuthService {
     public boolean isValidFormat(String email) {
         return EMAIL_REGEX.matcher(email).matches();
     }
-
+    
     // ✅ Gọi API kiểm tra email thật sự có tồn tại không
     public boolean isEmailDeliverable(String email) {
         String uri = UriComponentsBuilder

@@ -1,7 +1,9 @@
 package com.example.BEJobApplication.Mapper;
 
 
+import com.example.BEJobApplication.DTO.UserCreateDTO;
 import com.example.BEJobApplication.DTO.UserDTO;
+
 import com.example.BEJobApplication.Entity.User;
 
 public class UserMapper {
@@ -22,14 +24,14 @@ public class UserMapper {
     }
 
     // DTO -> Entity (nếu cần tạo mới user từ form)
-    public static User toUserEntity(UserDTO dto) {
+    public static User toUserEntity(UserCreateDTO dto) {
         if (dto == null) return null;
 
         User user = new User();
-        user.setId(dto.getId());
+//        user.setId(dto.getId());
         user.setUsername(dto.getUsername());
         user.setEmail(dto.getEmail());
-        user.setBirth_day(dto.getBirthday());
+        user.setBirth_day(dto.getBirthDate());
         user.setGender(dto.getGender());
         user.setRole(dto.getRole());
 

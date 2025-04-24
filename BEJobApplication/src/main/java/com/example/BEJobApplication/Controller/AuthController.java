@@ -2,6 +2,9 @@ package com.example.BEJobApplication.Controller;
 
 import com.example.BEJobApplication.DTO.LoginRequest;
 import com.example.BEJobApplication.DTO.LoginResponse;
+import com.example.BEJobApplication.DTO.UserCreateDTO;
+import com.example.BEJobApplication.DTO.PasswordResetDTO;
+
 import com.example.BEJobApplication.DTO.GoogleLoginRequest;
 import com.example.BEJobApplication.Entity.User;
 import com.example.BEJobApplication.Service.UserService;
@@ -15,6 +18,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 import com.example.BEJobApplication.Service.GoogleAuthService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
@@ -40,25 +44,35 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
-    
+
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // Thêm dòng này
+
+    @PostMapping("/check-email")
+    public ResponseEntity<Boolean> checkEmail(@RequestBody String email) {
+        System.out.println("Email nhận được: " + email); // Log email nhận được
+        email = email.replace("\"", "").trim();
+        boolean exists = userService.emailExists(email);
+        System.out.println("Email tồn tại: " + exists);
+        return ResponseEntity.ok(exists);
+    }
 
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
-        try {
-            // Tìm user từ DB
-            User user = userService.findByEmailOrUsername(request.getIdentifier(), request.getIdentifier())
-                    .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
-            
-            if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-                return new LoginResponse("Sai mật khẩu", null, null);
-            }
-            // Tạo JWT token
-            String token = jwtUtils.generateToken(user);
-            return new LoginResponse("Login thành công", token, user);
-        } catch (Exception e) {
-            return new LoginResponse("Invalid credentials", null, null);
+        // Sử dụng Optional để kiểm tra người dùng có tồn tại không
+        Optional<User> userOptional = userService.findByEmailOrUsername(request.getIdentifier(), request.getIdentifier());
+        if (!userOptional.isPresent()) {
+            // Trả về lỗi nếu người dùng không tồn tại
+            return new LoginResponse("Người dùng không tồn tại", null, null);
         }
+        User user = userOptional.get();
+        // Kiểm tra mật khẩu
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            return new LoginResponse("Sai mật khẩu", null, null);
+        }
+
+        // Tạo JWT token
+        String token = jwtUtils.generateToken(user);
+        return new LoginResponse("Login thành công", token, user);
     }
 
     @PostMapping("/google")
@@ -86,7 +100,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
+    public ResponseEntity<?> register(@RequestBody UserCreateDTO user) {
         try {
             if (!authService.isValidFormat(user.getEmail()) || !authService.isEmailDeliverable(user.getEmail())) {
                 return ResponseEntity.badRequest().body("Email không hợp lệ hoặc không tồn tại.");
@@ -108,6 +122,25 @@ public class AuthController {
                     Map.of("error", "Lỗi máy chủ", "message", e.getMessage()));
         }
 
+    }
+
+    @PutMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody PasswordResetDTO request) {
+        try {
+            Optional<User> optionalUser = userService.findByEmail(request.getEmail());
+
+            if (optionalUser.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Email không tồn tại trong hệ thống.");
+            }
+
+            userService.updatePassword(request.getEmail(), request.getNewPassword());
+
+            return ResponseEntity.ok("Đặt lại mật khẩu thành công.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Lỗi máy chủ", "message", e.getMessage()));
+        }
     }
 
 }

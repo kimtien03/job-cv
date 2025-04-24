@@ -12,8 +12,6 @@ public class UserDTO {
     private String gender;
     private String role;
 
-
-
 // Getters & Setters
 
     public Integer getId() {

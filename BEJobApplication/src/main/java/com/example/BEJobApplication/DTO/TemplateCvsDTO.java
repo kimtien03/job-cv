@@ -14,7 +14,6 @@ public class TemplateCvsDTO {
 
     @NotNull
     private String image;
-
     // Constructors
     public TemplateCvsDTO() {
     }
@@ -50,7 +49,6 @@ public class TemplateCvsDTO {
     public void setStyleId(Integer styleId) {
         this.styleId = styleId;
     }
-
     public String getImage() {
         return image;
     }
@@ -65,7 +63,6 @@ public class TemplateCvsDTO {
                 "id=" + id +
                 ", positionId=" + positionId +
                 ", styleId=" + styleId +
-                ", image=" + image +
                 '}';
     }
 }

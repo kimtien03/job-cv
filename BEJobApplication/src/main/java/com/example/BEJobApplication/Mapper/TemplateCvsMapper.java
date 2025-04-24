@@ -15,7 +15,6 @@ public class TemplateCvsMapper {
         TemplateCvsDTO dto = new TemplateCvsDTO();
         dto.setId(templateCvs.getId());
 
-        // Nếu có, gán các ID của các mối quan hệ
         dto.setPositionId(templateCvs.getPositions() != null ? templateCvs.getPositions().getId() : null);
         dto.setStyleId(templateCvs.getStyle() != null ? templateCvs.getStyle().getId() : null);
         dto.setImage(templateCvs.getImage());

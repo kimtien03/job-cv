@@ -1,0 +1,257 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>App Landing</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="manifest" th:href="@{/site.webmanifest}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/user/img/favicon.ico}">
+
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/user/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/slicknav.css}">
+    <link rel="stylesheet" th:href="@{/user/css/flaticon.css}">
+    <link rel="stylesheet" th:href="@{/user/css/progressbar_barfiller.css}">
+    <link rel="stylesheet" th:href="@{/user/css/gijgo.css}">
+    <link rel="stylesheet" th:href="@{/user/css/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/animated-headline.css}">
+    <link rel="stylesheet" th:href="@{/user/css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/user/css/fontawesome-all.min.css}">
+    <link rel="stylesheet" th:href="@{/user/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/user/css/slick.css}">
+    <link rel="stylesheet" th:href="@{/user/css/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/user/css/style.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+    <style>
+        .custom-select-wrapper {
+            position: relative;
+            width: 40%;
+            padding: 5px 5px;
+            border-radius: 2px;
+        }
+
+        .custom-select-style {
+
+            border: 1px solid #ccc;
+            background-color: #fff;
+            font-size: 16px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            box-shadow: 0 2px 5px rgba(128, 0, 128, 0.1);
+            transition: border-color 0.3s ease;
+        }
+
+        .form-label {
+            margin: 0;
+            width: 40%;
+        }
+
+        .form-input {
+            display: flex;
+        }
+
+        .custom-select-style:focus {
+            outline: none;
+            border-color: #800080;
+            box-shadow: 0 0 5px rgba(128, 0, 128, 0.4);
+        }
+    </style>
+</head>
+<body th:style="|background-image: url('user/img/logo/backgroundlogin.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 100vh;|">
+
+<!-- Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img th:src="@{/user/img/logo/loader.png}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader End -->
+
+<!-- Register -->
+<main class="login-body" data-vide-bg="assets/img/login-bg.mp4">
+    <!-- Register Form -->
+    <form id="formRegister" class="form-default" th:action="@{/register}" method="post" th:object="${user}">
+        <div class="login-form" style="box-shadow: 0 4px 15px rgba(128, 0, 128, 0.5); padding-top: 45px;">
+            <!-- Logo -->
+            <div class="logo-login">
+                <a><img th:src="@{/user/img/logo/loader.png}" alt=""></a>
+            </div>
+            <h2>Registration Here</h2>
+
+            <!-- Full name -->
+            <div class="form-input">
+                <label th:for="username">Full name</label>
+                <input type="text" th:field="*{username}" placeholder="Full name" required >
+            </div>
+
+            <!-- Email -->
+            <div class="form-input">
+                <label th:for="email">Email Address</label>
+                <input type="email" th:field="*{email}" placeholder="Email Address" required >
+            </div>
+
+            <!-- Password -->
+            <div class="form-input">
+                <label th:for="password">Password</label>
+                <input id="password" type="password" th:field="*{password}" placeholder="Password" required >
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-input">
+                <label th:for="confirmPassword">Confirm Password</label>
+                <input id="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm Password" required >
+            </div>
+
+            <!-- Birthdate -->
+            <div class="form-input d-flex align-items-center" style="width: 100%;">
+                <label for="birthDate" class="form-label mb-0" style="width: 35%; margin-bottom: 0;color: #FFFFFF">Birth Date</label>
+                <div style="position: relative; width: 60%;">
+                    <input type="text" id="birthDate" class="form-control flatpickr"
+                           th:field="*{birthDate}" placeholder="Select your birth date" required >
+                    <span style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none;">📅</span>
+                </div>
+            </div>
+            <!-- Gender -->
+            <div class="form-input">
+                <label th:for="gender" class="form-label">Gender</label>
+                <div class="custom-select-wrapper">
+                    <select name="gender" th:field="*{gender}" class="form-select custom-select-style">
+                        <option value= "" selected>-- Select Gender --</option>
+                        <option value="NAM">NAM</option>
+                        <option value="NỮ">NỮ</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Submit button -->
+            <div class="form-input pt-30">
+                <input type="submit" value="Registration">
+            </div>
+
+            <!-- Link to login -->
+            <a th:href="@{/login}" class="registration">Login</a>
+        </div>
+    </form>
+
+</main>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    flatpickr("#birthDate", {
+        dateFormat: "Y-m-d",
+        maxDate: "today",
+        altInput: true,
+        altFormat: "F j, Y",
+        allowInput: true,
+        locale: {
+            firstDayOfWeek: 1 // tuần bắt đầu từ thứ 2
+        }
+    });
+</script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var registerError = /*[[${registerError}]]*/ '';
+    var checkRegister = /*[[${checkRegister}]]*/ '';
+    console.log("checkRegister:" + checkRegister);
+    console.log("registerError: " + registerError);
+    localStorage.setItem('checkRegister', checkRegister);
+    if (registerError && registerError.trim() !== '') {
+        Toastify({
+            text: registerError,
+            duration: 3000,
+            newWindow: true,
+            close: true,
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true,
+            style: {
+                background: "linear-gradient(to right, #9f00c5, #d100f8)"
+            },
+            onClick: function() {} // Callback after click
+        }).showToast();
+        // Reset registerError
+    }
+    registerError = '';
+    /*]]>*/
+    document.getElementById("formRegister").addEventListener("submit", function (e) {
+        const gender = document.querySelector('select[name="gender"]').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        // Kiểm tra giới tính
+        if (!gender) {
+            e.preventDefault(); // Ngừng gửi form
+            Toastify({
+                text: "Vui lòng chọn giới tính.",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "linear-gradient(to right, #ff416c, #ff4b2b)",
+                }
+            }).showToast();
+        }
+
+        // Kiểm tra mật khẩu và xác nhận mật khẩu không khớp
+        if (password !== confirmPassword) {
+            e.preventDefault(); // Ngừng gửi form
+            Toastify({
+                text: "Mật khẩu và xác nhận mật khẩu không khớp.",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                style: {
+                    background: "linear-gradient(to right, #ff416c, #ff4b2b)",
+                }
+            }).showToast();
+            return; // Dừng lại ở đây để không tiếp tục kiểm tra lỗi khác
+        }
+        console.log("test1")
+        // Nếu mật khẩu khớp, kiểm tra lỗi từ server (registerError)
+    });
+</script>
+
+</script>
+<script th:src="@{/user/js/vendor/modernizr-3.5.0.min.js}"></script>
+<script th:src="@{/user/js/vendor/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/user/js/popper.min.js}"></script>
+<script th:src="@{/user/js/bootstrap.min.js}"></script>
+<script th:src="@{/user/js/jquery.slicknav.min.js}"></script>
+<script th:src="@{/user/js/jquery.vide.js}"></script>
+<script th:src="@{/user/js/owl.carousel.min.js}"></script>
+<script th:src="@{/user/js/slick.min.js}"></script>
+<script th:src="@{/user/js/wow.min.js}"></script>
+<script th:src="@{/user/js/animated.headline.js}"></script>
+<script th:src="@{/user/js/jquery.magnific-popup.js}"></script>
+<script th:src="@{/user/js/gijgo.min.js}"></script>
+<script th:src="@{/user/js/jquery.nice-select.min.js}"></script>
+<script th:src="@{/user/js/jquery.sticky.js}"></script>
+<script th:src="@{/user/js/jquery.barfiller.js}"></script>
+<script th:src="@{/user/js/jquery.counterup.min.js}"></script>
+<script th:src="@{/user/js/waypoints.min.js}"></script>
+<script th:src="@{/user/js/jquery.countdown.min.js}"></script>
+<script th:src="@{/user/js/hover-direction-snake.min.js}"></script>
+<script th:src="@{/user/js/contact.js}"></script>
+<script th:src="@{/user/js/jquery.form.js}"></script>
+<script th:src="@{/user/js/jquery.validate.min.js}"></script>
+<script th:src="@{/user/js/mail-script.js}"></script>
+<script th:src="@{/user/js/jquery.ajaxchimp.min.js}"></script>
+<script th:src="@{/user/js/plugins.js}"></script>
+<script th:src="@{/user/js/main.js}"></script>
+
+</body>
+</html>

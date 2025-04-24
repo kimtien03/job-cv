@@ -41,7 +41,7 @@ public class AdminController {
     // Chỉ ADMIN có thể tạo người dùng mới
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/Create")
-    public ResponseEntity<?> createUser(@RequestBody UserDTO user) {
+    public ResponseEntity<?> createUser(@RequestBody UserCreateDTO user) {
         try {
             UserDTO createdUser = userService.createUser(user);
             return ResponseEntity.status(200).body(createdUser);
@@ -54,7 +54,7 @@ public class AdminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/Update/{id}")
-    public ResponseEntity<?> UpdateUser(@PathVariable Integer id,@RequestBody UserDTO user) {
+    public ResponseEntity<?> UpdateUser(@PathVariable Integer id,@RequestBody UserCreateDTO user) {
         try {
             UserDTO createdUser = userService.updateUser(id,user);
             return ResponseEntity.status(200).body(createdUser);
